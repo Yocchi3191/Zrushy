@@ -1,6 +1,11 @@
 <Solution>
-  <Project Path="Zrushy.Core.Application/Zrushy.Core.Application.csproj" Id="c4fd5ae9-18af-4bdd-bcbf-9dfc339538e6" />
+  <Project Path="Zrushy.Core.Application/Zrushy.Core.Application.csproj" Id="c4fd5ae9-18af-4bdd-bcbf-9dfc339538e6">
+    <BuildDependency Project="Zrushy.Core.Domain/Zrushy.Core.Domain.csproj" />
+  </Project>
   <Project Path="Zrushy.Core.Domain/Zrushy.Core.Domain.csproj" />
-  <Project Path="Zrushy.Core.Presentation/Zrushy.Core.Presentation.csproj" Id="1613e4bf-82b4-4e01-937c-463e82c62232" />
-  <Project Path="Zrushy.Core.Test/Zrushy.Core.Test.csproj" Id="7c8ccde5-2650-4056-811b-997f367a26e2" />
+  <Project Path="Zrushy.Core.Presentation/Zrushy.Core.Presentation.csproj" Id="1613e4bf-82b4-4e01-937c-463e82c62232">
+    <BuildDependency Project="Zrushy.Core.Application/Zrushy.Core.Application.csproj" />
+    <BuildDependency Project="Zrushy.Core.Domain/Zrushy.Core.Domain.csproj" />
+  </Project>
+  <Project Path="Zrushy.Core.Test/Zrushy.Core.Test.csproj" Id="cb34f44c-405a-4546-80f2-d7ca5ab3becb" />
 </Solution>
