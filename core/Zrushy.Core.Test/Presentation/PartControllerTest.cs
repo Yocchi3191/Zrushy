@@ -1,11 +1,11 @@
 ﻿using Zrushy.Core.Presentation;
 
-namespace Zrushy.Core.Test
+namespace Zrushy.Core.Test.Presentation
 {
 	/// <summary>
 	/// Domain ~ Presentationまでのオブジェクト連携を確認する結合テスト
 	/// </summary>
-	public class ClickTest
+	public class PartControllerTest
 	{
 		PartController controller;
 		PartInput input;
@@ -20,7 +20,7 @@ namespace Zrushy.Core.Test
 		[Test]
 		public void Test1()
 		{
-			controller.Interact(input);
+			controller.SendInput(input);
 		}
 	}
 }

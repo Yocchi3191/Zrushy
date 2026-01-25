@@ -4,7 +4,7 @@ namespace Zrushy.Core.Presentation
 {
 	public class PartController
 	{
-		public void Interact(PartInput input)
+		public void SendInput(PartInput input)
 		{
 			throw new NotImplementedException();
 		}

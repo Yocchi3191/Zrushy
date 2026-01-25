@@ -1,0 +1,57 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.1/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
+      "Zrushy.Core.Presentation/1.0.0": {
+        "dependencies": {
+          "Zrushy.Core.Application": "1.0.0",
+          "Zrushy.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Zrushy.Core.Presentation.dll": {}
+        }
+      },
+      "Zrushy.Core.Application/1.0.0": {
+        "dependencies": {
+          "Zrushy.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Zrushy.Core.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Zrushy.Core.Domain/1.0.0": {
+        "runtime": {
+          "Zrushy.Core.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Zrushy.Core.Presentation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Zrushy.Core.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Zrushy.Core.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
