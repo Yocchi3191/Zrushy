@@ -1,0 +1,8 @@
+﻿<Project>
+  <PropertyGroup>
+    <!-- テストプロジェクト以外のみUnityに出力 -->
+    <OutputPath Condition="'$(MSBuildProjectName)' != 'Zrushy.Core.Test'">$(MSBuildThisFileDirectory)..\unity\Assets\Plugins\Core\</OutputPath>
+    <!-- 依存するDLLもコピー -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+</Project>
