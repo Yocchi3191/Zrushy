@@ -1,4 +1,4 @@
-# おさわりゲーのオブジェクト構成
+おさわりゲーのオブジェクト構成
 
 ```mermaid
 ---
@@ -6,20 +6,20 @@ title: おさわりゲーのオブジェクト構成
 ---
 classDiagram
 	namespace Zrushy.Core.Domain {
-		class Part{}
-		class Event{}
-		class Reaction{}
-		class IEventRepository{}
-		class IReactionRepository{}
-		class PartID{}
-		class Progress{}
+		class Part
+		class Event
+		class Reaction
+		class IEventRepository
+		class IReactionRepository
+		class PartID
+		class Progress
 	}
 	namespace Zrushy.Core.Application {
-		class ClickPartUseCase{}
+		class ClickPartUseCase
 		class ClickPartCommand
 	}
 	namespace Zrushy.Core.Presentation {
-		class PartController{}
+		class PartController
 	}
 	namespace Zrushy.Core.Presentation.Unity {
 		class Clickable {
@@ -30,7 +30,7 @@ classDiagram
 		}
 	}
 	namespace Zrushy.Core.DI {
-		class ZrushyInstaller{}
+		class ZrushyInstaller
 	}
 
 	User --> Clickable : click
