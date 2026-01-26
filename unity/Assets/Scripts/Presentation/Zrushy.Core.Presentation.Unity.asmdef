@@ -1,0 +1,18 @@
+{
+    "name": "Zrushy.Core.Presentation.Unity",
+    "rootNamespace": "Zrushy.Presentation.Unity",
+    "references": [
+        "Zrushy.Core.Domain",
+        "Zrushy.Core.Application",
+        "Zrushy.Core.Presentation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

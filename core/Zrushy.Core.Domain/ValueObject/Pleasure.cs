@@ -1,12 +1,26 @@
-﻿using System;
-
-namespace Zrushy.Core.Domain.ValueObject
+﻿namespace Zrushy.Core.Domain.ValueObject
 {
+	/// <summary>
+	/// 快感パラメータ
+	/// 開発度と好感度に比例する
+	/// </summary>
 	public class Pleasure
 	{
+		public int Value { get; }
+
+		public Pleasure(int value)
+		{
+			Value = value;
+		}
+
+		/// <summary>
+		/// さわり反応による快感の増加量を計算して新しいPleasureを返す
+		/// TODO: 開発度と好感度を考慮した計算式を実装
+		/// </summary>
 		internal Pleasure CalcRateGain()
 		{
-			throw new NotImplementedException();
+			// 仮実装: 固定値を加算
+			return new Pleasure(Value + 1);
 		}
 	}
 }

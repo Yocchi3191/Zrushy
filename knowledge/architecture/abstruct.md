@@ -6,20 +6,46 @@ title: おさわりゲーのオブジェクト構成
 ---
 classDiagram
 	namespace Zrushy.Core.Domain {
+		class Body {
+			集約ルート
+			Partを管理
+		}
 		class Part
+		class Interaction {
+			さわり操作のパラメータ
+		}
 		class Event
 		class Reaction
 		class IEventRepository
 		class IReactionRepository
 		class PartID
-		class Progress
+		class Pleasure {
+			快感パラメータ
+		}
+		class Development {
+			開発度パラメータ
+		}
+		class Affection {
+			好感度パラメータ
+		}
 	}
 	namespace Zrushy.Core.Application {
-		class ClickPartUseCase
-		class ClickPartCommand
+		class InteractPart {
+			さわり操作UseCase
+		}
+		class InteractPartCommand
+		class InteractPartResult {
+			UseCase実行結果
+		}
 	}
 	namespace Zrushy.Core.Presentation {
 		class PartController
+		class PartViewModel {
+			Viewへのデータバインディング
+		}
+		class PartInput {
+			ユーザー入力
+		}
 	}
 	namespace Zrushy.Core.Presentation.Unity {
 		class Clickable {
@@ -33,17 +59,31 @@ classDiagram
 		class ZrushyInstaller
 	}
 
+	%% ユーザー操作フロー
 	User --> Clickable : click
-	Clickable --> PartController : 操作
-	Clickable --> PartView : update
-	PartController --> ClickPartCommand : 作成
-	PartController --> ClickPartUseCase : 操作
-	ClickPartUseCase --> Part : 操作
-	ClickPartUseCase --> ClickPartCommand : パラメータ
-	ClickPartUseCase --> IEventRepository : 検索
+	Clickable --> PartController : SendInput
+	PartController --> PartViewModel : Update
+	PartViewModel --> PartView : OnUpdated
+	
+	%% コマンド実行フロー
+	PartController --> PartInput : 使用
+	PartController --> InteractPartCommand : 生成
+	PartController --> InteractPart : Execute
+	InteractPart --> Body : Interact
+	Body --> Part : Interact
+	
+	%% データ取得フロー
+	InteractPart --> IReactionRepository : GetReaction
+	IReactionRepository --> Reaction : 返却
+	InteractPart --> IEventRepository : GetEvent
 	IEventRepository --> Event : あれば返す
-	ClickPartUseCase --> IReactionRepository : 検索
-	IReactionRepository --> Reaction : あれば返す
+	InteractPart --> InteractPartResult : 生成
+	
+	%% 集約・所有関係
+	Body *-- Part : 複数所有
 	Part *-- PartID : ID
-	PartView *-- PartID : ID
+	Part *-- Pleasure : 快感
+	Part *-- Development : 開発度
+	Part *-- Affection : 好感度
+	Interaction *-- PartID : 対象部位
 ```
