@@ -20,6 +20,7 @@
 		<ProjectReference Include="..\Zrushy.Core.Application\Zrushy.Core.Application.csproj" />
 		<ProjectReference Include="..\Zrushy.Core.Domain\Zrushy.Core.Domain.csproj" />
 		<ProjectReference Include="..\Zrushy.Core.Presentation\Zrushy.Core.Presentation.csproj" />
+		<ProjectReference Include="..\Zrushy.Core.Infrastructure\Zrushy.Core.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
