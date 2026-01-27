@@ -22,5 +22,10 @@
 		{
 			return v.GetHashCode();
 		}
+
+		public override string ToString()
+		{
+			return v;
+		}
 	}
 }

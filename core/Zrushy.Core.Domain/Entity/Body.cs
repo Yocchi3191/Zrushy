@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Zrushy.Core.Domain.Exception;
 using Zrushy.Core.Domain.ValueObject;
 
 namespace Zrushy.Core.Domain.Entity
@@ -35,18 +36,20 @@ namespace Zrushy.Core.Domain.Entity
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
 		{
-			Part? targetPart = GetPart(interaction.PartID);
-			targetPart?.Interact(interaction);
+			Part targetPart = GetPart(interaction.PartID);
+			targetPart.Interact(interaction);
 		}
 
 		/// <summary>
 		/// 指定した部位を取得する
 		/// </summary>
 		/// <param name="partID">部位ID</param>
-		/// <returns>部位（見つからない場合はnull）</returns>
-		public Part? GetPart(PartID partID)
+		/// <returns>部位</returns>
+		/// <exception cref="PartNotFoundException">部位が見つからない場合</exception>
+		public Part GetPart(PartID partID)
 		{
-			return parts.Find(p => p.ID.Equals(partID));
+			return parts.Find(p => p.ID.Equals(partID))
+				?? throw new PartNotFoundException(partID);
 		}
 	}
 }
