@@ -25,31 +25,19 @@ namespace Zrushy.Core.DI
 		/// </summary>
 		private void InitializeBody()
 		{
-			// 頭部
-			body.AddPart(new Part(
-				new PartID("head"),
-				new Pleasure(0),
-				new Development(0),
-				new Affection(0)
-			));
+			string[] partIds = { "head", "torso", "arm", "hand", "waist", "leg", "foot" };
 
-			// 胸
-			body.AddPart(new Part(
-				new PartID("chest"),
-				new Pleasure(0),
-				new Development(0),
-				new Affection(0)
-			));
+			foreach (var id in partIds)
+			{
+				body.AddPart(new Part(
+					new PartID(id),
+					new Pleasure(0),
+					new Development(0),
+					new Affection(0)
+				));
+			}
 
-			// お腹
-			body.AddPart(new Part(
-				new PartID("belly"),
-				new Pleasure(0),
-				new Development(0),
-				new Affection(0)
-			));
-
-			Debug.Log($"[BodyInitializer] Body initialized with 3 parts");
+			Debug.Log($"[BodyInitializer] Body initialized with {partIds.Length} parts");
 		}
 	}
 }
