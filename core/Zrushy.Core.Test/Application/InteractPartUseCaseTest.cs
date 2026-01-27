@@ -1,5 +1,6 @@
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Entity;
+using Zrushy.Core.Domain.Exception;
 using Zrushy.Core.Domain.Repository;
 using Zrushy.Core.Domain.ValueObject;
 using Zrushy.Core.Infrastructure.Repository;
@@ -17,7 +18,7 @@ public class InteractPartUseCaseTest
 	[SetUp]
 	public void Setup()
 	{
-		_partID = new PartID("test_part");
+		_partID = new PartID("head");
 		_body = new Body();
 		_reactionRepository = new ReactionRepository();
 		_eventRepository = new EventRepository();
@@ -25,17 +26,13 @@ public class InteractPartUseCaseTest
 	}
 
 	[Test]
-	public void Executeで存在しないパーツの場合はnullを返す()
+	public void Executeで存在しないパーツの場合はPartNotFoundExceptionを投げる()
 	{
 		// Arrange
-		var command = new InteractPartCommand(_partID);
+		var command = new InteractPartCommand(new PartID("nonexistent"));
 
-		// Act
-		var result = _useCase.Execute(command);
-
-		// Assert
-		Assert.That(result.Reaction, Is.Null);
-		Assert.That(result.Event, Is.Null);
+		// Act & Assert
+		Assert.Throws<PartNotFoundException>(() => _useCase.Execute(command));
 	}
 
 	[Test]
@@ -104,7 +101,7 @@ public class InteractPartUseCaseTest
 
 		// Assert
 		Assert.That(result.Reaction, Is.Not.Null);
-		Assert.That(result.Reaction!.Dialogue, Is.EqualTo("あっ…"));
+		Assert.That(result.Reaction!.Dialogue, Is.EqualTo("や、やめて…髪が…"));
 		Assert.That(result.Reaction.AnimationName, Is.EqualTo("reaction_default"));
 		Assert.That(result.Reaction.ExpressionName, Is.EqualTo("expression_shy"));
 		Assert.That(result.Reaction.VoiceClipName, Is.EqualTo("voice_reaction_01"));
@@ -130,7 +127,7 @@ public class InteractPartUseCaseTest
 	{
 		// Arrange
 		var partID1 = new PartID("head");
-		var partID2 = new PartID("chest");
+		var partID2 = new PartID("torso");
 		var part1 = new Part(partID1, new Pleasure(0), new Development(0), new Affection(0));
 		var part2 = new Part(partID2, new Pleasure(0), new Development(0), new Affection(0));
 		_body.AddPart(part1);
@@ -152,9 +149,11 @@ public class InteractPartUseCaseTest
 	}
 
 	[Test]
-	public void Executeで例外を投げない()
+	public void Executeで登録済みパーツに対して例外を投げない()
 	{
 		// Arrange
+		var part = new Part(_partID, new Pleasure(0), new Development(0), new Affection(0));
+		_body.AddPart(part);
 		var command = new InteractPartCommand(_partID);
 
 		// Act & Assert

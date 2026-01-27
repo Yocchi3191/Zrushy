@@ -21,6 +21,7 @@ namespace Zrushy.Core.Test.Presentation
 		{
 			// 依存オブジェクトの構築
 			Body body = new Body();
+			body.AddPart(new Part(new PartID("head"), new Pleasure(0), new Development(0), new Affection(0)));
 			IReactionRepository reactionRepository = new ReactionRepository();
 			IEventRepository eventRepository = new EventRepository();
 			InteractPart useCase = new InteractPart(body, reactionRepository, eventRepository);
@@ -30,7 +31,7 @@ namespace Zrushy.Core.Test.Presentation
 			controller = new PartController(useCase);
 
 			// テスト用の入力
-			PartID partID = new PartID("test_part");
+			PartID partID = new PartID("head");
 			input = new PartInput(partID);
 		}
 

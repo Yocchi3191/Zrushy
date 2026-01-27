@@ -1,4 +1,5 @@
 using Zrushy.Core.Domain.Entity;
+using Zrushy.Core.Domain.Exception;
 using Zrushy.Core.Domain.ValueObject;
 
 namespace Zrushy.Core.Test.Domain.Entity;
@@ -53,17 +54,14 @@ public class BodyTest
 	}
 
 	[Test]
-	public void GetPartで存在しないパーツはnullを返す()
+	public void GetPartで存在しないパーツはPartNotFoundExceptionを投げる()
 	{
 		// Arrange
 		var body = new Body();
 		var partID = new PartID("nonexistent");
 
-		// Act
-		var part = body.GetPart(partID);
-
-		// Assert
-		Assert.That(part, Is.Null);
+		// Act & Assert
+		Assert.Throws<PartNotFoundException>(() => body.GetPart(partID));
 	}
 
 	[Test]
@@ -131,14 +129,14 @@ public class BodyTest
 	}
 
 	[Test]
-	public void Interactで存在しないパーツを指定しても例外を投げない()
+	public void Interactで存在しないパーツを指定するとPartNotFoundExceptionを投げる()
 	{
 		// Arrange
 		var body = new Body();
 		var interaction = new Interaction(new PartID("nonexistent"));
 
 		// Act & Assert
-		Assert.DoesNotThrow(() => body.Interact(interaction));
+		Assert.Throws<PartNotFoundException>(() => body.Interact(interaction));
 	}
 
 	[Test]

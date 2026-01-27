@@ -19,6 +19,8 @@ classDiagram
 		class IEventRepository
 		class IReactionRepository
 		class PartID
+		class PartNotFoundException
+		class UndefinedReactionException
 		class Pleasure {
 			快感パラメータ
 		}

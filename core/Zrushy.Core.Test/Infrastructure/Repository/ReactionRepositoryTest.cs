@@ -1,4 +1,5 @@
 using Zrushy.Core.Domain.Entity;
+using Zrushy.Core.Domain.Exception;
 using Zrushy.Core.Domain.Repository;
 using Zrushy.Core.Domain.ValueObject;
 using Zrushy.Core.Infrastructure.Repository;
@@ -19,7 +20,7 @@ public class ReactionRepositoryTest
 	public void GetReactionでリアクションを取得できる()
 	{
 		// Arrange
-		var partID = new PartID("chest");
+		var partID = new PartID("torso");
 		var pleasure = new Pleasure(10);
 		var development = new Development(20);
 		var affection = new Affection(30);
@@ -86,7 +87,7 @@ public class ReactionRepositoryTest
 	public void GetReactionでボイスクリップ名を含むリアクションを取得できる()
 	{
 		// Arrange
-		var partID = new PartID("back");
+		var partID = new PartID("waist");
 		var pleasure = new Pleasure(3);
 		var development = new Development(7);
 		var affection = new Affection(12);
@@ -103,7 +104,7 @@ public class ReactionRepositoryTest
 	public void GetReactionで異なるパラメータでもリアクションを取得できる()
 	{
 		// Arrange
-		var partID1 = new PartID("chest");
+		var partID1 = new PartID("torso");
 		var partID2 = new PartID("leg");
 		var pleasure1 = new Pleasure(10);
 		var pleasure2 = new Pleasure(50);
@@ -118,22 +119,37 @@ public class ReactionRepositoryTest
 	}
 
 	[Test]
-	public void GetReactionでゼロパラメータでもリアクションを取得できる()
+	public void GetReactionで未定義の部位はUndefinedReactionExceptionを投げる()
 	{
 		// Arrange
-		var partID = new PartID("test_part");
+		var partID = new PartID("undefined_part");
 		var pleasure = new Pleasure(0);
 		var development = new Development(0);
 		var affection = new Affection(0);
 
-		// Act
-		var reaction = _repository.GetReaction(partID, pleasure, development, affection);
+		// Act & Assert
+		Assert.Throws<UndefinedReactionException>(
+			() => _repository.GetReaction(partID, pleasure, development, affection));
+	}
 
-		// Assert
-		Assert.That(reaction, Is.Not.Null);
-		Assert.That(reaction.Dialogue, Is.EqualTo("あっ…"));
-		Assert.That(reaction.AnimationName, Is.EqualTo("reaction_default"));
-		Assert.That(reaction.ExpressionName, Is.EqualTo("expression_shy"));
-		Assert.That(reaction.VoiceClipName, Is.EqualTo("voice_reaction_01"));
+	[Test]
+	public void GetReactionで部位ごとに異なるセリフを取得できる()
+	{
+		// Arrange
+		var pleasure = new Pleasure(0);
+		var development = new Development(0);
+		var affection = new Affection(0);
+
+		string[] partIds = { "head", "torso", "arm", "hand", "waist", "leg", "foot" };
+
+		// Act
+		var dialogues = partIds
+			.Select(id => _repository.GetReaction(new PartID(id), pleasure, development, affection).Dialogue)
+			.ToList();
+
+		// Assert - 全て非空で、全て異なる
+		Assert.That(dialogues, Has.All.Not.Empty);
+		Assert.That(dialogues.Distinct().Count(), Is.EqualTo(dialogues.Count),
+			"各部位のセリフは全て異なるべき");
 	}
 }

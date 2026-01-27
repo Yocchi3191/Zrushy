@@ -36,12 +36,7 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 			body.Interact(interaction);
 
 			// さわった部位のパラメータを取得
-			Part? part = body.GetPart(command.PartID);
-			if (part == null)
-			{
-				// 部位が見つからない場合は空の結果を返す
-				return new InteractPartResult(null, null);
-			}
+			Part part = body.GetPart(command.PartID);
 
 			// 3. さわった部位の、現在のパラメータ状態で返すリアクションを取得
 			Reaction reaction = reactionRepository.GetReaction(
