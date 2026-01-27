@@ -1,4 +1,4 @@
-﻿using Zrushy.Core.Application.UseCase.InteractPart;
+using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Entity;
 using Zrushy.Core.Domain.Repository;
 using Zrushy.Core.Domain.ValueObject;
@@ -35,7 +35,7 @@ namespace Zrushy.Core.Test.Presentation
 		}
 
 		[Test]
-		public void Test1()
+		public void SendInputで対象パーツとViewModelが更新される()
 		{
 			// イベントハンドラの登録
 			bool updated = false;

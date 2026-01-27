@@ -18,7 +18,7 @@
 		/// さわり反応による開発度の増加量を計算して新しいDevelopmentを返す
 		/// TODO: さわり方、条件付けを考慮した計算式を実装
 		/// </summary>
-		internal Development CalcRateGain()
+		internal Development CalclateGain()
 		{
 			// 仮実装: 固定値を加算
 			return new Development(Value + 1);

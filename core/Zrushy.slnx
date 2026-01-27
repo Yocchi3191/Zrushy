@@ -6,6 +6,7 @@
     <BuildDependency Project="Zrushy.Core.Domain/Zrushy.Core.Domain.csproj" />
   </Project>
   <Project Path="Zrushy.Core.Domain/Zrushy.Core.Domain.csproj" />
+  <Project Path="Zrushy.Core.Infrastructure/Zrushy.Core.Infrastructure.csproj" />
   <Project Path="Zrushy.Core.Presentation/Zrushy.Core.Presentation.csproj" Id="1613e4bf-82b4-4e01-937c-463e82c62232">
     <BuildDependency Project="Zrushy.Core.Application/Zrushy.Core.Application.csproj" />
     <BuildDependency Project="Zrushy.Core.Domain/Zrushy.Core.Domain.csproj" />
