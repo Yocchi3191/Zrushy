@@ -57,11 +57,11 @@ public class FirstTouchEvent : IEvent
 
 ### Event が参照するインターフェース
 
-| インターフェース | 提供する情報 |
-|---|---|
-| `IInteractionHistory` | 累計タッチ回数、直前タッチ部位などの操作履歴 |
+| インターフェース       | 提供する情報                                                |
+| ---------------------- | ----------------------------------------------------------- |
+| `IInteractionHistory`  | 累計タッチ回数、直前タッチ部位などの操作履歴                |
 | `IPartParameterReader` | 各部位の Pleasure / Development / Affection（読み取り専用） |
-| `IScenarioProgress` | シナリオの完了状態（Main の1回きり制御に使う） |
+| `IScenarioProgress`    | シナリオの完了状態（Main の1回きり制御に使う）              |
 
 Event は `Body` や `Part` に直接依存しない。必要な情報ごとに狭いインターフェースを参照する。
 
@@ -86,61 +86,80 @@ Domain 層が知るのはこのインターフェースだけ。Yarn Spinner の
 ```csharp
 public interface IScenarioEngine
 {
+    bool IsScenarioFinished { get; }
+    Action GetCurrentAction();
+    void Next();
     void Start(ScenarioID scenarioID);
-    bool IsRunning { get; }
-    ScenarioInstruction GetNext();
-    void ProvideInput(PlayerInput input);
 }
 ```
 
-### ScenarioInstruction
-
-ScenarioEngine が返す「次にやること」の型。
-
-```csharp
-public abstract record ScenarioInstruction;
-public record ShowAction(Action Action) : ScenarioInstruction;
-public record AwaitTouch(PartID? ExpectedPart) : ScenarioInstruction;
-public record ApplyBonus(/* ボーナス情報 */) : ScenarioInstruction;
-public record ScenarioEnd : ScenarioInstruction;
-```
+ScenarioPlayer が Start → GetCurrentAction で最初の Action を取得し、以降は Next → GetCurrentAction で進行する。IsScenarioFinished が true になったらシナリオ終了。
 
 ### 実行の流れ
 
 ```mermaid
 sequenceDiagram
-    participant UseCase as InteractPart
-    participant Engine as IScenarioEngine
-    participant View
     actor User
+    participant Clickable
+    participant Controller as PartController
+    participant UseCase as InteractPart
+    participant Body
+    participant EventRepo as IEventRepository
+    participant SP as ScenarioPlayer
+    participant Engine as IScenarioEngine
+    participant HVM as HeroinViewModel
+    participant HV as HeroinView
+    participant SD as ScenarioDriver
 
-    UseCase ->> Engine : Start(scenarioId)
+    User->>Clickable: タッチ
+    Clickable->>Controller: SendInput(PartInput)
 
-    Engine -->> UseCase : ShowAction("ちゅー、して")
-    UseCase -->> View : Action 表示
+    Controller->>UseCase: Execute(command)
+    UseCase->>Body: Interact(interaction)
+    Body-->>UseCase: (パラメータ更新)
+    UseCase->>EventRepo: GetEvents(partID)
+    EventRepo-->>UseCase: IEvent[]
+    Note over UseCase: CanFire()で発火判定<br/>Priorityでソート
+    UseCase-->>Controller: InteractPartResult(ScenarioID)
 
-    Engine -->> UseCase : AwaitTouch(lips)
-    UseCase -->> View : 入力待ち
+    Controller->>SP: Play(ScenarioID)
+    SP->>Engine: Start(scenarioID)
+    SP->>Engine: GetCurrentAction()
+    Engine-->>SP: Action
+    SP->>HVM: Act(Action)
+    HVM->>HV: OnUpdated
+    HV->>HV: セリフ表示
 
-    User ->> UseCase : くちびるタッチ
-    UseCase ->> Engine : ProvideInput(lips)
+    Note over SP: 停止。ScenarioDriverを待つ
 
-    Engine -->> UseCase : ShowAction("ん……んチュ")
-    UseCase -->> View : Action 表示
+    User->>SD: クリック
+    SD->>SP: Next()
+    SP->>Engine: Next()
+    SP->>Engine: GetCurrentAction()
+    Engine-->>SP: Action
+    SP->>HVM: Act(Action)
+    HVM->>HV: OnUpdated
+    HV->>HV: 次のセリフ表示
 
-    Engine -->> UseCase : ApplyBonus
-    Engine -->> UseCase : ScenarioEnd
+    Note over SP: IsScenarioFinished → 終了
 ```
 
 ### Infrastructure での実装
 
+現在は `ListScenarioEngine` がハードコードされた Action 列を返す簡易実装。将来的に Yarn Spinner ベースの実装に差し替え可能。
+
 ```csharp
-// Yarn Spinner をラップ
+// 現在の実装: 固定データ
+public class ListScenarioEngine : IScenarioEngine
+{
+    // ScenarioID に対応する Action 列をハードコードで返す
+    // Start() でインデックスリセット、Next() でインデックス進行
+}
+
+// 将来の実装: Yarn Spinner をラップ
 public class YarnSpinnerScenarioEngine : IScenarioEngine
 {
-    // Yarn の Line → ShowAction に変換
-    // Yarn の Command → ApplyBonus 等に変換
-    // Yarn の Options → AwaitTouch に変換
+    // Yarn の Line → Action に変換
 }
 ```
 
@@ -152,23 +171,32 @@ public class YarnSpinnerScenarioEngine : IScenarioEngine
 Domain層
 ├── Entity:       Body, Part, Action, Interaction
 ├── ValueObject:  PartID, ScenarioID, Pleasure, Development, Affection
-├── Interface:    IEvent, IScenarioEngine, IInteractionHistory,
-│                 IPartParameterReader, IScenarioProgress
-├── Instruction:  ScenarioInstruction 派生群
-└── Event実装:    FirstTouchEvent, AfterTouchEvent, ThresholdEvent ...
+├── Interface:    IEvent, IScenarioEngine
+├── Repository:   IEventRepository, IReactionRepository
+└── (将来)       IInteractionHistory, IPartParameterReader, IScenarioProgress
 
 Application層
 ├── UseCase:      InteractPart
 └── DTO:          InteractPartCommand, InteractPartResult
 
 Infrastructure層
-├── Engine:       YarnSpinnerScenarioEngine
-├── Repository:   InteractionHistoryRepository, ScenarioProgressRepository
-└── Factory:      EventFactory
+├── Engine:       ListScenarioEngine (→ 将来 YarnSpinnerScenarioEngine)
+├── Repository:   EventRepository (DefaultEvent内包), ReactionRepository
+└── (将来)       EventFactory
 
-Presentation層
-├── Controller, ViewModel
-└── Unity: Clickable, PartView
+Presentation層 (C# DLL)
+├── Controller:   PartController
+├── ViewModel:    HeroinViewModel
+├── Player:       ScenarioPlayer
+└── Input:        PartInput
+
+Presentation層 (Unity MonoBehaviour)
+├── Clickable:    部位クリック検知
+├── HeroinView:   ViewModel購読 → Debug.Log表示
+└── ScenarioDriver: クリックで ScenarioPlayer.Next()
+
+DI層 (Unity)
+└── ZrushyInstaller: Zenjectバインド設定
 ```
 
 ## 設計判断メモ

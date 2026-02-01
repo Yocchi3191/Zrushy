@@ -14,11 +14,18 @@ classDiagram
 		class Interaction {
 			さわり操作のパラメータ
 		}
-		class Event
-		class Reaction
+		class Action {
+			セリフ・アニメ・表情の最小単位
+		}
+		class IEvent {
+			発火条件の自己判定
+		}
+		class IScenarioEngine {
+			シナリオ再生エンジン
+		}
 		class IEventRepository
-		class IReactionRepository
 		class PartID
+		class ScenarioID
 		class PartNotFoundException
 		class UndefinedReactionException
 		class Pleasure {
@@ -37,12 +44,24 @@ classDiagram
 		}
 		class InteractPartCommand
 		class InteractPartResult {
-			UseCase実行結果
+			ScenarioIDを返す
+		}
+	}
+	namespace Zrushy.Core.Infrastructure {
+		class ListScenarioEngine {
+			IScenarioEngine実装
+			固定Action列を返す
+		}
+		class EventRepository {
+			DefaultEventを返す
 		}
 	}
 	namespace Zrushy.Core.Presentation {
 		class PartController
-		class PartViewModel {
+		class ScenarioPlayer {
+			シナリオの進行管理
+		}
+		class HeroinViewModel {
 			Viewへのデータバインディング
 		}
 		class PartInput {
@@ -51,36 +70,43 @@ classDiagram
 	}
 	namespace Zrushy.Core.Presentation.Unity {
 		class Clickable {
-			OnClick()
+			OnPointerClick()
 		}
-		class PartView{
-			Render()
+		class HeroinView {
+			Debug.Logで表示
+		}
+		class ScenarioDriver {
+			クリックでNext()
 		}
 	}
 	namespace Zrushy.Core.DI {
 		class ZrushyInstaller
 	}
 
-	%% ユーザー操作フロー
+	%% ユーザー操作フロー（タッチ → シナリオ開始）
 	User --> Clickable : click
 	Clickable --> PartController : SendInput
-	PartController --> PartViewModel : Update
-	PartViewModel --> PartView : OnUpdated
-	
-	%% コマンド実行フロー
-	PartController --> PartInput : 使用
-	PartController --> InteractPartCommand : 生成
 	PartController --> InteractPart : Execute
 	InteractPart --> Body : Interact
 	Body --> Part : Interact
-	
-	%% データ取得フロー
-	InteractPart --> IReactionRepository : GetReaction
-	IReactionRepository --> Reaction : 返却
-	InteractPart --> IEventRepository : GetEvent
-	IEventRepository --> Event : あれば返す
+	InteractPart --> IEventRepository : GetEvents
+	IEventRepository --> IEvent : 返却
 	InteractPart --> InteractPartResult : 生成
-	
+
+	%% シナリオ再生フロー
+	PartController --> ScenarioPlayer : Play(ScenarioID)
+	ScenarioPlayer --> IScenarioEngine : Start / GetCurrentAction
+	ScenarioPlayer --> HeroinViewModel : Act(Action)
+	HeroinViewModel --> HeroinView : OnUpdated
+
+	%% シナリオ送りフロー
+	User --> ScenarioDriver : click
+	ScenarioDriver --> ScenarioPlayer : Next()
+
+	%% Infrastructure実装
+	ListScenarioEngine ..|> IScenarioEngine
+	EventRepository ..|> IEventRepository
+
 	%% 集約・所有関係
 	Body *-- Part : 複数所有
 	Part *-- PartID : ID
@@ -88,4 +114,6 @@ classDiagram
 	Part *-- Development : 開発度
 	Part *-- Affection : 好感度
 	Interaction *-- PartID : 対象部位
+	IEvent --> ScenarioID : 発火時に返す
+	Action --> ScenarioPlayer : 再生単位
 ```
