@@ -1,3 +1,4 @@
+﻿using System.Collections.Generic;
 using Zrushy.Core.Domain.Entity;
 using Zrushy.Core.Domain.ValueObject;
 
@@ -17,6 +18,6 @@ namespace Zrushy.Core.Domain.Repository
 		/// <param name="development">開発度</param>
 		/// <param name="affection">好感度</param>
 		/// <returns>条件に合致したイベント（発生しない場合はnull）</returns>
-		Event? GetEvent(PartID partID, Pleasure pleasure, Development development, Affection affection);
+		IReadOnlyList<IEvent> GetEvents(PartID partID);
 	}
 }

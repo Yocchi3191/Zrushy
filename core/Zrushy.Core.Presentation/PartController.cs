@@ -1,5 +1,4 @@
 ﻿using Zrushy.Core.Application.UseCase.InteractPart;
-using Zrushy.Core.Domain.ValueObject;
 
 namespace Zrushy.Core.Presentation
 {
@@ -10,10 +9,12 @@ namespace Zrushy.Core.Presentation
 	public class PartController
 	{
 		private readonly InteractPart interactPartUseCase;
+		private readonly ScenarioPlayer scenarioPlayer;
 
-		public PartController(InteractPart interactPartUseCase)
+		public PartController(InteractPart interactPartUseCase, ScenarioPlayer scenarioPlayer)
 		{
 			this.interactPartUseCase = interactPartUseCase;
+			this.scenarioPlayer = scenarioPlayer;
 		}
 
 		/// <summary>
@@ -22,16 +23,12 @@ namespace Zrushy.Core.Presentation
 		/// </summary>
 		/// <param name="input">ユーザー入力</param>
 		/// <param name="viewModel">更新対象のViewModel</param>
-		public void SendInput(PartInput input, PartViewModel viewModel)
+		public void SendInput(PartInput input)
 		{
-			// 入力をコマンドに変換
 			InteractPartCommand command = new InteractPartCommand(input.PartID);
-
-			// UseCaseを実行
 			InteractPartResult result = interactPartUseCase.Execute(command);
 
-			// ViewModelを更新（自動的にイベントが発火してViewに通知される）
-			viewModel.Update(result);
+			scenarioPlayer.Play(result.ScenarioToStart);
 		}
 	}
 }

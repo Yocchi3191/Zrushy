@@ -16,9 +16,6 @@ public class Clickable : MonoBehaviour, IPointerClickHandler
 	[Inject]
 	private PartController controller;
 
-	[Inject]
-	private PartViewModel viewModel;
-
 	/// <summary>
 	/// IPointerClickHandlerの実装
 	/// EventSystemから自動的に呼ばれる
@@ -37,6 +34,6 @@ public class Clickable : MonoBehaviour, IPointerClickHandler
 		PartInput input = new PartInput(partID);
 
 		// コントローラーにコマンドを送信（ViewModelを渡す）
-		controller.SendInput(input, viewModel);
+		controller.SendInput(input);
 	}
 }

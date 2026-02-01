@@ -1,21 +1,34 @@
-using System;
+using System.Collections.Generic;
 using Zrushy.Core.Domain.Entity;
 using Zrushy.Core.Domain.Repository;
 using Zrushy.Core.Domain.ValueObject;
 
 namespace Zrushy.Core.Infrastructure.Repository
 {
-	/// <summary>
-	/// イベントリポジトリの実装
-	/// 初期実装ではイベント発生条件をチェックしない
-	/// </summary>
 	public class EventRepository : IEventRepository
 	{
-		public Event? GetEvent(PartID partID, Pleasure pleasure, Development development, Affection affection)
+		public IReadOnlyList<IEvent> GetEvents(PartID partID)
 		{
-			// TODO: 実際のイベント発生条件チェックロジックを実装
-			// 現在は常にnullを返す（イベント未発生）
-			return null;
+			return new List<IEvent>
+			{
+				new DefaultEvent(new ScenarioID(partID.ToString() + "_default"))
+			};
+		}
+	}
+
+	internal class DefaultEvent : IEvent
+	{
+		public ScenarioID ScenarioToStart { get; }
+		public int Priority => 0;
+
+		public DefaultEvent(ScenarioID scenarioID)
+		{
+			ScenarioToStart = scenarioID;
+		}
+
+		public bool CanFire()
+		{
+			return true;
 		}
 	}
 }

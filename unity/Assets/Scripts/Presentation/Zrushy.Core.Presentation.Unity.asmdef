@@ -2,15 +2,18 @@
     "name": "Zrushy.Core.Presentation.Unity",
     "rootNamespace": "Zrushy.Presentation.Unity",
     "references": [
-        "Zrushy.Core.Domain",
-        "Zrushy.Core.Application",
-        "Zrushy.Core.Presentation"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Zrushy.Core.Domain.dll",
+        "Zrushy.Core.Application.dll",
+        "Zrushy.Core.Presentation.dll",
+        "Zenject-usage.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],

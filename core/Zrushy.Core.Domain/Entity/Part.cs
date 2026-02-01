@@ -36,9 +36,9 @@ namespace Zrushy.Core.Domain.Entity
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
 		{
-			Pleasure = Pleasure.CalclateGain();
-			Development = Development.CalclateGain();
-			Affection = Affection.CalclateGain();
+			Pleasure = Pleasure.CalculateGain();
+			Development = Development.CalculateGain();
+			Affection = Affection.CalculateGain();
 		}
 	}
 }
