@@ -1,5 +1,4 @@
-using Zenject;
-using Zrushy.Core.Presentation;
+﻿using Zenject;
 
 namespace Zrushy.Core.DI
 {
@@ -11,8 +10,7 @@ namespace Zrushy.Core.DI
 	{
 		public override void InstallBindings()
 		{
-			// このPart専用のViewModel（このGameObjectContext内でシングルトン）
-			Container.Bind<PartViewModel>().AsSingle();
+
 		}
 	}
 }

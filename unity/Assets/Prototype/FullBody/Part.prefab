@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3228771603176722642}
   - component: {fileID: 3611414996446299712}
-  - component: {fileID: 4941302746353148394}
   - component: {fileID: 3189136258048119817}
   - component: {fileID: 8488247166625686897}
   - component: {fileID: 8122932794654654676}
@@ -54,18 +53,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Clickable
   partId: head
---- !u!114 &4941302746353148394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3256515696759302751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ee7066ec9ed9541bcc8640d633a0cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Presentation.Unity.PartView
 --- !u!222 &3189136258048119817
 CanvasRenderer:
   m_ObjectHideFlags: 0
