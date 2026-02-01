@@ -17,6 +17,6 @@ namespace Zrushy.Core.Domain.Repository
 		/// <param name="development">開発度</param>
 		/// <param name="affection">好感度</param>
 		/// <returns>条件に合致したリアクション（複数候補からランダム選択）</returns>
-		Reaction GetReaction(PartID partID, Pleasure pleasure, Development development, Affection affection);
+		Action GetReaction(PartID partID, Pleasure pleasure, Development development, Affection affection);
 	}
 }

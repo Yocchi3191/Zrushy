@@ -4,7 +4,7 @@ namespace Zrushy.Core.Domain.Entity
 	/// リアクションエンティティ
 	/// 部位をさわった際のキャラクターの反応を表現する
 	/// </summary>
-	public class Reaction
+	public class Action
 	{
 		/// <summary>
 		/// セリフ（テキスト）
@@ -20,18 +20,11 @@ namespace Zrushy.Core.Domain.Entity
 		/// 表情名
 		/// </summary>
 		public string ExpressionName { get; }
-
-		/// <summary>
-		/// ボイスクリップ名
-		/// </summary>
-		public string VoiceClipName { get; }
-
-		public Reaction(string dialogue, string animationName, string expressionName, string voiceClipName)
+		public Action(string dialogue, string animationName, string expressionName)
 		{
 			Dialogue = dialogue;
 			AnimationName = animationName;
 			ExpressionName = expressionName;
-			VoiceClipName = voiceClipName;
 		}
 	}
 }
