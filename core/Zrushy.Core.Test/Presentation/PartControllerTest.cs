@@ -1,9 +1,10 @@
+﻿using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Entity;
 using Zrushy.Core.Domain.Repository;
 using Zrushy.Core.Domain.ValueObject;
-using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
+using Action = Zrushy.Core.Domain.Entity.Action;
 
 namespace Zrushy.Core.Test.Presentation
 {
@@ -12,41 +13,57 @@ namespace Zrushy.Core.Test.Presentation
 	/// </summary>
 	public class PartControllerTest
 	{
-		PartController controller;
-		PartInput input;
-		PartViewModel viewModel;
+		private PartController controller;
+		private PartInput input;
+		private IScenarioEngine engine;
+		private HeroinViewModel heroinViewModel;
+		private ScenarioID testScenarioID;
 
 		[SetUp]
 		public void Setup()
 		{
-			// 依存オブジェクトの構築
+			testScenarioID = new ScenarioID("test_scenario");
+
+			// Body構築
 			Body body = new Body();
 			body.AddPart(new Part(new PartID("head"), new Pleasure(0), new Development(0), new Affection(0)));
-			IReactionRepository reactionRepository = new ReactionRepository();
-			IEventRepository eventRepository = new EventRepository();
-			InteractPart useCase = new InteractPart(body, reactionRepository, eventRepository);
 
-			// ViewModelとControllerの構築
-			viewModel = new PartViewModel();
-			controller = new PartController(useCase);
+			// EventRepositoryモック: 発火可能なイベントを返す
+			var evt = Substitute.For<IEvent>();
+			evt.CanFire().Returns(true);
+			evt.Priority.Returns(0);
+			evt.ScenarioToStart.Returns(testScenarioID);
 
-			// テスト用の入力
-			PartID partID = new PartID("head");
-			input = new PartInput(partID);
+			var eventRepository = Substitute.For<IEventRepository>();
+			eventRepository.GetEvents(Arg.Any<PartID>()).Returns(new[] { evt });
+
+			// ScenarioEngineモック
+			engine = Substitute.For<IScenarioEngine>();
+			engine.GetCurrentAction().Returns(new Action("test", "idle", "normal"));
+
+			// 実オブジェクト
+			InteractPart useCase = new InteractPart(body, eventRepository);
+			heroinViewModel = new HeroinViewModel();
+			ScenarioPlayer scenarioPlayer = new ScenarioPlayer(engine, heroinViewModel);
+
+			controller = new PartController(useCase, scenarioPlayer);
+			input = new PartInput(new PartID("head"));
 		}
 
 		[Test]
-		public void SendInputで対象パーツとViewModelが更新される()
+		public void SendInputでシナリオが開始される()
 		{
-			// イベントハンドラの登録
-			bool updated = false;
-			viewModel.OnUpdated += (result) => { updated = true; };
+			controller.SendInput(input);
 
-			// 入力送信（ViewModelを渡す）
-			controller.SendInput(input, viewModel);
+			engine.Received(1).Start(testScenarioID);
+		}
 
-			// ViewModelが更新されることを確認
-			Assert.That(updated, Is.True);
+		[Test]
+		public void SendInputでHeroinViewModelが更新される()
+		{
+			controller.SendInput(input);
+
+			Assert.That(heroinViewModel.CurrentAction, Is.Not.Null);
 		}
 	}
 }
