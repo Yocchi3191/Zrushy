@@ -6,15 +6,8 @@ namespace Zrushy.Core.Domain.Interactions.ValueObject
 	/// 快感パラメータ
 	/// 開発度と好感度に比例する
 	/// </summary>
-	public class Pleasure : IComparable<Pleasure>
+	public record Pleasure(int Value) : IComparable<Pleasure>
 	{
-		public int Value { get; }
-
-		public Pleasure(int value)
-		{
-			Value = value;
-		}
-
 		public int CompareTo(Pleasure other) => Value.CompareTo(other.Value);
 
 		/// <summary>

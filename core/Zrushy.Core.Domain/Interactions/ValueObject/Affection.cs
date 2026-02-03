@@ -7,15 +7,8 @@ namespace Zrushy.Core.Domain.Interactions.ValueObject
 	/// 生活パートでのやりとりや覚醒状態でのおさわりで増える
 	/// 非覚醒状態のおさわりでは増えない
 	/// </summary>
-	public class Affection : IComparable<Affection>
+	public record Affection(int Value) : IComparable<Affection>
 	{
-		public int Value { get; }
-
-		public Affection(int value)
-		{
-			Value = value;
-		}
-
 		public int CompareTo(Affection other) => Value.CompareTo(other.Value);
 
 		/// <summary>
