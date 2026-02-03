@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Zrushy.Core.Domain.Entity;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
-namespace Zrushy.Core.Domain.Repository
+namespace Zrushy.Core.Domain.Events.Repository
 {
 	/// <summary>
 	/// イベントリポジトリのインターフェース

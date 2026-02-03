@@ -1,4 +1,4 @@
-namespace Zrushy.Core.Domain.ValueObject
+﻿namespace Zrushy.Core.Domain.Scenarios.ValueObject
 {
 	public class ScenarioID
 	{

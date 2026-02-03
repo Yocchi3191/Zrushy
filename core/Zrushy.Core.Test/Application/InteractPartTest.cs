@@ -1,8 +1,11 @@
 ﻿using Zrushy.Core.Application.UseCase.InteractPart;
-using Zrushy.Core.Domain.Entity;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Exception;
-using Zrushy.Core.Domain.Repository;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Interactions.Exception;
+using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Test.Application;
 

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Zrushy.Core.Domain.Entity;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Exception;
-using Zrushy.Core.Domain.Repository;
+using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Application.UseCase.InteractPart
 {

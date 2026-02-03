@@ -1,4 +1,4 @@
-﻿namespace Zrushy.Core.Domain.ValueObject
+﻿namespace Zrushy.Core.Domain.Interactions.ValueObject
 {
 	public class PartID
 	{

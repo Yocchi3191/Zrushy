@@ -1,6 +1,6 @@
-﻿using Zrushy.Core.Domain.ValueObject;
+﻿using Zrushy.Core.Domain.Scenarios.ValueObject;
 
-namespace Zrushy.Core.Domain.Entity
+namespace Zrushy.Core.Domain.Events.Entity
 {
 	public interface IEvent
 	{

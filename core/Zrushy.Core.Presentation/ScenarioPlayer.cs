@@ -1,19 +1,23 @@
-﻿using Zrushy.Core.Domain.Entity;
-using Zrushy.Core.Domain.ValueObject;
+﻿using Zrushy.Core.Domain.Scenarios.Entity;
+using Zrushy.Core.Domain.Scenarios.Repository;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Presentation
 {
 	public class ScenarioPlayer
 	{
-		private readonly IScenarioEngine engine;
-		private readonly HeroinViewModel heroinViewModel;
+		private readonly IScenarioRepository repository;
+		private readonly HeroinViewModel heroin;
+
 		private bool isPlaying = false;
+		private Scenario? scenario;
 
 
-		public ScenarioPlayer(IScenarioEngine engine, HeroinViewModel heroinViewModel)
+
+		public ScenarioPlayer(IScenarioRepository scenarioReposiory, HeroinViewModel heroinViewModel)
 		{
-			this.engine = engine;
-			this.heroinViewModel = heroinViewModel;
+			this.repository = scenarioReposiory;
+			this.heroin = heroinViewModel;
 		}
 
 		internal void Play(ScenarioID scenarioID)
@@ -22,13 +26,11 @@ namespace Zrushy.Core.Presentation
 			{
 				return;
 			}
-
 			isPlaying = true;
 
-			engine.Start(scenarioID);
-			Action action = engine.GetCurrentAction();
+			scenario = repository.GetScenario(scenarioID);
 
-			heroinViewModel.Act(action);
+			heroin.Act(scenario.First());
 		}
 
 		public void Next()
@@ -38,16 +40,13 @@ namespace Zrushy.Core.Presentation
 				return;
 			}
 
-			if (engine.IsScenarioFinished)
+			if (scenario.IsScenarioFinished)
 			{
 				isPlaying = false;
 				return;
 			}
 
-			engine.Next();
-			Action action = engine.GetCurrentAction();
-
-			heroinViewModel.Act(action);
+			heroin.Act(scenario.Next());
 		}
 	}
 }

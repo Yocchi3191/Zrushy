@@ -1,10 +1,14 @@
 ﻿using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
-using Zrushy.Core.Domain.Entity;
-using Zrushy.Core.Domain.Repository;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Scenarios.Entity;
+using Zrushy.Core.Domain.Scenarios.Repository;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Presentation;
-using Action = Zrushy.Core.Domain.Entity.Action;
+using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 
 namespace Zrushy.Core.Test.Presentation
 {
@@ -15,9 +19,10 @@ namespace Zrushy.Core.Test.Presentation
 	{
 		private PartController controller;
 		private PartInput input;
-		private IScenarioEngine engine;
+		private IScenarioRepository engine;
 		private HeroinViewModel heroinViewModel;
 		private ScenarioID testScenarioID;
+		Action testAction = new Action("test", "idle", "normal");
 
 		[SetUp]
 		public void Setup()
@@ -38,8 +43,8 @@ namespace Zrushy.Core.Test.Presentation
 			eventRepository.GetEvents(Arg.Any<PartID>()).Returns(new[] { evt });
 
 			// ScenarioEngineモック
-			engine = Substitute.For<IScenarioEngine>();
-			engine.GetCurrentAction().Returns(new Action("test", "idle", "normal"));
+			engine = Substitute.For<IScenarioRepository>();
+			engine.GetScenario(testScenarioID).Returns(new Scenario(testScenarioID, [testAction]));
 
 			// 実オブジェクト
 			InteractPart useCase = new InteractPart(body, eventRepository);
@@ -55,7 +60,7 @@ namespace Zrushy.Core.Test.Presentation
 		{
 			controller.SendInput(input);
 
-			engine.Received(1).Start(testScenarioID);
+			Assert.That(heroinViewModel.CurrentAction.Equals(testAction));
 		}
 
 		[Test]

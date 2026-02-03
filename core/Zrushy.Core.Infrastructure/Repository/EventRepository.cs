@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using Zrushy.Core.Domain.Entity;
-using Zrushy.Core.Domain.Repository;
-using Zrushy.Core.Domain.ValueObject;
+﻿using System.Collections.Generic;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Infrastructure.Repository
 {

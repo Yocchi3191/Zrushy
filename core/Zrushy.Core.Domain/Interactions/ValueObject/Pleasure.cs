@@ -1,10 +1,12 @@
-﻿namespace Zrushy.Core.Domain.ValueObject
+﻿using System;
+
+namespace Zrushy.Core.Domain.Interactions.ValueObject
 {
 	/// <summary>
 	/// 快感パラメータ
 	/// 開発度と好感度に比例する
 	/// </summary>
-	public class Pleasure
+	public class Pleasure : IComparable<Pleasure>
 	{
 		public int Value { get; }
 
@@ -12,6 +14,8 @@
 		{
 			Value = value;
 		}
+
+		public int CompareTo(Pleasure other) => Value.CompareTo(other.Value);
 
 		/// <summary>
 		/// さわり反応による快感の増加量を計算して新しいPleasureを返す

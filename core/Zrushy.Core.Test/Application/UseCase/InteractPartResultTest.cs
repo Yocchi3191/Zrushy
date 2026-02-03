@@ -1,5 +1,5 @@
 ﻿using Zrushy.Core.Application.UseCase.InteractPart;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Test.Application.UseCase;
 

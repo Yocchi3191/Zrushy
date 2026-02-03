@@ -1,4 +1,4 @@
-﻿using Zrushy.Core.Domain.ValueObject;
+﻿using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Presentation
 {

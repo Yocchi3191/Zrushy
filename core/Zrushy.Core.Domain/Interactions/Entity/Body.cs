@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Zrushy.Core.Domain.Exception;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Interactions.Exception;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
-namespace Zrushy.Core.Domain.Entity
+namespace Zrushy.Core.Domain.Interactions.Entity
 {
 	/// <summary>
 	/// 身体エンティティ（集約ルート）

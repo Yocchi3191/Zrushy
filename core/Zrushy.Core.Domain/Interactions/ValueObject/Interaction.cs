@@ -1,6 +1,4 @@
-﻿using Zrushy.Core.Domain.ValueObject;
-
-namespace Zrushy.Core.Domain.Entity
+﻿namespace Zrushy.Core.Domain.Interactions.ValueObject
 {
 	public class Interaction
 	{

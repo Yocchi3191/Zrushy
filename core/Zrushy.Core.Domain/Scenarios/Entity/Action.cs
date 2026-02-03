@@ -1,4 +1,4 @@
-namespace Zrushy.Core.Domain.Entity
+﻿namespace Zrushy.Core.Domain.Scenarios.Entity
 {
 	/// <summary>
 	/// リアクションエンティティ
