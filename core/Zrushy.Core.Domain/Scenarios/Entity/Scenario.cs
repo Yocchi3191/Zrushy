@@ -7,40 +7,14 @@ namespace Zrushy.Core.Domain.Scenarios.Entity
 	{
 		public ScenarioID ID { get; }
 		private readonly IReadOnlyList<Action> actions;
-		private int currentIndex;
 
-		public bool IsScenarioFinished
-		{
-			get
-			{
-				return currentIndex >= actions.Count || actions.Count < 1;
-			}
-		}
+		public int Count => actions.Count;
+		public Action this[int index] => actions[index];
 
-		public Scenario(ScenarioID id, IEnumerable<Action> actions)
+		public Scenario(ScenarioID id, IReadOnlyList<Action> actions)
 		{
 			this.ID = id;
-			this.actions = (IReadOnlyList<Action>)actions;
-			currentIndex = -1;
-		}
-
-		public Action First()
-		{
-			currentIndex = 0;
-			Action result = actions[currentIndex] ?? throw new ActionNotFoundException();
-			return result;
-		}
-
-		public Action Next()
-		{
-			if (currentIndex < 0)
-			{
-				throw new ScenarioNotStartedException();
-			}
-
-			currentIndex++;
-			Action result = actions[currentIndex] ?? throw new ActionNotFoundException();
-			return result;
+			this.actions = actions;
 		}
 
 		public override bool Equals(object obj)

@@ -12,6 +12,8 @@ public class ScenarioPlayerTest
 	ScenarioID testscenarioID = new ScenarioID("test_01");
 	private Scenario testScenario;
 
+	private Action action1 = new Action("test_1", "test_anim", "test_happy");
+	private Action action2 = new Action("test_2", "test_anim", "test_happy");
 
 	IScenarioRepository repository;
 	HeroinViewModel heroinViewModel;
@@ -22,9 +24,7 @@ public class ScenarioPlayerTest
 	public void Setup()
 	{
 		testScenario = new Scenario(testscenarioID,
-			new List<Action> {
-				new Action("テストだよ", "test_anim", "test_happy")
-			}
+			new List<Action> { action1, action2 }
 		);
 
 		repository = Substitute.For<IScenarioRepository>();
@@ -40,13 +40,23 @@ public class ScenarioPlayerTest
 	{
 		player.Play(testscenarioID);
 
-		Assert.That(testScenario.First().Equals(heroinViewModel.CurrentAction));
+		Assert.That(heroinViewModel.CurrentAction, Is.EqualTo(action1));
 	}
 
 	[Test]
 	public void PlayしないとNextしても何も起きない()
 	{
 		player.Next();
-		Assert.That(!testScenario.First().Equals(heroinViewModel.CurrentAction));
+		Assert.That(heroinViewModel.CurrentAction, Is.Not.EqualTo(action1));
+	}
+
+	[Test]
+	public void PlayしたらNextでScenarioを進められる()
+	{
+		player.Play(testscenarioID);
+
+		Assert.That(heroinViewModel.CurrentAction, Is.EqualTo(action1));
+		player.Next();
+		Assert.That(heroinViewModel.CurrentAction, Is.EqualTo(action2));
 	}
 }

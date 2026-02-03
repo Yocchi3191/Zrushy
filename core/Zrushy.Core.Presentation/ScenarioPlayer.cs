@@ -11,8 +11,7 @@ namespace Zrushy.Core.Presentation
 
 		private bool isPlaying = false;
 		private Scenario? scenario;
-
-
+		private int currentIndex;
 
 		public ScenarioPlayer(IScenarioRepository scenarioReposiory, HeroinViewModel heroinViewModel)
 		{
@@ -29,8 +28,9 @@ namespace Zrushy.Core.Presentation
 			isPlaying = true;
 
 			scenario = repository.GetScenario(scenarioID);
+			currentIndex = 0;
 
-			heroin.Act(scenario.First());
+			heroin.Act(scenario[currentIndex]);
 		}
 
 		public void Next()
@@ -40,13 +40,14 @@ namespace Zrushy.Core.Presentation
 				return;
 			}
 
-			if (scenario.IsScenarioFinished)
+			currentIndex++;
+			if (currentIndex >= scenario.Count)
 			{
 				isPlaying = false;
 				return;
 			}
 
-			heroin.Act(scenario.Next());
+			heroin.Act(scenario[currentIndex]);
 		}
 	}
 }
