@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Presentation;
 
 /// <summary>

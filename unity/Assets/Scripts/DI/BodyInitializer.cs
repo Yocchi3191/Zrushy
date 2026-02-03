@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-using Zrushy.Core.Domain.Entity;
-using Zrushy.Core.Domain.ValueObject;
+using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.DI
 {

@@ -1,7 +1,8 @@
 ﻿using Zenject;
 using Zrushy.Core.Application.UseCase.InteractPart;
-using Zrushy.Core.Domain.Entity;
-using Zrushy.Core.Domain.Repository;
+using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Infrastructure.Engine;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
@@ -21,9 +22,8 @@ namespace Zrushy.Core.DI
 			Container.Bind<Body>().AsSingle();
 
 			// Repository（シングルトン）
-			Container.Bind<IReactionRepository>().To<ReactionRepository>().AsSingle();
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
-			Container.Bind<IScenarioEngine>().To<ListScenarioEngine>().AsSingle();
+			Container.Bind<IScenarioRepository>().To<ListScenarioRepository>().AsSingle();
 
 			// Application層
 			// UseCase（シングルトン）
