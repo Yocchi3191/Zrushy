@@ -15,7 +15,7 @@ public class ScenarioPlayerTest
 	private Action action1 = new Action("test_1", "test_anim", "test_happy");
 	private Action action2 = new Action("test_2", "test_anim", "test_happy");
 
-	IScenarioRepository repository;
+	IScenarioEngine repository;
 	HeroinViewModel heroinViewModel;
 
 	ScenarioPlayer player;
@@ -27,8 +27,8 @@ public class ScenarioPlayerTest
 			new List<Action> { action1, action2 }
 		);
 
-		repository = Substitute.For<IScenarioRepository>();
-		repository.GetScenario(testscenarioID).Returns(testScenario);
+		repository = Substitute.For<IScenarioEngine>();
+		repository.GetCurrentAction().Returns(action1, action2);
 
 		heroinViewModel = new HeroinViewModel();
 

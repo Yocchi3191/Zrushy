@@ -1,22 +1,19 @@
-﻿using Zrushy.Core.Domain.Scenarios.Entity;
-using Zrushy.Core.Domain.Scenarios.Repository;
+﻿using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Presentation
 {
 	public class ScenarioPlayer
 	{
-		private readonly IScenarioRepository repository;
+		private readonly IScenarioEngine engine;
 		private readonly HeroinViewModel heroin;
 
 		private bool isPlaying = false;
-		private Scenario? scenario;
-		private int currentIndex;
 
-		public ScenarioPlayer(IScenarioRepository scenarioReposiory, HeroinViewModel heroinViewModel)
+		public ScenarioPlayer(IScenarioEngine engine, HeroinViewModel heroin)
 		{
-			this.repository = scenarioReposiory;
-			this.heroin = heroinViewModel;
+			this.engine = engine;
+			this.heroin = heroin;
 		}
 
 		internal void Play(ScenarioID scenarioID)
@@ -27,10 +24,8 @@ namespace Zrushy.Core.Presentation
 			}
 			isPlaying = true;
 
-			scenario = repository.GetScenario(scenarioID);
-			currentIndex = 0;
-
-			heroin.Act(scenario[currentIndex]);
+			engine.Start(scenarioID);
+			heroin.Act(engine.GetCurrentAction());
 		}
 
 		public void Next()
@@ -40,14 +35,14 @@ namespace Zrushy.Core.Presentation
 				return;
 			}
 
-			currentIndex++;
-			if (currentIndex >= scenario.Count)
+			engine.Next();
+			if (engine.IsScenarioFinished)
 			{
 				isPlaying = false;
 				return;
 			}
 
-			heroin.Act(scenario[currentIndex]);
+			heroin.Act(engine.GetCurrentAction());
 		}
 	}
 }

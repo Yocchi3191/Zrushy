@@ -5,9 +5,13 @@ using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Infrastructure.Engine
 {
-	public class ListScenarioRepository : IScenarioRepository
+	public class ListScenarioEngine : IScenarioEngine
 	{
-		public Scenario GetScenario(ScenarioID scenarioID)
+		public bool IsScenarioFinished { get; private set; }
+		private Scenario? currentScenario;
+		private int currentIndex;
+
+		private Scenario GetScenario(ScenarioID scenarioID)
 		{
 			string id = scenarioID.ToString();
 
@@ -61,6 +65,43 @@ namespace Zrushy.Core.Infrastructure.Engine
 					{
 						new Action("…？", "reaction_default", "expression_neutral"),
 					});
+			}
+		}
+
+		public void Start(ScenarioID scenarioID)
+		{
+			this.currentScenario = GetScenario(scenarioID);
+			this.currentIndex = 0;
+			this.IsScenarioFinished = false;
+		}
+
+		public Action GetCurrentAction()
+		{
+			if (this.currentScenario == null)
+			{
+				throw new ScenarioNotStartedException();
+			}
+
+			return currentScenario[currentIndex];
+		}
+
+		public void Next()
+		{
+			if (this.currentScenario == null)
+			{
+				throw new ScenarioNotStartedException();
+			}
+
+			if (this.IsScenarioFinished)
+			{
+				throw new ScenarioAlreadyFinishedException();
+			}
+
+			currentIndex++;
+
+			if (currentIndex >= currentScenario.Count)
+			{
+				IsScenarioFinished = true;
 			}
 		}
 	}

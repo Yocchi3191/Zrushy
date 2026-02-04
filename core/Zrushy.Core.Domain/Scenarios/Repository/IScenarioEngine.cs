@@ -3,8 +3,12 @@ using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Domain.Scenarios.Repository
 {
-	public interface IScenarioRepository
+	public interface IScenarioEngine
 	{
-		Scenario GetScenario(ScenarioID scenarioID);
+		bool IsScenarioFinished { get; }
+
+		Action GetCurrentAction();
+		void Next();
+		void Start(ScenarioID scenarioID);
 	}
 }

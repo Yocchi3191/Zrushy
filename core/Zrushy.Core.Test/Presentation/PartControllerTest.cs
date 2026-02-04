@@ -4,7 +4,6 @@ using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Presentation;
@@ -19,7 +18,7 @@ namespace Zrushy.Core.Test.Presentation
 	{
 		private PartController controller;
 		private PartInput input;
-		private IScenarioRepository engine;
+		private IScenarioEngine engine;
 		private HeroinViewModel heroinViewModel;
 		private ScenarioID testScenarioID;
 		Action testAction = new Action("test", "idle", "normal");
@@ -43,8 +42,8 @@ namespace Zrushy.Core.Test.Presentation
 			eventRepository.GetEvents(Arg.Any<PartID>()).Returns(new[] { evt });
 
 			// ScenarioEngineモック
-			engine = Substitute.For<IScenarioRepository>();
-			engine.GetScenario(testScenarioID).Returns(new Scenario(testScenarioID, [testAction]));
+			engine = Substitute.For<IScenarioEngine>();
+			engine.GetCurrentAction().Returns(testAction);
 
 			// 実オブジェクト
 			InteractPart useCase = new InteractPart(body, eventRepository);
