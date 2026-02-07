@@ -5,6 +5,7 @@ using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Infrastructure.Engine;
+using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
 
@@ -25,6 +26,9 @@ namespace Zrushy.Core.DI
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
 
+			// EventBus（シングルトン）
+			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
+
 			// Yarn Spinner（シーンから取得）
 			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
 			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
@@ -34,7 +38,7 @@ namespace Zrushy.Core.DI
 
 			// Application層
 			// UseCase（シングルトン）
-			Container.Bind<InteractPart>().AsSingle();
+			Container.Bind<IInteractPart>().To<InteractPart>().AsSingle();
 
 			// Presentation層
 			Container.Bind<ScenarioPlayer>().AsSingle();

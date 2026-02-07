@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
@@ -11,17 +11,20 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 	/// <summary>
 	/// 部位をさわる操作のユースケース
 	/// </summary>
-	public class InteractPart
+	public class InteractPart : IInteractPart
 	{
 		private readonly Body body;
 		private readonly IEventRepository eventRepository;
+		private readonly IEventBus eventBus;
 
 		public InteractPart(
 			Body body,
-			IEventRepository eventRepository)
+			IEventRepository eventRepository,
+			IEventBus eventBus)
 		{
 			this.body = body;
 			this.eventRepository = eventRepository;
+			this.eventBus = eventBus;
 		}
 
 		/// <summary>
@@ -41,6 +44,9 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 				.OrderByDescending(e => e.Priority)
 				.FirstOrDefault()
 				?? throw new UndefinedReactionException(command.PartID);
+
+			// EventBus にイベントを発火
+			eventBus.Publish(fired);
 
 			return new InteractPartResult(fired.ScenarioToStart);
 		}

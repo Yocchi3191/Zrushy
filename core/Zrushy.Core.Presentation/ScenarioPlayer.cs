@@ -1,4 +1,4 @@
-using Zrushy.Core.Domain.Scenarios.Repository;
+﻿using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Presentation
@@ -28,7 +28,7 @@ namespace Zrushy.Core.Presentation
 			this.heroin = heroin;
 		}
 
-		internal void Play(ScenarioID scenarioID)
+		public void Play(ScenarioID scenarioID)
 		{
 			if (isPlaying)
 			{

@@ -6,6 +6,7 @@ using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
+using Zrushy.Core.Infrastructure.EventBus;
 
 namespace Zrushy.Core.Test.Application;
 
@@ -14,6 +15,7 @@ public class InteractPartTest
 	private PartID _partID;
 	private Body _body;
 	private ScenarioID testScenarioID = new ScenarioID("test_scenario");
+	IEventBus _eventBus;
 
 	[SetUp]
 	public void Setup()
@@ -21,13 +23,15 @@ public class InteractPartTest
 		_partID = new PartID("head");
 		_body = new Body();
 		_body.AddPart(new Part(_partID, new Pleasure(0), new Development(0), new Affection(0)));
+
+		_eventBus = new EventBus();
 	}
 
 	[Test]
 	public void Executeでパラメータが更新される()
 	{
 		var evt = new StubEvent(canFire: true, priority: 1, testScenarioID);
-		var useCase = new InteractPart(_body, new StubEventRepository(evt));
+		var useCase = new InteractPart(_body, new StubEventRepository(evt), _eventBus);
 
 		useCase.Execute(new InteractPartCommand(_partID));
 
@@ -40,7 +44,7 @@ public class InteractPartTest
 	[Test]
 	public void Executeで発火可能なイベントがなければ例外を投げる()
 	{
-		var useCase = new InteractPart(_body, new StubEventRepository());
+		var useCase = new InteractPart(_body, new StubEventRepository(), _eventBus);
 
 		Assert.Throws<UndefinedReactionException>(() =>
 			useCase.Execute(new InteractPartCommand(_partID)));
@@ -50,7 +54,7 @@ public class InteractPartTest
 	public void Executeで発火可能なイベントのScenarioIDを返す()
 	{
 		var evt = new StubEvent(canFire: true, priority: 1, testScenarioID);
-		var useCase = new InteractPart(_body, new StubEventRepository(evt));
+		var useCase = new InteractPart(_body, new StubEventRepository(evt), _eventBus);
 
 		var result = useCase.Execute(new InteractPartCommand(_partID));
 
@@ -61,7 +65,7 @@ public class InteractPartTest
 	public void Executeで発火不可のイベントは無視して例外を投げる()
 	{
 		var evt = new StubEvent(canFire: false, priority: 1, testScenarioID);
-		var useCase = new InteractPart(_body, new StubEventRepository(evt));
+		var useCase = new InteractPart(_body, new StubEventRepository(evt), _eventBus);
 
 		Assert.Throws<UndefinedReactionException>(() =>
 			useCase.Execute(new InteractPartCommand(_partID)));
@@ -74,7 +78,7 @@ public class InteractPartTest
 		var highScenario = new ScenarioID("high_scenario");
 		var low = new StubEvent(canFire: true, priority: 1, lowScenario);
 		var high = new StubEvent(canFire: true, priority: 10, highScenario);
-		var useCase = new InteractPart(_body, new StubEventRepository(low, high));
+		var useCase = new InteractPart(_body, new StubEventRepository(low, high), _eventBus);
 
 		var result = useCase.Execute(new InteractPartCommand(_partID));
 
@@ -84,7 +88,7 @@ public class InteractPartTest
 	[Test]
 	public void Executeで存在しないパーツは例外を投げる()
 	{
-		var useCase = new InteractPart(_body, new StubEventRepository());
+		var useCase = new InteractPart(_body, new StubEventRepository(), _eventBus);
 
 		Assert.Throws<PartNotFoundException>(() =>
 			useCase.Execute(new InteractPartCommand(new PartID("nonexistent"))));
