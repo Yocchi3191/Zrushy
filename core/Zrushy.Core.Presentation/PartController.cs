@@ -16,15 +16,13 @@ namespace Zrushy.Core.Presentation
 		}
 
 		/// <summary>
-		/// ユーザー入力を受け取り、さわり反応の処理を実行する
-		/// InteractPart が EventBus にイベントを発火し、ScenarioDriver が購読して ScenarioPlayer を制御する
+		/// さわり入力を受け取り、Domainにパラメータ変化を反映する
 		/// </summary>
 		/// <param name="input">ユーザー入力</param>
 		public void SendInput(PartInput input)
 		{
 			InteractPartCommand command = new InteractPartCommand(input.PartID);
 			interactPartUseCase.Execute(command);
-			// EventBus 経由でイベントが発火される
 		}
 	}
 }

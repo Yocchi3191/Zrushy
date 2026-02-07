@@ -1,5 +1,7 @@
-﻿using Zrushy.Core.Domain.Scenarios.Repository;
+﻿using System;
+using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
+using Zrushy.Core.Infrastructure.Engine;
 
 namespace Zrushy.Core.Presentation
 {
@@ -34,13 +36,23 @@ namespace Zrushy.Core.Presentation
 			{
 				return;
 			}
-			isPlaying = true;
 
-			engine.Start(scenarioID);
-			heroin.Act(engine.GetCurrentAction());
+			try
+			{
+				engine.Start(scenarioID);
+				isPlaying = true;
+				heroin.Act(engine.GetCurrentAction());
 
-			// シナリオ開始イベントを発火
-			OnScenarioStarted?.Invoke();
+				// シナリオ開始イベントを発火
+				OnScenarioStarted?.Invoke();
+			}
+			catch (ScenarioNotFoundException ex)
+			{
+				// シナリオが見つからない場合はログを出力して処理を中断
+				// isPlaying は false のままにする
+				Console.WriteLine($"[ScenarioPlayer] {ex.Message}");
+				throw;
+			}
 		}
 
 		public void Next()

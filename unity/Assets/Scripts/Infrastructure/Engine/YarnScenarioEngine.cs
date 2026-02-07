@@ -1,7 +1,9 @@
-﻿using Yarn.Unity;
+﻿using System.Linq;
+using Yarn.Unity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Infrastructure;
+using Zrushy.Core.Infrastructure.Engine;
 using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 
 public class YarnScenarioEngine : IScenarioEngine
@@ -26,6 +28,13 @@ public class YarnScenarioEngine : IScenarioEngine
 
 	public void Start(ScenarioID scenarioID)
 	{
+		// シナリオの存在チェック
+		if (dialogueRunner.YarnProject == null ||
+		    !dialogueRunner.YarnProject.NodeNames.Contains(scenarioID.Value))
+		{
+			throw new ScenarioNotFoundException(scenarioID);
+		}
+
 		isFinished = false;
 		// ScenarioID.Value = Yarn ノード名
 		dialogueRunner.StartDialogue(scenarioID.Value);
