@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Yarn.Unity;
+using Zenject;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Interactions.Entity;
@@ -23,7 +24,13 @@ namespace Zrushy.Core.DI
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
-			Container.Bind<IScenarioRepository>().To<ListScenarioRepository>().AsSingle();
+
+			// Yarn Spinner（シーンから取得）
+			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
+			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
+
+			// ScenarioEngine（YarnScenarioEngine を使用）
+			Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
 
 			// Application層
 			// UseCase（シングルトン）

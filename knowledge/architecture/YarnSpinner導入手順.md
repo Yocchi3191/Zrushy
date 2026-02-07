@@ -195,6 +195,21 @@ public class ListScenarioEngine : IScenarioEngine
 
 ### Step 3-4: YarnScenarioEngine を Unity 側に実装する
 
+**重要**: `ScenarioPlayer` は `IScenarioEngine` にのみ依存し、設計は変更されない。
+`ZrushyDialoguePresenter` は `YarnScenarioEngine` の**内部コンポーネント**であり、ScenarioPlayer からは見えない。
+
+```
+ScenarioPlayer --> IScenarioEngine <|.. YarnScenarioEngine
+                                         ↑
+                                         | (内部で所有・参照)
+                                         |
+                                   ZrushyDialoguePresenter
+                                         ↑
+                                         | (Yarn Spinner からのコールバック)
+                                         |
+                                   DialogueRunner
+```
+
 ```csharp
 // unity/Assets/Scripts/Engine/YarnScenarioEngine.cs
 using Yarn.Unity;
@@ -206,12 +221,22 @@ using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 public class YarnScenarioEngine : IScenarioEngine
 {
     private readonly DialogueRunner dialogueRunner;
+    private readonly ZrushyDialoguePresenter dialoguePresenter;
 
     // Yarn Spinner からの Line を Action に変換してバッファする
     private Action currentAction;
     private bool isFinished;
 
     public bool IsScenarioFinished => isFinished;
+
+    public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
+    {
+        this.dialogueRunner = dialogueRunner;
+        this.dialoguePresenter = presenter;
+
+        // DialoguePresenter にこのエンジンを設定
+        presenter.Initialize(this);
+    }
 
     public void Start(ScenarioID scenarioID)
     {
@@ -224,13 +249,13 @@ public class YarnScenarioEngine : IScenarioEngine
 
     public void Next()
     {
-        // DialogueRunner に次の行を要求
-        // → DialoguePresenter 経由で currentAction が更新される
+        // 内部の DialoguePresenter に次の行への進行を指示
+        dialoguePresenter.Advance();
     }
 
     /// <summary>
     /// Yarn の Line + ハッシュタグ → Action に変換
-    /// DialoguePresenter から呼ばれる
+    /// DialoguePresenter から呼ばれる（内部メソッド）
     /// </summary>
     internal void SetLineAsAction(LocalizedLine line)
     {
@@ -238,6 +263,14 @@ public class YarnScenarioEngine : IScenarioEngine
         string anim = GetMetadata(line, "anim", "reaction_default");
         string expr = GetMetadata(line, "expr", "expression_neutral");
         currentAction = new Action(dialogue, anim, expr);
+    }
+
+    /// <summary>
+    /// DialoguePresenter から呼ばれる（内部メソッド）
+    /// </summary>
+    internal void MarkFinished()
+    {
+        isFinished = true;
     }
 
     private string GetMetadata(LocalizedLine line, string key, string fallback)
@@ -253,7 +286,10 @@ public class YarnScenarioEngine : IScenarioEngine
 }
 ```
 
-> 上記は設計の骨格。DialogueRunner との接続部分 (DialoguePresenter) の実装は Step 4 で詳述。
+ポイント:
+- DialoguePresenter は YarnScenarioEngine のコンストラクタで受け取り、内部で保持する
+- ScenarioPlayer.Next() → YarnScenarioEngine.Next() → DialoguePresenter.Advance() という一方向の流れ
+- ScenarioPlayer は IScenarioEngine 以外の型を知らない（依存関係が変わらない）
 
 ### Step 3-5: DI 設定を更新する
 
@@ -262,10 +298,21 @@ public class YarnScenarioEngine : IScenarioEngine
 // Before:
 Container.Bind<IScenarioRepository>().To<ListScenarioRepository>().AsSingle();
 
-// After:
+// After (Yarn Spinner 使用時):
+// DialogueRunner と DialoguePresenter はシーン上の GameObject にアタッチ
+Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
+Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
+
+// IScenarioEngine として YarnScenarioEngine をバインド
 Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
-// テスト時は ListScenarioEngine にバインドする
+
+// テスト時は ListScenarioEngine にバインドする:
+// Container.Bind<IScenarioEngine>().To<ListScenarioEngine>().AsSingle();
 ```
+
+ポイント:
+- ScenarioPlayer は `IScenarioEngine` に依存するだけなので、バインディングを切り替えるだけでテスト用エンジンと Yarn エンジンを使い分けられる
+- DialogueRunner と DialoguePresenter は Unity のシーン上に配置し、Zenject で自動的に注入される
 
 ---
 
@@ -273,31 +320,55 @@ Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
 
 Yarn Spinner 3 では `DialoguePresenterBase` を継承して、Line / Command / Options の受け取り方をカスタマイズする。
 
+**設計上の位置づけ**: DialoguePresenter は YarnScenarioEngine の内部コンポーネントであり、ScenarioPlayer からは直接参照されない。
+
+**データフロー**:
+1. ScenarioPlayer.Next() を呼ぶ
+2. ↓ IScenarioEngine.Next() を通じて
+3. YarnScenarioEngine.Next() が DialoguePresenter.Advance() を呼ぶ
+4. DialoguePresenter が Yarn Spinner に次の Line を要求
+5. Yarn Spinner が DialoguePresenter.RunLineAsync() にコールバック
+6. DialoguePresenter が YarnScenarioEngine.SetLineAsAction() を呼んで Action に変換
+7. ScenarioPlayer が IScenarioEngine.GetCurrentAction() で Action を取得
+
 ```csharp
 // unity/Assets/Scripts/Engine/ZrushyDialoguePresenter.cs
-using System.Threading;
+using System.Threading.Tasks;
 using Yarn.Unity;
-using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 
 public class ZrushyDialoguePresenter : DialoguePresenterBase
 {
     private YarnScenarioEngine engine;
 
-    // ScenarioPlayer.Next() が呼ばれるまで待機するための仕組み
+    // YarnScenarioEngine.Next() が呼ばれるまで待機するための仕組み
     private TaskCompletionSource<bool> waitForNext;
 
-    public override async YarnTask OnDialogueLineReceived(LocalizedLine line, LineCancellationToken token)
+    /// <summary>
+    /// YarnScenarioEngine から呼ばれる初期化メソッド
+    /// </summary>
+    public void Initialize(YarnScenarioEngine engine)
     {
-        // Line → Action 変換
+        this.engine = engine;
+    }
+
+    public override YarnTask OnDialogueStartedAsync()
+    {
+        // ダイアログ開始時の処理（必要に応じて実装）
+        return YarnTask.CompletedTask;
+    }
+
+    public override async YarnTask RunLineAsync(LocalizedLine line, LineCancellationToken token)
+    {
+        // Line → Action 変換（engine の内部状態を更新）
         engine.SetLineAsAction(line);
 
-        // ScenarioPlayer.Next() が呼ばれるまで待機
+        // YarnScenarioEngine.Next() が呼ばれるまで待機
         waitForNext = new TaskCompletionSource<bool>();
         await waitForNext.Task;
     }
 
     /// <summary>
-    /// ScenarioPlayer.Next() から呼ばれる。待機を解除して次の Line に進む
+    /// YarnScenarioEngine.Next() から呼ばれる。待機を解除して次の Line に進む
     /// </summary>
     public void Advance()
     {
@@ -312,7 +383,10 @@ public class ZrushyDialoguePresenter : DialoguePresenterBase
 }
 ```
 
-これにより、セリフの進行制御が ScenarioPlayer → Advance() → Yarn Spinner という流れになる。
+**重要**:
+- ScenarioPlayer は DialoguePresenter の存在を知らない（IScenarioEngine 経由でのみ通信）
+- DialoguePresenter は YarnScenarioEngine の private なコンポーネントとして振る舞う
+- これにより、ScenarioPlayer の依存関係が IScenarioEngine のみに保たれる
 
 ---
 
@@ -378,17 +452,17 @@ title: head_default
 
 ## 7. 作業順序
 
-| # | 作業 | レイヤー | 依存 |
-|---|------|----------|------|
-| 1 | Yarn Spinner を Unity にインストール | Unity | なし |
-| 2 | IScenarioEngine を Domain に定義 | Core | なし |
-| 3 | ListScenarioEngine を作成 (テスト用) | Core | #2 |
-| 4 | ScenarioPlayer を IScenarioEngine に切り替え | Core | #2 |
-| 5 | ScenarioPlayer のテストを修正・追加 | Core | #3, #4 |
-| 6 | YarnScenarioEngine + ZrushyDialoguePresenter 実装 | Unity | #1, #2 |
-| 7 | .yarn ファイルに既存データを移行 | Unity | #1 |
-| 8 | ZrushyInstaller の DI 設定を更新 | Unity | #6 |
-| 9 | ListScenarioRepository を削除 | Core | #8 が動作確認済み後 |
+| #   | 作業                                              | レイヤー  | 依存          |
+| --- | ----------------------------------------------- | ----- | ----------- |
+| 1   | Yarn Spinner を Unity にインストール                    | Unity | なし          |
+| 2   | IScenarioEngine を Domain に定義                    | Core  | なし          |
+| 3   | ListScenarioEngine を作成 (テスト用)                   | Core  | #2          |
+| 4   | ScenarioPlayer を IScenarioEngine に切り替え          | Core  | #2          |
+| 5   | ScenarioPlayer のテストを修正・追加                       | Core  | #3, #4      |
+| 6   | YarnScenarioEngine + ZrushyDialoguePresenter 実装 | Unity | #1, #2      |
+| 7   | .yarn ファイルに既存データを移行                             | Unity | #1          |
+| 8   | ZrushyInstaller の DI 設定を更新                      | Unity | #6          |
+| 9   | ListScenarioRepository を削除                      | Core  | #8 が動作確認済み後 |
 
 ### Core 側 (#2-#5) と Unity 側 (#1, #6-#8) は並行して進められる
 

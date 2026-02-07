@@ -1,10 +1,7 @@
 {
-    "name": "Zrushy.Core.DI",
-    "rootNamespace": "Zrushy.Core.DI",
+    "name": "Zrushy.Core.Infrastructure.Unity",
+    "rootNamespace": "Zrushy.Core.Infrastructure",
     "references": [
-        "Zenject",
-        "Zrushy.Core.Presentation.Unity",
-        "Zrushy.Core.Infrastructure.Unity",
         "YarnSpinner.Unity"
     ],
     "includePlatforms": [],
@@ -12,11 +9,10 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Zrushy.Core.Application.dll",
         "Zrushy.Core.Domain.dll",
-        "Zrushy.Core.Infrastructure.dll",
         "Zrushy.Core.Presentation.dll",
-        "Zenject-usage.dll"
+        "YarnSpinner.dll",
+        "Zrushy.Core.Infrastructure.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
