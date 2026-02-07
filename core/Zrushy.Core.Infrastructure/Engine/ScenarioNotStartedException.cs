@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Zrushy.Core.Infrastructure.Engine
 {
 	[Serializable]
-	internal class ScenarioNotStartedException : Exception
+	public class ScenarioNotStartedException : Exception
 	{
 		public ScenarioNotStartedException()
 		{

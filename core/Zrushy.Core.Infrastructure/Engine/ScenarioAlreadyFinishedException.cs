@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Zrushy.Core.Infrastructure.Engine
 {
 	[Serializable]
-	internal class ScenarioAlreadyFinishedException : Exception
+	public class ScenarioAlreadyFinishedException : Exception
 	{
 		public ScenarioAlreadyFinishedException()
 		{
