@@ -3,6 +3,7 @@ using Zenject;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
+using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Scenarios.Repository;
@@ -36,6 +37,12 @@ namespace Zrushy.Core.DI
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
 			// ConditionFactory（シングルトン）
+			Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<FirstTouchConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<EventFiredConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<PleasureConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<DevelopmentConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
 
 			// Yarn Spinner（シーンから取得）

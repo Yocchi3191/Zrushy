@@ -18,10 +18,8 @@ namespace Zrushy.Core.Infrastructure.EventBus
 
 		public void Publish(IScenarioEvent gameEvent)
 		{
-			if (gameEvent == null || !gameEvent.CanFire())
-			{
+			if (gameEvent == null)
 				return;
-			}
 
 			firedEventLog.Record(gameEvent.ID);
 			OnEventPublished?.Invoke(gameEvent);

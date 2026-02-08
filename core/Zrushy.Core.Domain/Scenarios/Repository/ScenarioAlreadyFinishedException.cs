@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
-namespace Zrushy.Core.Infrastructure.Engine
+namespace Zrushy.Core.Domain.Scenarios.Repository
 {
 	[Serializable]
-	public class ScenarioAlreadyFinishedException : Exception
+	public class ScenarioAlreadyFinishedException : System.Exception
 	{
 		public ScenarioAlreadyFinishedException()
 		{
@@ -14,7 +14,7 @@ namespace Zrushy.Core.Infrastructure.Engine
 		{
 		}
 
-		public ScenarioAlreadyFinishedException(string message, Exception innerException) : base(message, innerException)
+		public ScenarioAlreadyFinishedException(string message, System.Exception innerException) : base(message, innerException)
 		{
 		}
 

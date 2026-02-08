@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
-namespace Zrushy.Core.Infrastructure.Engine
+namespace Zrushy.Core.Domain.Scenarios.Repository
 {
 	[Serializable]
-	public class ScenarioNotStartedException : Exception
+	public class ScenarioNotStartedException : System.Exception
 	{
 		public ScenarioNotStartedException()
 		{
@@ -14,7 +14,7 @@ namespace Zrushy.Core.Infrastructure.Engine
 		{
 		}
 
-		public ScenarioNotStartedException(string message, Exception innerException) : base(message, innerException)
+		public ScenarioNotStartedException(string message, System.Exception innerException) : base(message, innerException)
 		{
 		}
 

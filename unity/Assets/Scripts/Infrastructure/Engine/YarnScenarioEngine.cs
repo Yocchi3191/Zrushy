@@ -4,8 +4,6 @@ using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
-using Zrushy.Core.Infrastructure;
-using Zrushy.Core.Infrastructure.Engine;
 using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 
 public class YarnScenarioEngine : IScenarioEngine

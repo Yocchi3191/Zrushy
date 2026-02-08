@@ -2,10 +2,10 @@ using System;
 using System.Runtime.Serialization;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
-namespace Zrushy.Core.Infrastructure.Engine
+namespace Zrushy.Core.Domain.Scenarios.Repository
 {
 	[Serializable]
-	public class ScenarioNotFoundException : Exception
+	public class ScenarioNotFoundException : System.Exception
 	{
 		public ScenarioID ScenarioID { get; }
 
@@ -23,7 +23,7 @@ namespace Zrushy.Core.Infrastructure.Engine
 			ScenarioID = scenarioID;
 		}
 
-		public ScenarioNotFoundException(string message, Exception innerException) : base(message, innerException)
+		public ScenarioNotFoundException(string message, System.Exception innerException) : base(message, innerException)
 		{
 		}
 
