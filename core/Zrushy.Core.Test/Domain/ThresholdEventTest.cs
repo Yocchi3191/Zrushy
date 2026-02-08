@@ -1,21 +1,18 @@
-﻿using Zrushy.Core.Domain.Events.Entity;
+﻿using Zrushy.Core.Domain.Events.Entity.Conditions;
 using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Test.Domain;
 
 public class ThresholdEventTest
 {
 	private PartID _partID;
-	private ScenarioID _scenarioID;
 
 	[SetUp]
 	public void Setup()
 	{
 		_partID = new PartID("head");
-		_scenarioID = new ScenarioID("test_scenario");
 	}
 
 	[Test]
@@ -23,10 +20,10 @@ public class ThresholdEventTest
 	{
 		var reader = new StubPartParameterReader(pleasure: new Pleasure(50));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), new Pleasure(100), () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.True);
+		Assert.That(condition.CanFire(), Is.True);
 	}
 
 	[Test]
@@ -34,10 +31,10 @@ public class ThresholdEventTest
 	{
 		var reader = new StubPartParameterReader(pleasure: new Pleasure(5));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), new Pleasure(100), () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.False);
+		Assert.That(condition.CanFire(), Is.False);
 	}
 
 	[Test]
@@ -48,18 +45,18 @@ public class ThresholdEventTest
 			development: new Development(999),
 			affection: new Affection(999));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), new Pleasure(100), () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.True);
+		Assert.That(condition.CanFire(), Is.True);
 	}
 
 	[Test]
 	public void 閾値なしなら常に発火する()
 	{
-		var evt = new ThresholdEvent(_scenarioID, 1);
+		var condition = new ThresholdCondition();
 
-		Assert.That(evt.CanFire(), Is.True);
+		Assert.That(condition.CanFire(), Is.True);
 	}
 
 	[Test]
@@ -67,10 +64,10 @@ public class ThresholdEventTest
 	{
 		var reader = new StubPartParameterReader(pleasure: new Pleasure(50));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), null, () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.True);
+		Assert.That(condition.CanFire(), Is.True);
 	}
 
 	[Test]
@@ -78,10 +75,10 @@ public class ThresholdEventTest
 	{
 		var reader = new StubPartParameterReader(pleasure: new Pleasure(5));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), null, () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.False);
+		Assert.That(condition.CanFire(), Is.False);
 	}
 
 	[Test]
@@ -89,10 +86,10 @@ public class ThresholdEventTest
 	{
 		var reader = new StubPartParameterReader(pleasure: new Pleasure(50));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(null, new Pleasure(100), () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.True);
+		Assert.That(condition.CanFire(), Is.True);
 	}
 
 	[Test]
@@ -100,10 +97,10 @@ public class ThresholdEventTest
 	{
 		var reader = new StubPartParameterReader(pleasure: new Pleasure(150));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(null, new Pleasure(100), () => reader.GetPleasure(_partID)));
 
-		Assert.That(evt.CanFire(), Is.False);
+		Assert.That(condition.CanFire(), Is.False);
 	}
 
 	[Test]
@@ -113,11 +110,11 @@ public class ThresholdEventTest
 			pleasure: new Pleasure(50),
 			development: new Development(30));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), new Pleasure(100), () => reader.GetPleasure(_partID)),
 			new Threshold<Development>(new Development(10), new Development(50), () => reader.GetDevelopment(_partID)));
 
-		Assert.That(evt.CanFire(), Is.True);
+		Assert.That(condition.CanFire(), Is.True);
 	}
 
 	[Test]
@@ -127,11 +124,11 @@ public class ThresholdEventTest
 			pleasure: new Pleasure(50),
 			development: new Development(60));
 
-		var evt = new ThresholdEvent(_scenarioID, 1,
+		var condition = new ThresholdCondition(
 			new Threshold<Pleasure>(new Pleasure(10), new Pleasure(100), () => reader.GetPleasure(_partID)),
 			new Threshold<Development>(new Development(10), new Development(50), () => reader.GetDevelopment(_partID)));
 
-		Assert.That(evt.CanFire(), Is.False);
+		Assert.That(condition.CanFire(), Is.False);
 	}
 
 	// --- Stub ---

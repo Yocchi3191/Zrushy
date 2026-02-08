@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
@@ -8,6 +9,7 @@ namespace Zrushy.Core.Infrastructure.Engine
 	public class ListScenarioEngine : IScenarioEngine
 	{
 		public bool IsScenarioFinished { get; private set; }
+		public IEvent? CurrentProceedCondition => null;
 		private Scenario? currentScenario;
 		private int currentIndex;
 

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using Yarn.Unity;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Infrastructure;
@@ -10,25 +12,25 @@ public class YarnScenarioEngine : IScenarioEngine
 {
 	private readonly DialogueRunner dialogueRunner;
 	private readonly ZrushyDialoguePresenter dialoguePresenter;
+	private readonly IConditionFactory conditionFactory;
 
-	// Yarn Spinner からの Line を Action に変換してバッファする
 	private Action currentAction;
 	private bool isFinished;
 
 	public bool IsScenarioFinished => isFinished;
+	public IEvent? CurrentProceedCondition { get; private set; }
 
-	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
+	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter, IConditionFactory conditionFactory)
 	{
 		this.dialogueRunner = dialogueRunner;
 		this.dialoguePresenter = presenter;
+		this.conditionFactory = conditionFactory;
 
-		// DialoguePresenter にこのエンジンを設定
 		presenter.Initialize(this);
 	}
 
 	public void Start(ScenarioID scenarioID)
 	{
-		// シナリオの存在チェック
 		if (dialogueRunner.YarnProject == null ||
 		    !dialogueRunner.YarnProject.NodeNames.Contains(scenarioID.Value))
 		{
@@ -36,7 +38,7 @@ public class YarnScenarioEngine : IScenarioEngine
 		}
 
 		isFinished = false;
-		// ScenarioID.Value = Yarn ノード名
+		CurrentProceedCondition = null;
 		dialogueRunner.StartDialogue(scenarioID.Value);
 	}
 
@@ -44,13 +46,11 @@ public class YarnScenarioEngine : IScenarioEngine
 
 	public void Next()
 	{
-		// 内部の DialoguePresenter に次の行への進行を指示
 		dialoguePresenter.Advance();
 	}
 
 	/// <summary>
-	/// Yarn の Line + ハッシュタグ → Action に変換
-	/// DialoguePresenter から呼ばれる（内部メソッド）
+	/// Yarn の Line → Action 変換 + 進行条件の解析
 	/// </summary>
 	internal void SetLineAsAction(LocalizedLine line)
 	{
@@ -58,11 +58,11 @@ public class YarnScenarioEngine : IScenarioEngine
 		string anim = GetMetadata(line, "anim", "reaction_default");
 		string expr = GetMetadata(line, "expr", "expression_neutral");
 		currentAction = new Action(dialogue, anim, expr);
+
+		string conditionString = GetMetadata(line, "condition", null);
+		CurrentProceedCondition = conditionString != null ? conditionFactory.Create(conditionString) : null;
 	}
 
-	/// <summary>
-	/// DialoguePresenter から呼ばれる（内部メソッド）
-	/// </summary>
 	internal void MarkFinished()
 	{
 		isFinished = true;
@@ -70,7 +70,6 @@ public class YarnScenarioEngine : IScenarioEngine
 
 	private string GetMetadata(LocalizedLine line, string key, string fallback)
 	{
-		// line.Metadata からハッシュタグを検索
 		foreach (var tag in line.Metadata)
 		{
 			if (tag.StartsWith(key + ":"))

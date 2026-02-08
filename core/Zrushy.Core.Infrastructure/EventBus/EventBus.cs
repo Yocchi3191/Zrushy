@@ -1,31 +1,29 @@
 using System;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.Service;
 
 namespace Zrushy.Core.Infrastructure.EventBus
 {
-	/// <summary>
-	/// イベントバス（仮実装）
-	/// IEventBus を実装し、IEvent の発火と購読を管理する
-	/// TODO: 将来的には優先度、フィルタリング、非同期処理などを追加
-	/// </summary>
 	public class EventBus : IEventBus
 	{
-		/// <summary>
-		/// イベントが発火されたときに通知されるイベント
-		/// </summary>
-		public event Action<IEvent>? OnEventPublished;
+		private readonly IFiredEventLog firedEventLog;
 
-		/// <summary>
-		/// イベントを発火する
-		/// </summary>
-		public void Publish(IEvent gameEvent)
+		public EventBus(IFiredEventLog firedEventLog)
+		{
+			this.firedEventLog = firedEventLog;
+		}
+
+		public event Action<IScenarioEvent>? OnEventPublished;
+
+		public void Publish(IScenarioEvent gameEvent)
 		{
 			if (gameEvent == null || !gameEvent.CanFire())
 			{
 				return;
 			}
 
+			firedEventLog.Record(gameEvent.ID);
 			OnEventPublished?.Invoke(gameEvent);
 		}
 	}

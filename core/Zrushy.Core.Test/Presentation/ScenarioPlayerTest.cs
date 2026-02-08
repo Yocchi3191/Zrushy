@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
@@ -29,6 +30,7 @@ public class ScenarioPlayerTest
 
 		repository = Substitute.For<IScenarioEngine>();
 		repository.GetCurrentAction().Returns(action1, action2);
+		repository.CurrentProceedCondition.Returns((IEvent?)null);
 
 		heroinViewModel = new HeroinViewModel();
 

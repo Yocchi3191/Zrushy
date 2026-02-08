@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
@@ -8,28 +9,15 @@ namespace Zrushy.Core.Infrastructure.Repository
 {
 	public class EventRepository : IEventRepository
 	{
-		public IReadOnlyList<IEvent> GetEvents(PartID partID)
+		public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID)
 		{
-			return new List<IEvent>
+			return new List<IScenarioEvent>
 			{
-				new DefaultEvent(new ScenarioID(partID.ToString() + "_default"))
+				new Event(
+					new EventID(partID.ToString() + "_default"),
+					new ScenarioID(partID.ToString() + "_default"),
+					priority: 0)
 			};
-		}
-	}
-
-	internal class DefaultEvent : IEvent
-	{
-		public ScenarioID ScenarioToStart { get; }
-		public int Priority => 0;
-
-		public DefaultEvent(ScenarioID scenarioID)
-		{
-			ScenarioToStart = scenarioID;
-		}
-
-		public bool CanFire()
-		{
-			return true;
 		}
 	}
 }

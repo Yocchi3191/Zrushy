@@ -2,9 +2,10 @@
 using Zenject;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Scenarios.Repository;
-using Zrushy.Core.Infrastructure.Engine;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
@@ -25,9 +26,17 @@ namespace Zrushy.Core.DI
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
+			Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
+			Container.Bind<IPartParameterReader>().To<BodyParameterReader>().AsSingle();
+
+			// FiredEventLog（シングルトン）
+			Container.Bind<IFiredEventLog>().To<FiredEventLog>().AsSingle();
 
 			// EventBus（シングルトン）
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
+
+			// ConditionFactory（シングルトン）
+			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
 
 			// Yarn Spinner（シーンから取得）
 			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();

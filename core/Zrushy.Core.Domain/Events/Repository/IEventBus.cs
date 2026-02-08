@@ -9,14 +9,7 @@ namespace Zrushy.Core.Domain.Events.Repository
 	/// </summary>
 	public interface IEventBus
 	{
-		/// <summary>
-		/// イベントが発火されたときに通知されるイベント
-		/// </summary>
-		event Action<IEvent>? OnEventPublished;
-
-		/// <summary>
-		/// イベントを発火する
-		/// </summary>
-		void Publish(IEvent gameEvent);
+		event Action<IScenarioEvent>? OnEventPublished;
+		void Publish(IScenarioEvent gameEvent);
 	}
 }
