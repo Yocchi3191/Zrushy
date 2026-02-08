@@ -1,7 +1,6 @@
 ﻿using System;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
-using Zrushy.Core.Infrastructure.Engine;
 
 namespace Zrushy.Core.Presentation
 {
