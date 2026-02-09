@@ -92,5 +92,19 @@ namespace Zrushy.Core.Presentation
 
 			heroin.Act(engine.GetCurrentAction());
 		}
+
+		/// <summary>
+		/// 現在再生中のシナリオを強制的に停止する
+		/// 高優先度イベント（絶頂など）による割り込み時に使用
+		/// </summary>
+		public void Stop()
+		{
+			if (!isPlaying)
+				return;
+
+			isPlaying = false;
+			pendingNewLine = false;
+			// 注: OnScenarioFinished は発火しない（強制停止なので）
+		}
 	}
 }

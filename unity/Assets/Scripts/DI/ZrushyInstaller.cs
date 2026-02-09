@@ -21,20 +21,20 @@ namespace Zrushy.Core.DI
 	{
 		public override void InstallBindings()
 		{
+			// FiredEventLog（シングルトン）
+			Container.Bind<IFiredEventLog>().To<FiredEventLog>().AsSingle();
+
+			// EventBus（シングルトン）※ Body より先にバインド（依存順序）
+			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
+
 			// Domain層
-			// Body（シングルトン）
+			// Body（シングルトン）※ IEventBus に依存
 			Container.Bind<Body>().AsSingle();
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
 			Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
 			Container.Bind<IPartParameterReader>().To<BodyParameterReader>().AsSingle();
-
-			// FiredEventLog（シングルトン）
-			Container.Bind<IFiredEventLog>().To<FiredEventLog>().AsSingle();
-
-			// EventBus（シングルトン）
-			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
 			// ConditionFactory（シングルトン）
 			Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();

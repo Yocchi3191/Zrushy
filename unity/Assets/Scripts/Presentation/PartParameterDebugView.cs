@@ -24,17 +24,19 @@ public class PartParameterDebugView : MonoBehaviour
 
 		var text = "=== Part Parameters ===\n\n";
 
+		// Body 全体の快感を表示
+		var bodyPleasure = parameterReader.GetPleasure(new PartID("dummy")); // PartID は無視される
+		text += $"[Body Pleasure: {bodyPleasure.Value}]\n\n";
+
 		foreach (var partName in parts)
 		{
 			var partID = new PartID(partName);
 			var touchCount = interactionHistory.Get(partID).Count;
-			var pleasure = parameterReader.GetPleasure(partID);
 			var development = parameterReader.GetDevelopment(partID);
 			var affection = parameterReader.GetAffection(partID);
 
 			text += $"[{partName}]\n";
 			text += $"  Touch: {touchCount}\n";
-			text += $"  Pleasure: {pleasure}\n";
 			text += $"  Development: {development}\n";
 			text += $"  Affection: {affection}\n\n";
 		}

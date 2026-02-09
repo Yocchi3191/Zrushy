@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Domain.Interactions.Entity
 {
@@ -11,13 +16,28 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	public class Body
 	{
 		private readonly List<Part> parts;
+		private readonly IEventBus eventBus;
 
 		/// <summary>
-		/// 空の身体を作成する
+		/// Body全体の快感パラメータ
+		/// 各部位の開発度と好感度に応じて増減する
 		/// </summary>
-		public Body()
+		public Pleasure Pleasure { get; private set; }
+
+		/// <summary>
+		/// 絶頂判定の閾値
+		/// </summary>
+		private const int CLIMAX_THRESHOLD = 100;
+
+		/// <summary>
+		/// 身体を作成する
+		/// </summary>
+		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
+		public Body(IEventBus eventBus)
 		{
 			parts = new List<Part>();
+			this.eventBus = eventBus;
+			Pleasure = new Pleasure(0);
 		}
 
 		/// <summary>
@@ -31,13 +51,63 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
 		/// <summary>
 		/// さわり操作を実行する
-		/// 対象部位のパラメータを更新する
+		/// 対象部位のパラメータを更新し、快感を蓄積し、絶頂判定を行う
 		/// </summary>
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
 		{
 			Part targetPart = GetPart(interaction.PartID);
+
+			// 快感を部位の開発度・好感度を考慮して増加
+			Pleasure = Pleasure.CalculateGain(targetPart.Development, targetPart.Affection);
+
+			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
+
+			// 絶頂判定とイベント発火
+			CheckAndHandleClimax();
+		}
+
+		/// <summary>
+		/// 絶頂判定を行い、閾値を超えていれば絶頂イベントを発火してクールダウンする
+		/// </summary>
+		private void CheckAndHandleClimax()
+		{
+			if (Pleasure.IsAboveThreshold(CLIMAX_THRESHOLD))
+			{
+				// 絶頂イベントを発火
+				var climaxEvent = new Event(
+					new EventID("climax"),
+					new ScenarioID("climax_scenario"),
+					priority: 1000 // 高優先度（割り込み）
+				);
+
+				eventBus.Publish(climaxEvent);
+
+				// クールダウンを適用
+				ApplyCooldown();
+			}
+		}
+
+		/// <summary>
+		/// 絶頂後のクールダウンを適用して快感を減少させる
+		/// 全部位の平均開発度を使って減少量を補正する
+		/// </summary>
+		private void ApplyCooldown()
+		{
+			if (parts.Count == 0)
+			{
+				// 部位がない場合は固定値で減少
+				Pleasure = Pleasure.ApplyCooldown(new Development(0));
+				return;
+			}
+
+			// 全部位の平均開発度を計算
+			int totalDevelopment = parts.Sum(p => p.Development.Value);
+			int avgDevelopment = totalDevelopment / parts.Count;
+
+			// 平均開発度を使ってクールダウンを適用
+			Pleasure = Pleasure.ApplyCooldown(new Development(avgDevelopment));
 		}
 
 		/// <summary>

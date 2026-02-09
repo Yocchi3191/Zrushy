@@ -18,6 +18,11 @@ namespace Zrushy.Unity.Presentation
 		[Inject]
 		private IEventBus eventBus;
 
+		/// <summary>
+		/// この優先度以上のイベントは現在のシナリオを割り込む
+		/// </summary>
+		private const int INTERRUPT_PRIORITY_THRESHOLD = 900;
+
 		private void Start()
 		{
 			eventBus.OnEventPublished += OnEventFired;
@@ -25,14 +30,25 @@ namespace Zrushy.Unity.Presentation
 
 		/// <summary>
 		/// EventBus からイベントが発火されたときの処理
-		/// 未再生なら開始、再生中なら次へ進もうとする（条件が満たされなければ保留）
+		/// 高優先度イベントは現在のシナリオを割り込み、通常イベントは進行または開始
 		/// </summary>
 		private void OnEventFired(IScenarioEvent gameEvent)
 		{
-			if (scenarioPlayer.IsPlaying)
-				scenarioPlayer.Next();
+			// 高優先度イベント（絶頂など）は現在のシナリオを割り込む
+			if (gameEvent.Priority >= INTERRUPT_PRIORITY_THRESHOLD && scenarioPlayer.IsPlaying)
+			{
+				scenarioPlayer.Stop(); // 現在のシナリオを強制停止
+				scenarioPlayer.Play(gameEvent.ScenarioToStart); // 新しいシナリオを開始
+			}
+			// 通常の優先度
+			else if (scenarioPlayer.IsPlaying)
+			{
+				scenarioPlayer.Next(); // 次へ進む
+			}
 			else
-				scenarioPlayer.Play(gameEvent.ScenarioToStart);
+			{
+				scenarioPlayer.Play(gameEvent.ScenarioToStart); // 新規開始
+			}
 		}
 
 		private void OnDestroy()

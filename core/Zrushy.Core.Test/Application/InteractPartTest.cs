@@ -25,10 +25,10 @@ public class InteractPartTest
 	public void Setup()
 	{
 		_partID = new PartID("head");
-		_body = new Body();
-		_body.AddPart(new Part(_partID, new Pleasure(0), new Development(0), new Affection(0)));
-
 		_eventBus = new EventBus(new FiredEventLog());
+		_body = new Body(_eventBus);
+		_body.AddPart(new Part(_partID, new Development(0), new Affection(0)));
+
 		_interactionHistory = Substitute.For<IInteractionHistory>();
 	}
 
@@ -41,7 +41,8 @@ public class InteractPartTest
 		useCase.Execute(new InteractPartCommand(_partID));
 
 		var part = _body.GetPart(_partID);
-		Assert.That(part.Pleasure.Value, Is.EqualTo(1));
+		// 快感は Body 全体で管理されるようになった
+		Assert.That(_body.Pleasure.Value, Is.GreaterThan(0));
 		Assert.That(part.Development.Value, Is.EqualTo(1));
 		Assert.That(part.Affection.Value, Is.EqualTo(1));
 	}

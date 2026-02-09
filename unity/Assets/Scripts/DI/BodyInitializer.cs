@@ -31,13 +31,12 @@ namespace Zrushy.Core.DI
 			{
 				body.AddPart(new Part(
 					new PartID(id),
-					new Pleasure(0),
 					new Development(0),
 					new Affection(0)
 				));
 			}
 
-			Debug.Log($"[BodyInitializer] Body initialized with {partIds.Length} parts");
+			Debug.Log($"[BodyInitializer] Body initialized with {partIds.Length} parts, Pleasure={body.Pleasure.Value}");
 		}
 	}
 }
