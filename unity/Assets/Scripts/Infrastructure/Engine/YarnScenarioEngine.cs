@@ -55,9 +55,9 @@ public class YarnScenarioEngine : IScenarioEngine
 		string dialogue = line.TextWithoutCharacterName.Text;
 		string anim = GetMetadata(line, "anim", "reaction_default");
 		string expr = GetMetadata(line, "expr", "expression_neutral");
-		currentAction = new Action(dialogue, anim, expr);
-
 		string conditionString = GetMetadata(line, "condition", null);
+		currentAction = new Action(dialogue, anim, expr, conditionString);
+
 		CurrentProceedCondition = conditionString != null ? conditionFactory.Create(conditionString) : null;
 	}
 

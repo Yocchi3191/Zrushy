@@ -1,0 +1,8 @@
+title: leg_default
+---
+やっ……脚、触らないでよ！ #anim:reaction_default #expr:expression_shy #condition:first_touch:leg
+んっ……なんか、ドキドキする…… #anim:reaction_default #expr:expression_shy
+そんなに撫でたら……変な気分になっちゃう…… #anim:reaction_default #expr:expression_shy #condition:touch_count:leg:5,pleasure:leg:8
+あっ……もっと、上の方……？ #anim:reaction_default #expr:expression_shy #condition:development:leg:15,pleasure:leg:25
+んっ……いいよ……もっと触って…… #anim:reaction_default #expr:expression_happy #condition:development:leg:30,pleasure:leg:45,affection:leg:30
+===
