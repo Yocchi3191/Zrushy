@@ -1,0 +1,21 @@
+{
+    "name": "Zrushy.Core.Infrastructure.Unity",
+    "rootNamespace": "Zrushy.Core.Infrastructure",
+    "references": [
+        "YarnSpinner.Unity"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Zrushy.Core.Domain.dll",
+        "Zrushy.Core.Presentation.dll",
+        "YarnSpinner.dll",
+        "Zrushy.Core.Infrastructure.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

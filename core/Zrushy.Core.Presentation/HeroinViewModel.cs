@@ -1,4 +1,4 @@
-﻿using Zrushy.Core.Domain.Entity;
+﻿using Zrushy.Core.Domain.Scenarios.Entity;
 
 namespace Zrushy.Core.Presentation
 {

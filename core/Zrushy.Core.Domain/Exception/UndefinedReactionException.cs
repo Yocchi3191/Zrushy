@@ -1,5 +1,5 @@
-using System;
-using Zrushy.Core.Domain.ValueObject;
+﻿using System;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Domain.Exception
 {

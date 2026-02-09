@@ -22,7 +22,8 @@ public class HeroinView : MonoBehaviour
 		var action = vm.CurrentAction;
 		if (action != null)
 		{
-			Debug.Log($"[Heroin] {action.Dialogue} (anim: {action.AnimationName}, expr: {action.ExpressionName})");
+			var conditionInfo = action.Condition != null ? $", condition: {action.Condition}" : "";
+			Debug.Log($"[Heroin] {action.Dialogue} (anim: {action.AnimationName}, expr: {action.ExpressionName}{conditionInfo})");
 		}
 	}
 }

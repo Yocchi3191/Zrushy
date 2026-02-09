@@ -1,0 +1,6 @@
+title: head_default
+---
+や、やめて……髪が…… #anim:reaction_default #expr:expression_shy
+もう……撫でないでよ…… #anim:reaction_default #expr:expression_shy #condition:touch_count:head:5
+……ちょっとだけなら、いいけど #anim:reaction_default #expr:expression_happy #condition:touch_count:head:10,affection:head:20
+===

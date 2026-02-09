@@ -2,7 +2,10 @@
     "name": "Zrushy.Core.DI",
     "rootNamespace": "Zrushy.Core.DI",
     "references": [
-        "Zenject"
+        "Zenject",
+        "Zrushy.Core.Presentation.Unity",
+        "Zrushy.Core.Infrastructure.Unity",
+        "YarnSpinner.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
