@@ -15,7 +15,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	/// </summary>
 	public class Heroin
 	{
-		private readonly List<Part> parts;
+		private readonly List<IPart> parts;
 		private readonly IEventBus eventBus;
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
 		public Heroin(IEventBus eventBus)
 		{
-			parts = new List<Part>();
+			parts = new List<IPart>();
 			this.eventBus = eventBus;
 			Arousal = new Arousal(0);
 		}
@@ -44,7 +44,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 部位を追加する
 		/// </summary>
 		/// <param name="part">追加する部位</param>
-		public void AddPart(Part part)
+		public void AddPart(IPart part)
 		{
 			parts.Add(part);
 		}
@@ -56,10 +56,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
 		{
-			Part targetPart = GetPart(interaction.PartID);
+			IPart targetPart = GetPart(interaction.PartID);
 
-			// 快感を部位の開発度・好感度を考慮して増加
-			Arousal = Arousal.CalculateGain(targetPart.Development, targetPart.Affection);
+			// 部位ごとの計算ロジックで興奮度を更新
+			Arousal = targetPart.CalculateArousal(Arousal);
 
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
@@ -116,7 +116,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <param name="partID">部位ID</param>
 		/// <returns>部位</returns>
 		/// <exception cref="PartNotFoundException">部位が見つからない場合</exception>
-		public Part GetPart(PartID partID)
+		public IPart GetPart(PartID partID)
 		{
 			return parts.Find(p => p.ID.Equals(partID))
 				?? throw new PartNotFoundException(partID);

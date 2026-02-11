@@ -6,7 +6,8 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	/// 部位エンティティ
 	/// ヒロインの身体の各部位を表現する
 	/// </summary>
-	public class Part
+	public class Part : IPart
+
 	{
 		public PartID ID { get; }
 
@@ -35,6 +36,21 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		{
 			Development = Development.CalculateGain();
 			Affection = Affection.CalculateGain();
+		}
+
+		public Arousal CalculateArousal(Arousal baseArousal)
+		{
+			// 計算式: 基本値-2 + (開発度 * 0.1) + (好感度 * 0.05)
+			// 開発度0・好感度0は不快（-2）、開発度20以上で快感に転じる
+			int developmentBonus = (int)(Development.Value * 0.1);
+			int affectionBonus = (int)(Affection.Value * 0.05);
+			int totalGain = -2 + developmentBonus + affectionBonus;
+			return baseArousal + totalGain;
+		}
+
+		public Awakeness CalculateAwakeness(Awakeness baseAwakeness)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

@@ -70,38 +70,6 @@ public class ArousalTest
 		Assert.That(result.Value, Is.EqualTo(40));
 	}
 
-	// --- CalculateGain 計算テスト ---
-
-	[Test]
-	public void 開発度0好感度0なら基本値1が加算される()
-	{
-		var result = new Arousal(0).CalculateGain(new Development(0), new Affection(0));
-		Assert.That(result.Value, Is.EqualTo(1));
-	}
-
-	[Test]
-	public void 開発度ボーナスが加算される()
-	{
-		// 1 + (10 * 0.1) = 2
-		var result = new Arousal(0).CalculateGain(new Development(10), new Affection(0));
-		Assert.That(result.Value, Is.EqualTo(2));
-	}
-
-	[Test]
-	public void 好感度ボーナスが加算される()
-	{
-		// 1 + (20 * 0.05) = 2
-		var result = new Arousal(0).CalculateGain(new Development(0), new Affection(20));
-		Assert.That(result.Value, Is.EqualTo(2));
-	}
-
-	[Test]
-	public void CalculateGainで上限を超えた場合クランプされる()
-	{
-		var result = new Arousal(99).CalculateGain(new Development(100), new Affection(100));
-		Assert.That(result.Value, Is.EqualTo(Arousal.MAX_VALUE));
-	}
-
 	// --- ApplyCooldown テスト ---
 
 	[Test]

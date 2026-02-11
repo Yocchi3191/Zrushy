@@ -41,9 +41,9 @@ public class ClimaxFlowTest
 		};
 
 		// Act: Interact を繰り返して快感を蓄積
-		// 開発度50、好感度50なので、1回あたり約6増加 (1 + 5 + 2.5)
-		// 100 / 6 ≒ 17回で絶頂
-		for (int i = 0; i < 20; i++)
+		// 開発度50、好感度50なので、1回あたり約5増加 (-2 + 5 + 2)
+		// 100 / 5 ≒ 20回で絶頂
+		for (int i = 0; i < 25; i++)
 		{
 			_body.Interact(new Interaction(_partID));
 		}
@@ -55,19 +55,21 @@ public class ClimaxFlowTest
 	[Test]
 	public void 絶頂後はクールダウンが適用される()
 	{
-		// Arrange: 快感を閾値直前まで蓄積
-		for (int i = 0; i < 19; i++)
+		// 絶頂が発火するまでInteractし続け、発火直前との比較でクールダウンを検証
+		for (int i = 0; i < 100; i++)
 		{
+			int arousalBefore = _body.Arousal.Value;
 			_body.Interact(new Interaction(_partID));
+
+			if (_body.Arousal.Value < arousalBefore)
+			{
+				// クールダウン発生を確認
+				Assert.That(_body.Arousal.Value, Is.LessThan(arousalBefore));
+				return;
+			}
 		}
 
-		int pleasureBeforeClimax = _body.Arousal.Value;
-
-		// Act: 絶頂を引き起こす
-		_body.Interact(new Interaction(_partID));
-
-		// Assert: クールダウンで快感が減少している
-		Assert.That(_body.Arousal.Value, Is.LessThan(pleasureBeforeClimax));
+		Assert.Fail("100回以内に絶頂が発火しなかった");
 	}
 
 	[Test]

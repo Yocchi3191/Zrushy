@@ -41,8 +41,8 @@ public class InteractPartTest
 		useCase.Execute(new InteractPartCommand(_partID));
 
 		var part = _body.GetPart(_partID);
-		// 快感は Body 全体で管理されるようになった
-		Assert.That(_body.Arousal.Value, Is.GreaterThan(0));
+		// 好感度0・開発度0の部位は不快なので興奮度は負になる
+		Assert.That(_body.Arousal.Value, Is.LessThan(0));
 		Assert.That(part.Development.Value, Is.EqualTo(1));
 		Assert.That(part.Affection.Value, Is.EqualTo(1));
 	}
