@@ -1,4 +1,4 @@
-using Zrushy.Core.Domain.Events.Entity;
+﻿using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Entity.Conditions;
 using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Service;
@@ -22,7 +22,7 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 			if (parts.Length != 3) return null;
 			var partID = new PartID(parts[1]);
 			return new ThresholdCondition(
-				new Threshold<Pleasure>(new Pleasure(int.Parse(parts[2])), null, () => parameterReader.GetPleasure(partID)));
+				new Threshold<Arousal>(new Arousal(int.Parse(parts[2])), null, () => parameterReader.GetPleasure(partID)));
 		}
 	}
 }

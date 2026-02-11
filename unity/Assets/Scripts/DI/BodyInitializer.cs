@@ -36,7 +36,7 @@ namespace Zrushy.Core.DI
 				));
 			}
 
-			Debug.Log($"[BodyInitializer] Body initialized with {partIds.Length} parts, Pleasure={body.Pleasure.Value}");
+			Debug.Log($"[BodyInitializer] Body initialized with {partIds.Length} parts, Arousal={body.Arousal.Value}");
 		}
 	}
 }

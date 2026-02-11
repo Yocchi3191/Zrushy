@@ -42,7 +42,7 @@ public class InteractPartTest
 
 		var part = _body.GetPart(_partID);
 		// 快感は Body 全体で管理されるようになった
-		Assert.That(_body.Pleasure.Value, Is.GreaterThan(0));
+		Assert.That(_body.Arousal.Value, Is.GreaterThan(0));
 		Assert.That(part.Development.Value, Is.EqualTo(1));
 		Assert.That(part.Affection.Value, Is.EqualTo(1));
 	}

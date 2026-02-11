@@ -61,13 +61,13 @@ public class ClimaxFlowTest
 			_body.Interact(new Interaction(_partID));
 		}
 
-		int pleasureBeforeClimax = _body.Pleasure.Value;
+		int pleasureBeforeClimax = _body.Arousal.Value;
 
 		// Act: 絶頂を引き起こす
 		_body.Interact(new Interaction(_partID));
 
 		// Assert: クールダウンで快感が減少している
-		Assert.That(_body.Pleasure.Value, Is.LessThan(pleasureBeforeClimax));
+		Assert.That(_body.Arousal.Value, Is.LessThan(pleasureBeforeClimax));
 	}
 
 	[Test]
@@ -90,7 +90,7 @@ public class ClimaxFlowTest
 		}
 
 		// Assert: 開発度が高い方が快感の残存量が多い
-		Assert.That(highDevBody.Pleasure.Value, Is.GreaterThan(lowDevBody.Pleasure.Value));
+		Assert.That(highDevBody.Arousal.Value, Is.GreaterThan(lowDevBody.Arousal.Value));
 	}
 
 	[Test]
