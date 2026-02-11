@@ -59,7 +59,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			IPart targetPart = GetPart(interaction.PartID);
 
 			// 部位ごとの計算ロジックで興奮度を更新
-			Arousal = targetPart.CalculateArousal(Arousal);
+			Arousal = targetPart.CalculateArousal(Arousal, interaction);
 
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);

@@ -16,7 +16,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 興奮度計算
 		/// 状態によっては不快になる部位もある
 		/// </summary>
-		Arousal CalculateArousal(Arousal baseArousal);
+		Arousal CalculateArousal(Arousal baseArousal, Interaction interaction);
 
 		/// <summary>
 		/// 覚醒度計算

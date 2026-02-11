@@ -38,7 +38,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			Affection = Affection.CalculateGain();
 		}
 
-		public Arousal CalculateArousal(Arousal baseArousal)
+		public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction)
 		{
 			// 計算式: 基本値-2 + (開発度 * 0.1) + (好感度 * 0.05)
 			// 開発度0・好感度0は不快（-2）、開発度20以上で快感に転じる
