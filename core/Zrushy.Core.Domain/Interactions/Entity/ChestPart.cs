@@ -36,11 +36,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			return baseArousal + gain;
 		}
 
-		public Awakeness CalculateAwakeness(Awakeness baseAwakeness)
-		{
-			throw new System.NotImplementedException();
-		}
-
 		public void Interact(Interaction interaction)
 		{
 			Development = Development.CalculateGain();

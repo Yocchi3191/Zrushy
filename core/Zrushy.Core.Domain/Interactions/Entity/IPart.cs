@@ -19,12 +19,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		Arousal CalculateArousal(Arousal baseArousal, Interaction interaction);
 
 		/// <summary>
-		/// 覚醒度計算
-		/// 部位ごと、開発度等の要素によって上昇量が変化する
-		/// </summary>
-		Awakeness CalculateAwakeness(Awakeness baseAwakeness);
-
-		/// <summary>
 		/// さわり操作による内部状態の更新
 		/// </summary>
 		void Interact(Interaction interaction);

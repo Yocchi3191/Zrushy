@@ -51,11 +51,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 				: baseArousal + (_config.FingerWetBase + (int)(Development.Value * _config.FingerWetDevFactor));
 		}
 
-		public Awakeness CalculateAwakeness(Awakeness baseAwakeness)
-		{
-			throw new System.NotImplementedException();
-		}
-
 		/// <summary>
 		/// さわり操作による内部状態の更新
 		/// ペニス挿入かつ処女の場合、処女喪失を記録する

@@ -36,9 +36,5 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			return baseArousal + totalGain;
 		}
 
-		public Awakeness CalculateAwakeness(Awakeness baseAwakeness)
-		{
-			throw new System.NotImplementedException();
-		}
 	}
 }
