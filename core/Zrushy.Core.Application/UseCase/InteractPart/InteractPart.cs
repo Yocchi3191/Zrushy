@@ -3,7 +3,6 @@ using System.Linq;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
-using Zrushy.Core.Domain.Exception;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
@@ -47,12 +46,12 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 			IScenarioEvent fired = candidates
 				.Where(e => e.CanFire())
 				.OrderByDescending(e => e.Priority)
-				.FirstOrDefault()
-				?? throw new UndefinedReactionException(command.PartID);
+				.FirstOrDefault();
 
-			eventBus.Publish(fired);
+			if (fired != null)
+				eventBus.Publish(fired);
 
-			return new InteractPartResult(fired.ScenarioToStart);
+			return new InteractPartResult(fired?.ScenarioToStart);
 		}
 	}
 }

@@ -2,5 +2,5 @@
 
 namespace Zrushy.Core.Application.UseCase.InteractPart
 {
-	public record InteractPartResult(ScenarioID ScenarioToStart);
+	public record InteractPartResult(ScenarioID? ScenarioToStart);
 }

@@ -3,7 +3,6 @@ using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
-using Zrushy.Core.Domain.Exception;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
@@ -49,12 +48,13 @@ public class InteractPartTest
 	}
 
 	[Test]
-	public void Executeで発火可能なイベントがなければ例外を投げる()
+	public void Executeで発火可能なイベントがなければScenarioToStartがnullを返す()
 	{
 		var useCase = new InteractPart(_body, new StubEventRepository(), _eventBus, _interactionHistory);
 
-		Assert.Throws<UndefinedReactionException>(() =>
-			useCase.Execute(new InteractPartCommand(_partID)));
+		var result = useCase.Execute(new InteractPartCommand(_partID));
+
+		Assert.That(result.ScenarioToStart, Is.Null);
 	}
 
 	[Test]
@@ -69,13 +69,14 @@ public class InteractPartTest
 	}
 
 	[Test]
-	public void Executeで発火不可のイベントは無視して例外を投げる()
+	public void Executeで発火不可のイベントは無視してScenarioToStartがnullを返す()
 	{
 		var evt = new StubEvent(canFire: false, priority: 1, testScenarioID);
 		var useCase = new InteractPart(_body, new StubEventRepository(evt), _eventBus, _interactionHistory);
 
-		Assert.Throws<UndefinedReactionException>(() =>
-			useCase.Execute(new InteractPartCommand(_partID)));
+		var result = useCase.Execute(new InteractPartCommand(_partID));
+
+		Assert.That(result.ScenarioToStart, Is.Null);
 	}
 
 	[Test]
