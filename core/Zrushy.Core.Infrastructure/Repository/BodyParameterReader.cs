@@ -15,7 +15,6 @@ namespace Zrushy.Core.Infrastructure.Repository
 
 		/// <summary>
 		/// 快感を取得する
-		/// 注意: 快感はBody全体で管理されているため、PartIDは無視される
 		/// </summary>
 		public Arousal GetArousal(PartID partID) => body.Arousal;
 
