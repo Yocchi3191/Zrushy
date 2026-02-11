@@ -3,6 +3,6 @@ title: foot_default
 きゃっ……足、触らないで！ #anim:reaction_default #expr:expression_shy #condition:first_touch:foot
 んっ……くすぐったいよぉ…… #anim:reaction_default #expr:expression_shy
 もう……そんなに足ばっかり…… #anim:reaction_default #expr:expression_shy #condition:touch_count:foot:5
-足フェチ……なの……？ #anim:reaction_default #expr:expression_shy #condition:development:foot:12,pleasure:foot:15
-ふふ……変なの……でも、いいよ #anim:reaction_default #expr:expression_happy #condition:development:foot:25,affection:foot:20,pleasure:foot:30
+足フェチ……なの……？ #anim:reaction_default #expr:expression_shy #condition:development:foot:12,arousal:foot:15
+ふふ……変なの……でも、いいよ #anim:reaction_default #expr:expression_happy #condition:development:foot:25,affection:foot:20,arousal:foot:30
 ===

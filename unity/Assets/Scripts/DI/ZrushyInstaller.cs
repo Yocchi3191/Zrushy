@@ -40,7 +40,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<FirstTouchConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<EventFiredConditionParser>().AsSingle();
-			Container.Bind<IConditionParser>().To<PleasureConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<ArousalConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<DevelopmentConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();

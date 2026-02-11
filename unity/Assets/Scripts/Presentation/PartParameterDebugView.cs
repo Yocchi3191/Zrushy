@@ -25,8 +25,8 @@ public class PartParameterDebugView : MonoBehaviour
 		var text = "=== Part Parameters ===\n\n";
 
 		// Body 全体の快感を表示
-		var bodyPleasure = parameterReader.GetPleasure(new PartID("dummy")); // PartID は無視される
-		text += $"[Body Pleasure: {bodyPleasure.Value}]\n\n";
+		var bodyArousal = parameterReader.GetArousal(new PartID("dummy")); // PartID は無視される
+		text += $"[Body Arousal: {bodyArousal.Value}]\n\n";
 
 		foreach (var partName in parts)
 		{

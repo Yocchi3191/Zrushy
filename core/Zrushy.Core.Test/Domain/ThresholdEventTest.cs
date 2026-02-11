@@ -21,7 +21,7 @@ public class ThresholdEventTest
 		var reader = new StubPartParameterReader(pleasure: new Arousal(50));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.True);
 	}
@@ -32,7 +32,7 @@ public class ThresholdEventTest
 		var reader = new StubPartParameterReader(pleasure: new Arousal(5));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.False);
 	}
@@ -46,7 +46,7 @@ public class ThresholdEventTest
 			affection: new Affection(999));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.True);
 	}
@@ -65,7 +65,7 @@ public class ThresholdEventTest
 		var reader = new StubPartParameterReader(pleasure: new Arousal(50));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), null, () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(new Arousal(10), null, () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.True);
 	}
@@ -76,7 +76,7 @@ public class ThresholdEventTest
 		var reader = new StubPartParameterReader(pleasure: new Arousal(5));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), null, () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(new Arousal(10), null, () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.False);
 	}
@@ -87,7 +87,7 @@ public class ThresholdEventTest
 		var reader = new StubPartParameterReader(pleasure: new Arousal(50));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(null, new Arousal(100), () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(null, new Arousal(100), () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.True);
 	}
@@ -98,7 +98,7 @@ public class ThresholdEventTest
 		var reader = new StubPartParameterReader(pleasure: new Arousal(150));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(null, new Arousal(100), () => reader.GetPleasure(_partID)));
+			new Threshold<Arousal>(null, new Arousal(100), () => reader.GetArousal(_partID)));
 
 		Assert.That(condition.CanFire(), Is.False);
 	}
@@ -111,7 +111,7 @@ public class ThresholdEventTest
 			development: new Development(30));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetPleasure(_partID)),
+			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetArousal(_partID)),
 			new Threshold<Development>(new Development(10), new Development(50), () => reader.GetDevelopment(_partID)));
 
 		Assert.That(condition.CanFire(), Is.True);
@@ -125,7 +125,7 @@ public class ThresholdEventTest
 			development: new Development(60));
 
 		var condition = new ThresholdCondition(
-			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetPleasure(_partID)),
+			new Threshold<Arousal>(new Arousal(10), new Arousal(100), () => reader.GetArousal(_partID)),
 			new Threshold<Development>(new Development(10), new Development(50), () => reader.GetDevelopment(_partID)));
 
 		Assert.That(condition.CanFire(), Is.False);
@@ -149,7 +149,7 @@ public class ThresholdEventTest
 			_affection = affection ?? new Affection(0);
 		}
 
-		public Arousal GetPleasure(PartID partID) => _pleasure;
+		public Arousal GetArousal(PartID partID) => _pleasure;
 		public Development GetDevelopment(PartID partID) => _development;
 		public Affection GetAffection(PartID partID) => _affection;
 	}
