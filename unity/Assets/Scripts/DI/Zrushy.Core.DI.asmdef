@@ -5,7 +5,8 @@
         "Zenject",
         "Zrushy.Core.Presentation.Unity",
         "Zrushy.Core.Infrastructure.Unity",
-        "YarnSpinner.Unity"
+        "YarnSpinner.Unity",
+        "Zrushy.Core.Unity.Config"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
