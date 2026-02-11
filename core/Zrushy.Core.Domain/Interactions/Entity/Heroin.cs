@@ -13,16 +13,16 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	/// 身体エンティティ（集約ルート）
 	/// ヒロインの身体全体を管理し、各部位へのアクセスを制御する
 	/// </summary>
-	public class Body
+	public class Heroin
 	{
-		private readonly List<Part> parts;
+		private readonly List<IPart> parts;
 		private readonly IEventBus eventBus;
 
 		/// <summary>
-		/// Body全体の快感パラメータ
+		/// Body全体の興奮度パラメータ
 		/// 各部位の開発度と好感度に応じて増減する
 		/// </summary>
-		public Pleasure Pleasure { get; private set; }
+		public Arousal Arousal { get; private set; }
 
 		/// <summary>
 		/// 絶頂判定の閾値
@@ -33,18 +33,18 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 身体を作成する
 		/// </summary>
 		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
-		public Body(IEventBus eventBus)
+		public Heroin(IEventBus eventBus)
 		{
-			parts = new List<Part>();
+			parts = new List<IPart>();
 			this.eventBus = eventBus;
-			Pleasure = new Pleasure(0);
+			Arousal = new Arousal(0);
 		}
 
 		/// <summary>
 		/// 部位を追加する
 		/// </summary>
 		/// <param name="part">追加する部位</param>
-		public void AddPart(Part part)
+		public void AddPart(IPart part)
 		{
 			parts.Add(part);
 		}
@@ -56,10 +56,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
 		{
-			Part targetPart = GetPart(interaction.PartID);
+			IPart targetPart = GetPart(interaction.PartID);
 
-			// 快感を部位の開発度・好感度を考慮して増加
-			Pleasure = Pleasure.CalculateGain(targetPart.Development, targetPart.Affection);
+			// 部位ごとの計算ロジックで興奮度を更新
+			Arousal = targetPart.CalculateArousal(Arousal, interaction);
 
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
@@ -73,7 +73,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// </summary>
 		private void CheckAndHandleClimax()
 		{
-			if (Pleasure.IsAboveThreshold(CLIMAX_THRESHOLD))
+			if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
 			{
 				// 絶頂イベントを発火
 				var climaxEvent = new Event(
@@ -98,7 +98,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			if (parts.Count == 0)
 			{
 				// 部位がない場合は固定値で減少
-				Pleasure = Pleasure.ApplyCooldown(new Development(0));
+				Arousal = Arousal.ApplyCooldown(new Development(0));
 				return;
 			}
 
@@ -107,7 +107,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			int avgDevelopment = totalDevelopment / parts.Count;
 
 			// 平均開発度を使ってクールダウンを適用
-			Pleasure = Pleasure.ApplyCooldown(new Development(avgDevelopment));
+			Arousal = Arousal.ApplyCooldown(new Development(avgDevelopment));
 		}
 
 		/// <summary>
@@ -116,7 +116,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <param name="partID">部位ID</param>
 		/// <returns>部位</returns>
 		/// <exception cref="PartNotFoundException">部位が見つからない場合</exception>
-		public Part GetPart(PartID partID)
+		public IPart GetPart(PartID partID)
 		{
 			return parts.Find(p => p.ID.Equals(partID))
 				?? throw new PartNotFoundException(partID);

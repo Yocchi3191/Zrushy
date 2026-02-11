@@ -4,7 +4,7 @@ namespace Zrushy.Core.Domain.Interactions.Service
 {
 	public interface IPartParameterReader
 	{
-		Pleasure GetPleasure(PartID partID);
+		Arousal GetArousal(PartID partID);
 		Development GetDevelopment(PartID partID);
 		Affection GetAffection(PartID partID);
 	}

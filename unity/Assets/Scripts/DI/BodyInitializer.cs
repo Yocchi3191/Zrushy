@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Zenject;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Unity.Config;
 
 namespace Zrushy.Core.DI
 {
@@ -12,7 +13,12 @@ namespace Zrushy.Core.DI
 	public class BodyInitializer : MonoBehaviour
 	{
 		[Inject]
-		private Body body;
+		private Heroin body;
+
+		[Header("部位設定")]
+		[SerializeField] private PartConfigAsset defaultPartConfig;
+		[SerializeField] private PartConfigAsset chestPartConfig;
+		[SerializeField] private SecretPartConfigAsset secretPartConfig;
 
 		private void Start()
 		{
@@ -25,18 +31,32 @@ namespace Zrushy.Core.DI
 		/// </summary>
 		private void InitializeBody()
 		{
-			string[] partIds = { "head", "torso", "arm", "hand", "waist", "leg", "foot" };
+			body.AddPart(new ChestPart(
+				new PartID("chest"),
+				new Development(0),
+				new Affection(0),
+				chestPartConfig.ToConfig()
+			));
 
-			foreach (var id in partIds)
+			body.AddPart(new SecretPart(
+				new PartID("secret"),
+				new Development(0),
+				new Affection(0),
+				secretPartConfig.ToConfig()
+			));
+
+			string[] defaultPartIds = { "head", "torso", "arm", "hand", "waist", "leg", "foot" };
+			foreach (var id in defaultPartIds)
 			{
 				body.AddPart(new Part(
 					new PartID(id),
 					new Development(0),
-					new Affection(0)
+					new Affection(0),
+					defaultPartConfig.ToConfig()
 				));
 			}
 
-			Debug.Log($"[BodyInitializer] Body initialized with {partIds.Length} parts, Pleasure={body.Pleasure.Value}");
+			Debug.Log($"[BodyInitializer] Body initialized, Arousal={body.Arousal.Value}");
 		}
 	}
 }

@@ -1879,6 +1879,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216bbd2896186cd4a8322dac9faa5ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.DI::Zrushy.Core.DI.BodyInitializer
+  defaultPartConfig: {fileID: 11400000, guid: bdf82e037625e7545abcdbc37fd18be4, type: 2}
+  chestPartConfig: {fileID: 11400000, guid: b5e335890c4bab044bb3bc2503bc1ca1, type: 2}
+  secretPartConfig: {fileID: 11400000, guid: ddf9d64415a2e994b9f46614eb2700b1, type: 2}
 --- !u!4 &1153780309
 Transform:
   m_ObjectHideFlags: 0

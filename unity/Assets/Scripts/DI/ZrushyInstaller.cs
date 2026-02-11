@@ -28,8 +28,8 @@ namespace Zrushy.Core.DI
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
 			// Domain層
-			// Body（シングルトン）※ IEventBus に依存
-			Container.Bind<Body>().AsSingle();
+			// Heroin（シングルトン）※ IEventBus に依存
+			Container.Bind<Heroin>().AsSingle();
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
@@ -40,7 +40,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<FirstTouchConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<EventFiredConditionParser>().AsSingle();
-			Container.Bind<IConditionParser>().To<PleasureConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<ArousalConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<DevelopmentConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();

@@ -6,35 +6,35 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	/// 部位エンティティ
 	/// ヒロインの身体の各部位を表現する
 	/// </summary>
-	public class Part
+	public class Part : IPart
 	{
+		private readonly PartConfig _config;
+
 		public PartID ID { get; }
+		public Development Development { get; private set; }
+		public Affection Affection { get; private set; }
 
-		public Development Development { get; private set; } // 開発度
-		public Affection Affection { get; private set; } // 好感度
-
-		/// <summary>
-		/// 部位を作成する
-		/// </summary>
-		/// <param name="id">部位ID</param>
-		/// <param name="development">開発度の初期値</param>
-		/// <param name="affection">好感度の初期値</param>
-		public Part(PartID id, Development development, Affection affection)
+		public Part(PartID id, Development development, Affection affection, PartConfig config)
 		{
 			ID = id;
 			Development = development;
 			Affection = affection;
+			_config = config;
 		}
 
-		/// <summary>
-		/// さわり操作による反応
-		/// 開発度と好感度を更新する（快感はBodyで管理）
-		/// </summary>
-		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
 		{
 			Development = Development.CalculateGain();
 			Affection = Affection.CalculateGain();
 		}
+
+		public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction)
+		{
+			int developmentBonus = (int)(Development.Value * _config.DevelopmentFactor);
+			int affectionBonus = (int)(Affection.Value * _config.AffectionFactor);
+			int totalGain = _config.BaseGain + developmentBonus + affectionBonus;
+			return baseArousal + totalGain;
+		}
+
 	}
 }
