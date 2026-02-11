@@ -28,8 +28,8 @@ namespace Zrushy.Core.DI
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
 			// Domain層
-			// Body（シングルトン）※ IEventBus に依存
-			Container.Bind<Body>().AsSingle();
+			// Heroin（シングルトン）※ IEventBus に依存
+			Container.Bind<Heroin>().AsSingle();
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();

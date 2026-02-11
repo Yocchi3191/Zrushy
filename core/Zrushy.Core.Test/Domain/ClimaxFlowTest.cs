@@ -12,6 +12,7 @@ namespace Zrushy.Core.Test.Domain;
 /// </summary>
 public class ClimaxFlowTest
 {
+	private static readonly PartConfig _partConfig = new(-2, 0.1f, 0.05f);
 	private Heroin _body;
 	private IEventBus _eventBus;
 	private PartID _partID;
@@ -24,7 +25,7 @@ public class ClimaxFlowTest
 		_partID = new PartID("test");
 
 		// 開発度50、好感度50の部位を追加
-		_body.AddPart(new Part(_partID, new Development(50), new Affection(50)));
+		_body.AddPart(new Part(_partID, new Development(50), new Affection(50), _partConfig));
 	}
 
 	[Test]
@@ -78,11 +79,11 @@ public class ClimaxFlowTest
 		// Arrange: 開発度の異なる2つのケースを比較
 		var lowDevBody = new Heroin(_eventBus);
 		var lowDevPartID = new PartID("low_dev");
-		lowDevBody.AddPart(new Part(lowDevPartID, new Development(10), new Affection(50)));
+		lowDevBody.AddPart(new Part(lowDevPartID, new Development(10), new Affection(50), _partConfig));
 
 		var highDevBody = new Heroin(_eventBus);
 		var highDevPartID = new PartID("high_dev");
-		highDevBody.AddPart(new Part(highDevPartID, new Development(90), new Affection(50)));
+		highDevBody.AddPart(new Part(highDevPartID, new Development(90), new Affection(50), _partConfig));
 
 		// Act: 両方を絶頂まで持っていく
 		for (int i = 0; i < 30; i++)

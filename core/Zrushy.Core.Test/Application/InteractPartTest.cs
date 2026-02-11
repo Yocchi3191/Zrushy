@@ -15,6 +15,7 @@ namespace Zrushy.Core.Test.Application;
 
 public class InteractPartTest
 {
+	private static readonly PartConfig _partConfig = new(-2, 0.1f, 0.05f);
 	private PartID _partID;
 	private Heroin _body;
 	private ScenarioID testScenarioID = new ScenarioID("test_scenario");
@@ -27,7 +28,7 @@ public class InteractPartTest
 		_partID = new PartID("head");
 		_eventBus = new EventBus(new FiredEventLog());
 		_body = new Heroin(_eventBus);
-		_body.AddPart(new Part(_partID, new Development(0), new Affection(0)));
+		_body.AddPart(new Part(_partID, new Development(0), new Affection(0), _partConfig));
 
 		_interactionHistory = Substitute.For<IInteractionHistory>();
 	}

@@ -9,21 +9,18 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	/// </summary>
 	public class ChestPart : IPart
 	{
-		/// <summary>
-		/// 開発度・好感度によらず序盤から得られる基本ゲイン
-		/// 初回から快感を感じやすい部位
-		/// </summary>
-		private const int BASE_GAIN = 3;
+		private readonly PartConfig _config;
 
 		public PartID ID { get; }
 		public Development Development { get; private set; }
 		public Affection Affection { get; private set; }
 
-		public ChestPart(PartID id, Development development, Affection affection)
+		public ChestPart(PartID id, Development development, Affection affection, PartConfig config)
 		{
 			ID = id;
 			Development = development;
 			Affection = affection;
+			_config = config;
 		}
 
 		/// <summary>
@@ -33,10 +30,9 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// </summary>
 		public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction)
 		{
-			// 計算式: 基本値3 + (開発度 * 0.1) + (好感度 * 0.05)
-			// dev=0, aff=0 → gain=3  (序盤から小さく稼ぐ)
-			// dev=100, aff=100 → gain=18 (十分な開発で絶頂も可能)
-			int gain = BASE_GAIN + (int)(Development.Value * 0.1) + (int)(Affection.Value * 0.05);
+			int gain = _config.BaseGain
+				+ (int)(Development.Value * _config.DevelopmentFactor)
+				+ (int)(Affection.Value * _config.AffectionFactor);
 			return baseArousal + gain;
 		}
 
