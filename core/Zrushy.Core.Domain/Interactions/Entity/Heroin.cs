@@ -13,7 +13,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	/// 身体エンティティ（集約ルート）
 	/// ヒロインの身体全体を管理し、各部位へのアクセスを制御する
 	/// </summary>
-	public class Body
+	public class Heroin
 	{
 		private readonly List<Part> parts;
 		private readonly IEventBus eventBus;
@@ -33,7 +33,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 身体を作成する
 		/// </summary>
 		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
-		public Body(IEventBus eventBus)
+		public Heroin(IEventBus eventBus)
 		{
 			parts = new List<Part>();
 			this.eventBus = eventBus;

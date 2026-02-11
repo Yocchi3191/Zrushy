@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
@@ -14,13 +14,13 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 	/// </summary>
 	public class InteractPart : IInteractPart
 	{
-		private readonly Body body;
+		private readonly Heroin body;
 		private readonly IEventRepository eventRepository;
 		private readonly IEventBus eventBus;
 		private readonly IInteractionHistory interactionHistory;
 
 		public InteractPart(
-			Body body,
+			Heroin body,
 			IEventRepository eventRepository,
 			IEventBus eventBus,
 			IInteractionHistory interactionHistory)

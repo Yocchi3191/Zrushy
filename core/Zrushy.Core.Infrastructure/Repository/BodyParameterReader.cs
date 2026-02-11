@@ -1,4 +1,4 @@
-using Zrushy.Core.Domain.Interactions.Entity;
+﻿using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
@@ -6,9 +6,9 @@ namespace Zrushy.Core.Infrastructure.Repository
 {
 	public class BodyParameterReader : IPartParameterReader
 	{
-		private readonly Body body;
+		private readonly Heroin body;
 
-		public BodyParameterReader(Body body)
+		public BodyParameterReader(Heroin body)
 		{
 			this.body = body;
 		}

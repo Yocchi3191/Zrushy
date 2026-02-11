@@ -12,7 +12,7 @@ namespace Zrushy.Core.Test.Domain;
 /// </summary>
 public class ClimaxFlowTest
 {
-	private Body _body;
+	private Heroin _body;
 	private IEventBus _eventBus;
 	private PartID _partID;
 
@@ -20,7 +20,7 @@ public class ClimaxFlowTest
 	public void Setup()
 	{
 		_eventBus = new EventBus(new FiredEventLog());
-		_body = new Body(_eventBus);
+		_body = new Heroin(_eventBus);
 		_partID = new PartID("test");
 
 		// 開発度50、好感度50の部位を追加
@@ -74,11 +74,11 @@ public class ClimaxFlowTest
 	public void 開発度が高いほどクールダウンが緩やかになる()
 	{
 		// Arrange: 開発度の異なる2つのケースを比較
-		var lowDevBody = new Body(_eventBus);
+		var lowDevBody = new Heroin(_eventBus);
 		var lowDevPartID = new PartID("low_dev");
 		lowDevBody.AddPart(new Part(lowDevPartID, new Development(10), new Affection(50)));
 
-		var highDevBody = new Body(_eventBus);
+		var highDevBody = new Heroin(_eventBus);
 		var highDevPartID = new PartID("high_dev");
 		highDevBody.AddPart(new Part(highDevPartID, new Development(90), new Affection(50)));
 
