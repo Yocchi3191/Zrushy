@@ -1,7 +1,5 @@
 using System.Linq;
 using Yarn.Unity;
-using Zrushy.Core.Domain.Events.Entity;
-using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
@@ -10,19 +8,16 @@ public class YarnScenarioEngine : IScenarioEngine
 {
 	private readonly DialogueRunner dialogueRunner;
 	private readonly ZrushyDialoguePresenter dialoguePresenter;
-	private readonly IConditionFactory conditionFactory;
 
 	private Action currentAction;
 	private bool isFinished;
 
 	public bool IsScenarioFinished => isFinished;
-	public IEvent? CurrentProceedCondition { get; private set; }
 
-	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter, IConditionFactory conditionFactory)
+	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
 	{
 		this.dialogueRunner = dialogueRunner;
 		this.dialoguePresenter = presenter;
-		this.conditionFactory = conditionFactory;
 
 		presenter.Initialize(this);
 	}
@@ -36,7 +31,6 @@ public class YarnScenarioEngine : IScenarioEngine
 		}
 
 		isFinished = false;
-		CurrentProceedCondition = null;
 		dialogueRunner.StartDialogue(scenarioID.Value);
 	}
 
@@ -48,17 +42,14 @@ public class YarnScenarioEngine : IScenarioEngine
 	}
 
 	/// <summary>
-	/// Yarn の Line → Action 変換 + 進行条件の解析
+	/// Yarn の Line → Action 変換
 	/// </summary>
 	internal void SetLineAsAction(LocalizedLine line)
 	{
 		string dialogue = line.TextWithoutCharacterName.Text;
 		string anim = GetMetadata(line, "anim", "reaction_default");
 		string expr = GetMetadata(line, "expr", "expression_neutral");
-		string conditionString = GetMetadata(line, "condition", null);
-		currentAction = new Action(dialogue, anim, expr, conditionString);
-
-		CurrentProceedCondition = conditionString != null ? conditionFactory.Create(conditionString) : null;
+		currentAction = new Action(dialogue, anim, expr);
 	}
 
 	internal void MarkFinished()
