@@ -11,7 +11,6 @@ namespace Zrushy.Core.Presentation
 
 		public bool IsPlaying => isPlaying;
 		private bool isPlaying = false;
-		private bool pendingNewLine = false;
 
 		/// <summary>
 		/// シナリオが開始されたときに発火するイベント
@@ -58,21 +57,7 @@ namespace Zrushy.Core.Presentation
 
 		public void Next()
 		{
-			if (!isPlaying)
-				return;
-
-			// 前回の advance で受け取った新ラインの entry 条件が未達の場合、再度チェック
-			if (pendingNewLine)
-			{
-				var condition = engine.CurrentProceedCondition;
-				if (condition != null && !condition.CanFire())
-					return;
-
-				pendingNewLine = false;
-				heroin.Act(engine.GetCurrentAction());
-				return;
-			}
-
+			if (!isPlaying) return;
 			engine.Next();
 			if (engine.IsScenarioFinished)
 			{
@@ -80,16 +65,6 @@ namespace Zrushy.Core.Presentation
 				OnScenarioFinished?.Invoke();
 				return;
 			}
-
-			// 新ラインの entry 条件を確認
-			var entryCondition = engine.CurrentProceedCondition;
-			if (entryCondition != null && !entryCondition.CanFire())
-			{
-				// 条件未達 — Yarn は次のラインを保持したまま待機
-				pendingNewLine = true;
-				return;
-			}
-
 			heroin.Act(engine.GetCurrentAction());
 		}
 
@@ -103,7 +78,6 @@ namespace Zrushy.Core.Presentation
 				return;
 
 			isPlaying = false;
-			pendingNewLine = false;
 			// 注: OnScenarioFinished は発火しない（強制停止なので）
 		}
 	}
