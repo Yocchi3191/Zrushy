@@ -34,21 +34,16 @@ namespace Zrushy.Unity.Presentation
 		/// </summary>
 		private void OnEventFired(IScenarioEvent gameEvent)
 		{
-			// 高優先度イベント（絶頂など）は現在のシナリオを割り込む
 			if (gameEvent.Priority >= INTERRUPT_PRIORITY_THRESHOLD && scenarioPlayer.IsPlaying)
 			{
-				scenarioPlayer.Stop(); // 現在のシナリオを強制停止
-				scenarioPlayer.Play(gameEvent.ScenarioToStart); // 新しいシナリオを開始
+				scenarioPlayer.Stop();
+				scenarioPlayer.Play(gameEvent.ScenarioToStart);
 			}
-			// 通常の優先度
-			else if (scenarioPlayer.IsPlaying)
+			else if (!scenarioPlayer.IsPlaying)
 			{
-				scenarioPlayer.Next(); // 次へ進む
+				scenarioPlayer.Play(gameEvent.ScenarioToStart);
 			}
-			else
-			{
-				scenarioPlayer.Play(gameEvent.ScenarioToStart); // 新規開始
-			}
+			// 再生中のタッチは無視（InteractPart でパラメータは加算済み）
 		}
 
 		private void OnDestroy()
