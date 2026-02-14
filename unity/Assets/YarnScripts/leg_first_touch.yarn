@@ -1,0 +1,7 @@
+title: leg_first_touch
+tags: part:leg
+condition: first_touch:leg
+priority: 10
+---
+やっ……脚、触らないでよ！ #anim:reaction_default #expr:expression_shy
+===

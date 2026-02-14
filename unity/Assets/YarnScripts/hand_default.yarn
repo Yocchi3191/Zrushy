@@ -1,7 +1,6 @@
 title: hand_default
+tags: part:hand
+priority: 0
 ---
-わっ……手、触らないで #anim:reaction_default #expr:expression_shy #condition:first_touch:hand
 ちょっと……くすぐったいよ #anim:reaction_default #expr:expression_shy
-手を繋いでくれるの……？ #anim:reaction_default #expr:expression_happy #condition:touch_count:hand:3,affection:hand:10
-もう、離さないでね…… #anim:reaction_default #expr:expression_happy #condition:affection:hand:30
 ===

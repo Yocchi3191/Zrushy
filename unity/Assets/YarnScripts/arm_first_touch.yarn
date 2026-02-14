@@ -1,0 +1,7 @@
+title: arm_first_touch
+tags: part:arm
+condition: first_touch:arm
+priority: 10
+---
+ん……腕、触らないでよ #anim:reaction_default #expr:expression_shy
+===

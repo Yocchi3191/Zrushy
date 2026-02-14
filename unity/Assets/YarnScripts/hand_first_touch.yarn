@@ -1,0 +1,7 @@
+title: hand_first_touch
+tags: part:hand
+condition: first_touch:hand
+priority: 10
+---
+わっ……手、触らないで #anim:reaction_default #expr:expression_shy
+===

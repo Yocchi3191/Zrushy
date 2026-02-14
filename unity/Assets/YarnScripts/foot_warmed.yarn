@@ -1,0 +1,7 @@
+title: foot_warmed
+tags: part:foot
+condition: touch_count:foot:5
+priority: 5
+---
+もう……そんなに足ばっかり…… #anim:reaction_default #expr:expression_shy
+===

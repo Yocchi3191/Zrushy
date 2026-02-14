@@ -1,0 +1,7 @@
+title: waist_first_touch
+tags: part:waist
+condition: first_touch:waist
+priority: 10
+---
+やっ……！ そこは……ダメ……！ #anim:reaction_default #expr:expression_shy
+===
