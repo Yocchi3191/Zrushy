@@ -6,7 +6,7 @@ namespace Zrushy.Core.Presentation
 {
 	public class ScenarioPlayer
 	{
-		private readonly IScenarioEngine engine;
+		private readonly IScenarioRepository engine;
 		private readonly HeroinViewModel heroin;
 
 		public bool IsPlaying => isPlaying;
@@ -24,7 +24,7 @@ namespace Zrushy.Core.Presentation
 		/// </summary>
 		public event System.Action? OnScenarioFinished;
 
-		public ScenarioPlayer(IScenarioEngine engine, HeroinViewModel heroin)
+		public ScenarioPlayer(IScenarioRepository engine, HeroinViewModel heroin)
 		{
 			this.engine = engine;
 			this.heroin = heroin;

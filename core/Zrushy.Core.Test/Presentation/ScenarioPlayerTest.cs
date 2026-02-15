@@ -15,7 +15,7 @@ public class ScenarioPlayerTest
 	private Action action1 = new Action("test_1", "test_anim", "test_happy");
 	private Action action2 = new Action("test_2", "test_anim", "test_happy");
 
-	IScenarioEngine repository;
+	IScenarioRepository repository;
 	HeroinViewModel heroinViewModel;
 
 	ScenarioPlayer player;
@@ -27,7 +27,7 @@ public class ScenarioPlayerTest
 			new List<Action> { action1, action2 }
 		);
 
-		repository = Substitute.For<IScenarioEngine>();
+		repository = Substitute.For<IScenarioRepository>();
 		repository.When(x => x.Start(Arg.Any<ScenarioID>()))
 			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action1));
 		repository.When(x => x.Next())

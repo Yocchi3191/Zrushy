@@ -1,10 +1,10 @@
-using System.Linq;
+﻿using System.Linq;
 using Yarn.Unity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 
-public class YarnScenarioEngine : IScenarioEngine
+public class YarnScenarioRepository : IScenarioRepository
 {
 	private readonly DialogueRunner dialogueRunner;
 	private readonly ZrushyDialoguePresenter dialoguePresenter;
@@ -15,7 +15,7 @@ public class YarnScenarioEngine : IScenarioEngine
 	public bool IsScenarioFinished => isFinished;
 	public event System.Action<Action> OnActionChanged;
 
-	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
+	public YarnScenarioRepository(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
 	{
 		this.dialogueRunner = dialogueRunner;
 		this.dialoguePresenter = presenter;
@@ -26,7 +26,7 @@ public class YarnScenarioEngine : IScenarioEngine
 	public void Start(ScenarioID scenarioID)
 	{
 		if (dialogueRunner.YarnProject == null ||
-		    !dialogueRunner.YarnProject.NodeNames.Contains(scenarioID.Value))
+			!dialogueRunner.YarnProject.NodeNames.Contains(scenarioID.Value))
 		{
 			throw new ScenarioNotFoundException(scenarioID);
 		}

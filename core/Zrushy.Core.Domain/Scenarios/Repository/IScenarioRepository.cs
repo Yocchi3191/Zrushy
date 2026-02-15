@@ -3,7 +3,7 @@ using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Domain.Scenarios.Repository
 {
-	public interface IScenarioEngine
+	public interface IScenarioRepository
 	{
 		bool IsScenarioFinished { get; }
 		event System.Action<Action> OnActionChanged;
