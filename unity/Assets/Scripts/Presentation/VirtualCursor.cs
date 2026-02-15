@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// OS カーソルを非表示にし、手スプライトをマウス座標に追従させるカスタムカーソル
@@ -12,6 +13,11 @@ public class VirtualCursor : MonoBehaviour
 	{
 		rectTransform = GetComponent<RectTransform>();
 		Cursor.visible = false;
+
+		// 他 UI へのレイキャストをブロックしないよう無効化
+		var image = GetComponent<Image>();
+		if (image != null)
+			image.raycastTarget = false;
 	}
 
 	private void Update()
