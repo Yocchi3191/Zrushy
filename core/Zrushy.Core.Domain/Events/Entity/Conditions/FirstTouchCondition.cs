@@ -19,7 +19,7 @@ namespace Zrushy.Core.Domain.Events.Entity.Conditions
 
 		public bool CanFire()
 		{
-			return history.Get(partID).Count == 0;
+			return history.Get(partID).Count == 1;
 		}
 	}
 }

@@ -1,0 +1,7 @@
+title: hand_warmed
+tags: part:hand
+condition: touch_count:hand:3,affection:hand:10
+priority: 5
+---
+手を繋いでくれるの……？ #anim:reaction_default #expr:expression_happy
+===

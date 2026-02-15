@@ -8,9 +8,9 @@ namespace Zrushy.Core.Presentation
 	/// </summary>
 	public class PartController
 	{
-		private readonly IInteractPart interactPartUseCase;
+		private readonly InteractPart interactPartUseCase;
 
-		public PartController(IInteractPart interactPartUseCase)
+		public PartController(InteractPart interactPartUseCase)
 		{
 			this.interactPartUseCase = interactPartUseCase;
 		}

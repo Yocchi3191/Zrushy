@@ -1,2 +1,5 @@
 tools/gh-sync-labels/
 .claude/
+
+# ビルドファイル
+.dll

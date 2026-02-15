@@ -1,0 +1,7 @@
+title: foot_first_touch
+tags: part:foot
+condition: first_touch:foot
+priority: 10
+---
+きゃっ……足、触らないで！ #anim:reaction_default #expr:expression_shy
+===

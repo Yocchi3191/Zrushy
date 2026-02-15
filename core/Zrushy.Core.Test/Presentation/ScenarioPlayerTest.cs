@@ -1,5 +1,4 @@
 ﻿using NSubstitute;
-using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
@@ -16,7 +15,7 @@ public class ScenarioPlayerTest
 	private Action action1 = new Action("test_1", "test_anim", "test_happy");
 	private Action action2 = new Action("test_2", "test_anim", "test_happy");
 
-	IScenarioEngine repository;
+	IScenarioRepository repository;
 	HeroinViewModel heroinViewModel;
 
 	ScenarioPlayer player;
@@ -28,9 +27,11 @@ public class ScenarioPlayerTest
 			new List<Action> { action1, action2 }
 		);
 
-		repository = Substitute.For<IScenarioEngine>();
-		repository.GetCurrentAction().Returns(action1, action2);
-		repository.CurrentProceedCondition.Returns((IEvent?)null);
+		repository = Substitute.For<IScenarioRepository>();
+		repository.When(x => x.Start(Arg.Any<ScenarioID>()))
+			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action1));
+		repository.When(x => x.Next())
+			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action2));
 
 		heroinViewModel = new HeroinViewModel();
 

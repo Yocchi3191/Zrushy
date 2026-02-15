@@ -1,8 +1,0 @@
-title: arm_default
----
-ん……腕、触らないでよ #anim:reaction_default #expr:expression_shy #condition:first_touch:arm
-ちょっと……くすぐったい…… #anim:reaction_default #expr:expression_shy
-なに……甘えたいの……？ #anim:reaction_default #expr:expression_shy #condition:touch_count:arm:4,affection:arm:10
-もう……仕方ないなぁ…… #anim:reaction_default #expr:expression_happy #condition:affection:arm:25
-ずっと、こうしてようか…… #anim:reaction_default #expr:expression_happy #condition:affection:arm:40,touch_count:arm:10
-===

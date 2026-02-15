@@ -6,12 +6,11 @@ namespace Zrushy.Core.Presentation
 {
 	public class ScenarioPlayer
 	{
-		private readonly IScenarioEngine engine;
+		private readonly IScenarioRepository engine;
 		private readonly HeroinViewModel heroin;
 
 		public bool IsPlaying => isPlaying;
 		private bool isPlaying = false;
-		private bool pendingNewLine = false;
 
 		/// <summary>
 		/// シナリオが開始されたときに発火するイベント
@@ -25,10 +24,11 @@ namespace Zrushy.Core.Presentation
 		/// </summary>
 		public event System.Action? OnScenarioFinished;
 
-		public ScenarioPlayer(IScenarioEngine engine, HeroinViewModel heroin)
+		public ScenarioPlayer(IScenarioRepository engine, HeroinViewModel heroin)
 		{
 			this.engine = engine;
 			this.heroin = heroin;
+			engine.OnActionChanged += heroin.Act;
 		}
 
 		public void Play(ScenarioID scenarioID)
@@ -42,7 +42,6 @@ namespace Zrushy.Core.Presentation
 			{
 				engine.Start(scenarioID);
 				isPlaying = true;
-				heroin.Act(engine.GetCurrentAction());
 
 				// シナリオ開始イベントを発火
 				OnScenarioStarted?.Invoke();
@@ -58,39 +57,13 @@ namespace Zrushy.Core.Presentation
 
 		public void Next()
 		{
-			if (!isPlaying)
-				return;
-
-			// 前回の advance で受け取った新ラインの entry 条件が未達の場合、再度チェック
-			if (pendingNewLine)
-			{
-				var condition = engine.CurrentProceedCondition;
-				if (condition != null && !condition.CanFire())
-					return;
-
-				pendingNewLine = false;
-				heroin.Act(engine.GetCurrentAction());
-				return;
-			}
-
+			if (!isPlaying) return;
 			engine.Next();
 			if (engine.IsScenarioFinished)
 			{
 				isPlaying = false;
 				OnScenarioFinished?.Invoke();
-				return;
 			}
-
-			// 新ラインの entry 条件を確認
-			var entryCondition = engine.CurrentProceedCondition;
-			if (entryCondition != null && !entryCondition.CanFire())
-			{
-				// 条件未達 — Yarn は次のラインを保持したまま待機
-				pendingNewLine = true;
-				return;
-			}
-
-			heroin.Act(engine.GetCurrentAction());
 		}
 
 		/// <summary>
@@ -102,8 +75,8 @@ namespace Zrushy.Core.Presentation
 			if (!isPlaying)
 				return;
 
+			engine.Stop();
 			isPlaying = false;
-			pendingNewLine = false;
 			// 注: OnScenarioFinished は発火しない（強制停止なので）
 		}
 	}

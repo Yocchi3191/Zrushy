@@ -32,7 +32,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<Heroin>().AsSingle();
 
 			// Repository（シングルトン）
-			Container.Bind<IEventRepository>().To<EventRepository>().AsSingle();
+			Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
 			Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
 			Container.Bind<IPartParameterReader>().To<BodyParameterReader>().AsSingle();
 
@@ -50,11 +50,11 @@ namespace Zrushy.Core.DI
 			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
 
 			// ScenarioEngine（YarnScenarioEngine を使用）
-			Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
+			Container.Bind<IScenarioRepository>().To<YarnScenarioRepository>().AsSingle();
 
 			// Application層
 			// UseCase（シングルトン）
-			Container.Bind<IInteractPart>().To<InteractPart>().AsSingle();
+			Container.Bind<InteractPart>().To<InteractPart>().AsSingle();
 
 			// Presentation層
 			Container.Bind<ScenarioPlayer>().AsSingle();

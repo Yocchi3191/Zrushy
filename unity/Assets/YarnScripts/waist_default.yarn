@@ -1,8 +1,0 @@
-title: waist_default
----
-やっ……！ そこは……ダメ……！ #anim:reaction_default #expr:expression_shy #condition:first_touch:waist
-んっ……くすぐったいってば…… #anim:reaction_default #expr:expression_shy
-もう……そんなに触ったら変になっちゃう…… #anim:reaction_default #expr:expression_shy #condition:arousal:waist:10
-あっ……力、入らない…… #anim:reaction_default #expr:expression_shy #condition:arousal:waist:30,touch_count:waist:8
-んん……もっと、ギュッてして…… #anim:reaction_default #expr:expression_happy #condition:development:waist:25,arousal:waist:50,affection:waist:30
-===

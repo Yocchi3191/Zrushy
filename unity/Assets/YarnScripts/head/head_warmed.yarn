@@ -1,0 +1,7 @@
+title: head_warmed
+tags: part:head
+condition: touch_count:head:5
+priority: 5
+---
+もう……撫でないでよ…… #anim:reaction_default #expr:expression_shy
+===
