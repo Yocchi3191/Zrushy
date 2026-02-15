@@ -6,12 +6,12 @@ namespace Zrushy.Core.Domain.Scenarios.Entity
 	public class Scenario
 	{
 		public ScenarioID ID { get; }
-		private readonly IReadOnlyList<Action> actions;
+		private readonly IReadOnlyList<Beat> actions;
 
 		public int Count => actions.Count;
-		public Action this[int index] => actions[index];
+		public Beat this[int index] => actions[index];
 
-		public Scenario(ScenarioID id, IReadOnlyList<Action> actions)
+		public Scenario(ScenarioID id, IReadOnlyList<Beat> actions)
 		{
 			this.ID = id;
 			this.actions = actions;

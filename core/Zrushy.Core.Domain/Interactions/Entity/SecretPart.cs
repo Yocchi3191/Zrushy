@@ -65,5 +65,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			Development = Development.CalculateGain();
 			Affection = Affection.CalculateGain();
 		}
+
+		public void AddDevelopment(Development bonus)
+		{
+			Development = new Development(Development.Value + bonus.Value);
+		}
 	}
 }

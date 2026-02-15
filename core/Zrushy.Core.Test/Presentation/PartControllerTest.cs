@@ -43,7 +43,7 @@ namespace Zrushy.Core.Test.Presentation
 		{
 			// Arrange
 			InteractPart interactPart = new InteractPart(heroin, repo, bus, history);
-			PartController controller = new PartController(interactPart);
+			PartController controller = new PartController(interactPart, new ScenarioInputGate());
 			PartInput input = new PartInput(new PartID("head"));
 
 			// Act

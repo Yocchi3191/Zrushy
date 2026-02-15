@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Zenject;
 using Zrushy.Core.Domain.Events.Service;
@@ -16,7 +17,8 @@ public class PartParameterDebugView : MonoBehaviour
 	[SerializeField]
 	private TextMeshProUGUI debugText;
 
-	private readonly string[] parts = { "head", "torso", "hand", "arm", "waist", "foot", "leg" };
+	[SerializeField]
+	private List<string> parts = new List<string> { "head", "torso", "hand", "arm", "waist", "foot", "leg" };
 
 	private void Update()
 	{

@@ -1,0 +1,7 @@
+title: torso_warmed
+tags: part:torso
+condition: touch_count:torso:5
+priority: 5
+---
+もう……くすぐったいってば…… #anim:reaction_default #expr:expression_shy
+===

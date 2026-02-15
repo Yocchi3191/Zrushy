@@ -1,4 +1,4 @@
-﻿using Zrushy.Core.Application.UseCase.InteractPart;
+using Zrushy.Core.Application.UseCase.InteractPart;
 
 namespace Zrushy.Core.Presentation
 {
@@ -9,10 +9,12 @@ namespace Zrushy.Core.Presentation
 	public class PartController
 	{
 		private readonly InteractPart interactPartUseCase;
+		private readonly ScenarioInputGate scenarioInputGate;
 
-		public PartController(InteractPart interactPartUseCase)
+		public PartController(InteractPart interactPartUseCase, ScenarioInputGate scenarioInputGate)
 		{
 			this.interactPartUseCase = interactPartUseCase;
+			this.scenarioInputGate = scenarioInputGate;
 		}
 
 		/// <summary>
@@ -23,6 +25,7 @@ namespace Zrushy.Core.Presentation
 		{
 			InteractPartCommand command = new InteractPartCommand(input.PartID);
 			interactPartUseCase.Execute(command);
+			scenarioInputGate.NotifyTouch(input.PartID.Value);
 		}
 	}
 }

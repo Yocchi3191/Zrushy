@@ -1,19 +1,19 @@
 ﻿using System.Linq;
 using Yarn.Unity;
+using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
-using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
 
 public class YarnScenarioRepository : IScenarioRepository
 {
 	private readonly DialogueRunner dialogueRunner;
 	private readonly ZrushyDialoguePresenter dialoguePresenter;
 
-	private Action currentAction;
+	private Beat currentBeat;
 	private bool isFinished;
 
 	public bool IsScenarioFinished => isFinished;
-	public event System.Action<Action> OnActionChanged;
+	public event System.Action<Beat> OnBeatChanged;
 
 	public YarnScenarioRepository(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
 	{
@@ -35,7 +35,7 @@ public class YarnScenarioRepository : IScenarioRepository
 		dialogueRunner.StartDialogue(scenarioID.Value);
 	}
 
-	public Action GetCurrentAction() => currentAction;
+	public Beat GetCurrentBeat() => currentBeat;
 
 	public void Next()
 	{
@@ -50,8 +50,8 @@ public class YarnScenarioRepository : IScenarioRepository
 		string dialogue = line.TextWithoutCharacterName.Text;
 		string anim = GetMetadata(line, "anim", "reaction_default");
 		string expr = GetMetadata(line, "expr", "expression_neutral");
-		currentAction = new Action(dialogue, anim, expr);
-		OnActionChanged?.Invoke(currentAction);
+		currentBeat = new Beat(dialogue, anim, expr);
+		OnBeatChanged?.Invoke(currentBeat);
 	}
 
 	internal void MarkFinished()

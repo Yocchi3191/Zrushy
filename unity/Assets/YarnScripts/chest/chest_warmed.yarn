@@ -1,0 +1,7 @@
+title: chest_warmed
+tags: part:chest
+condition: touch_count:chest:5
+priority: 5
+---
+もう……胸ばっかり触って…… #anim:reaction_default #expr:expression_shy
+===
