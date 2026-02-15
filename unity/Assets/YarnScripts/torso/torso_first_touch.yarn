@@ -1,0 +1,7 @@
+title: torso_first_touch
+tags: part:torso
+condition: first_touch:torso
+priority: 10
+---
+ちょっ……胴体触らないでよ…… #anim:reaction_default #expr:expression_shy
+===
