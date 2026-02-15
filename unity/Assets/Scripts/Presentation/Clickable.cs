@@ -13,6 +13,8 @@ public class Clickable : MonoBehaviour, IPointerClickHandler
 {
 	[SerializeField] private string partId = "head"; // インスペクタで設定可能な部位ID
 
+	public string PartId => partId;
+
 	[Inject]
 	private PartController controller;
 
