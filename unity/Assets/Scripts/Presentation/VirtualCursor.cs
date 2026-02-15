@@ -22,11 +22,15 @@ public class VirtualCursor : MonoBehaviour
 
 	private void Update()
 	{
-		rectTransform.position = Input.mousePosition;
+		// マウスが動いたときだけ追従する
+		// MoveTo() 呼び出し後にマウスが静止していても上書きしないため
+		if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+			rectTransform.position = Input.mousePosition;
 	}
 
 	/// <summary>
 	/// カーソルを指定スクリーン座標へ移動する（force_touch から呼ばれる）
+	/// マウスが動くまでこの位置を維持する
 	/// </summary>
 	/// <param name="screenPos">移動先のスクリーン座標</param>
 	public void MoveTo(Vector2 screenPos)
