@@ -1,5 +1,6 @@
 ﻿using Yarn.Unity;
 using Zenject;
+using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
@@ -10,6 +11,7 @@ using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
+using Zrushy.Unity.Presentation;
 
 namespace Zrushy.Core.DI
 {
@@ -55,10 +57,14 @@ namespace Zrushy.Core.DI
 			// Application層
 			// UseCase（シングルトン）
 			Container.Bind<InteractPart>().To<InteractPart>().AsSingle();
+			Container.Bind<ApplyBonus>().AsSingle();
 
 			// Presentation層
+			Container.Bind<ScenarioInputGate>().AsSingle();
 			Container.Bind<ScenarioPlayer>().AsSingle();
 			Container.Bind<PartController>().AsSingle();
+			Container.Bind<VirtualCursor>().FromComponentInHierarchy().AsSingle();
+			Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
 
 			// ViewModel
 			Container.Bind<HeroinViewModel>().AsSingle();
