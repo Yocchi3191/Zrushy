@@ -28,7 +28,10 @@ public class ScenarioPlayerTest
 		);
 
 		repository = Substitute.For<IScenarioEngine>();
-		repository.GetCurrentAction().Returns(action1, action2);
+		repository.When(x => x.Start(Arg.Any<ScenarioID>()))
+			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action1));
+		repository.When(x => x.Next())
+			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action2));
 
 		heroinViewModel = new HeroinViewModel();
 

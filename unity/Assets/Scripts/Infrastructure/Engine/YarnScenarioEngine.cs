@@ -13,6 +13,7 @@ public class YarnScenarioEngine : IScenarioEngine
 	private bool isFinished;
 
 	public bool IsScenarioFinished => isFinished;
+	public event System.Action<Action> OnActionChanged;
 
 	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
 	{
@@ -50,11 +51,17 @@ public class YarnScenarioEngine : IScenarioEngine
 		string anim = GetMetadata(line, "anim", "reaction_default");
 		string expr = GetMetadata(line, "expr", "expression_neutral");
 		currentAction = new Action(dialogue, anim, expr);
+		OnActionChanged?.Invoke(currentAction);
 	}
 
 	internal void MarkFinished()
 	{
 		isFinished = true;
+	}
+
+	public void Stop()
+	{
+		dialogueRunner.Stop();
 	}
 
 	private string GetMetadata(LocalizedLine line, string key, string fallback)

@@ -6,9 +6,11 @@ namespace Zrushy.Core.Domain.Scenarios.Repository
 	public interface IScenarioEngine
 	{
 		bool IsScenarioFinished { get; }
+		event System.Action<Action> OnActionChanged;
 
 		Action GetCurrentAction();
 		void Next();
 		void Start(ScenarioID scenarioID);
+		void Stop();
 	}
 }

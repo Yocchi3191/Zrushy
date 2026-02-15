@@ -28,6 +28,7 @@ namespace Zrushy.Core.Presentation
 		{
 			this.engine = engine;
 			this.heroin = heroin;
+			engine.OnActionChanged += heroin.Act;
 		}
 
 		public void Play(ScenarioID scenarioID)
@@ -41,7 +42,6 @@ namespace Zrushy.Core.Presentation
 			{
 				engine.Start(scenarioID);
 				isPlaying = true;
-				heroin.Act(engine.GetCurrentAction());
 
 				// シナリオ開始イベントを発火
 				OnScenarioStarted?.Invoke();
@@ -63,9 +63,7 @@ namespace Zrushy.Core.Presentation
 			{
 				isPlaying = false;
 				OnScenarioFinished?.Invoke();
-				return;
 			}
-			heroin.Act(engine.GetCurrentAction());
 		}
 
 		/// <summary>
@@ -77,6 +75,7 @@ namespace Zrushy.Core.Presentation
 			if (!isPlaying)
 				return;
 
+			engine.Stop();
 			isPlaying = false;
 			// 注: OnScenarioFinished は発火しない（強制停止なので）
 		}
