@@ -111,6 +111,16 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		}
 
 		/// <summary>
+		/// 指定した部位の開発度ボーナスを加算する（シナリオコマンドから呼ばれる）
+		/// </summary>
+		/// <param name="partID">対象部位ID</param>
+		/// <param name="amount">加算量</param>
+		public void ApplyDevelopmentBonus(PartID partID, int amount)
+		{
+			GetPart(partID).AddDevelopment(new Development(amount));
+		}
+
+		/// <summary>
 		/// 指定した部位を取得する
 		/// </summary>
 		/// <param name="partID">部位ID</param>

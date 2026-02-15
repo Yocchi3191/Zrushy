@@ -22,5 +22,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// さわり操作による内部状態の更新
 		/// </summary>
 		void Interact(Interaction interaction);
+
+		/// <summary>
+		/// 開発度ボーナスを加算する（シナリオコマンドから呼ばれる）
+		/// </summary>
+		void AddDevelopment(Development bonus);
 	}
 }
