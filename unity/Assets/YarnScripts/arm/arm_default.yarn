@@ -2,5 +2,6 @@ title: arm_default
 tags: part:arm
 priority: 0
 ---
+<<wait 10>>
 ちょっと……くすぐったい…… #anim:reaction_default #expr:expression_shy
 ===
