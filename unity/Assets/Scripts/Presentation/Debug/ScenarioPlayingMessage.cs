@@ -9,11 +9,14 @@ namespace Zrushy.Presentation.Unity
         [Inject]
         private ScenarioPlayer scenarioPlayer;
 
+        [SerializeField]
+        private GameObject target;
+
         private void OnEnable()
         {
             scenarioPlayer.OnScenarioStarted += Show;
             scenarioPlayer.OnScenarioFinished += Hide;
-            gameObject.SetActive(scenarioPlayer.IsPlaying);
+            target.SetActive(scenarioPlayer.IsPlaying);
         }
 
         private void OnDisable()
@@ -22,7 +25,7 @@ namespace Zrushy.Presentation.Unity
             scenarioPlayer.OnScenarioFinished -= Hide;
         }
 
-        private void Show() => gameObject.SetActive(true);
-        private void Hide() => gameObject.SetActive(false);
+        private void Show() => target.SetActive(true);
+        private void Hide() => target.SetActive(false);
     }
 }
