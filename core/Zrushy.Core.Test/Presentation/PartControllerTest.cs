@@ -1,5 +1,10 @@
+using System.Collections.Generic;
 using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
+using Zrushy.Core.Domain.Events.Entity;
+using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.Service;
+using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Presentation;
 
@@ -11,21 +16,41 @@ namespace Zrushy.Core.Test.Presentation
 	/// </summary>
 	public class PartControllerTest
 	{
+		private Heroin heroin;
+		private IEventRepository repo;
+		private IEventBus bus;
+		private IInteractionHistory history;
+
+		[SetUp]
+		public void setup()
+		{
+			IEventBus heroinBus = Substitute.For<IEventBus>();
+			heroin = new Heroin(heroinBus);
+
+			IPart headPart = Substitute.For<IPart>();
+			headPart.ID.Returns(new PartID("head"));
+			headPart.CalculateArousal(Arg.Any<Arousal>(), Arg.Any<Interaction>()).Returns(new Arousal(0));
+			heroin.AddPart(headPart);
+
+			repo = Substitute.For<IEventRepository>();
+			repo.GetEvents(Arg.Any<PartID>()).Returns(new List<IScenarioEvent>());
+			bus = Substitute.For<IEventBus>();
+			history = Substitute.For<IInteractionHistory>();
+		}
+
 		[Test]
 		public void SendInput_頭をさわる入力を受け取ったら_InteractPartが正しいコマンドで呼ばれる()
 		{
 			// Arrange
-			var interactPart = Substitute.For<IInteractPart>();
-			var controller = new PartController(interactPart);
-			var input = new PartInput(new PartID("head"));
+			InteractPart interactPart = new InteractPart(heroin, repo, bus, history);
+			PartController controller = new PartController(interactPart);
+			PartInput input = new PartInput(new PartID("head"));
 
 			// Act
 			controller.SendInput(input);
 
 			// Assert
-			interactPart.Received(1).Execute(Arg.Is<InteractPartCommand>(
-				cmd => cmd.PartID.Value == "head"
-			));
+			repo.Received(1).GetEvents(Arg.Is<PartID>(id => id.Value == "head"));
 		}
 	}
 }

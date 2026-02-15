@@ -11,7 +11,7 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 	/// <summary>
 	/// 部位をさわる操作のユースケース
 	/// </summary>
-	public class InteractPart : IInteractPart
+	public class InteractPart
 	{
 		private readonly Heroin body;
 		private readonly IEventRepository eventRepository;
