@@ -3,7 +3,7 @@ using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Presentation;
-using Action = Zrushy.Core.Domain.Scenarios.Entity.Action;
+using Beat = Zrushy.Core.Domain.Scenarios.Entity.Beat;
 
 namespace Zrushy.Core.Test.Presentation;
 
@@ -12,8 +12,8 @@ public class ScenarioPlayerTest
 	ScenarioID testscenarioID = new ScenarioID("test_01");
 	private Scenario testScenario;
 
-	private Action action1 = new Action("test_1", "test_anim", "test_happy");
-	private Action action2 = new Action("test_2", "test_anim", "test_happy");
+	private Beat beat1 = new Beat("test_1", "test_anim", "test_happy");
+	private Beat beat2 = new Beat("test_2", "test_anim", "test_happy");
 
 	IScenarioRepository repository;
 	HeroinViewModel heroinViewModel;
@@ -24,14 +24,14 @@ public class ScenarioPlayerTest
 	public void Setup()
 	{
 		testScenario = new Scenario(testscenarioID,
-			new List<Action> { action1, action2 }
+			new List<Beat> { beat1, beat2 }
 		);
 
 		repository = Substitute.For<IScenarioRepository>();
 		repository.When(x => x.Start(Arg.Any<ScenarioID>()))
-			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action1));
+			.Do(_ => repository.OnBeatChanged += Raise.Event<System.Action<Beat>>(beat1));
 		repository.When(x => x.Next())
-			.Do(_ => repository.OnActionChanged += Raise.Event<System.Action<Action>>(action2));
+			.Do(_ => repository.OnBeatChanged += Raise.Event<System.Action<Beat>>(beat2));
 
 		heroinViewModel = new HeroinViewModel();
 
@@ -39,18 +39,18 @@ public class ScenarioPlayerTest
 	}
 
 	[Test]
-	public void PlayするとHeroinViewModelにScenarioの最初のActionを送る()
+	public void PlayするとHeroinViewModelにScenarioの最初のBeatを送る()
 	{
 		player.Play(testscenarioID);
 
-		Assert.That(heroinViewModel.CurrentAction, Is.EqualTo(action1));
+		Assert.That(heroinViewModel.CurrentBeat, Is.EqualTo(beat1));
 	}
 
 	[Test]
 	public void PlayしないとNextしても何も起きない()
 	{
 		player.Next();
-		Assert.That(heroinViewModel.CurrentAction, Is.Not.EqualTo(action1));
+		Assert.That(heroinViewModel.CurrentBeat, Is.Not.EqualTo(beat1));
 	}
 
 	[Test]
@@ -58,8 +58,8 @@ public class ScenarioPlayerTest
 	{
 		player.Play(testscenarioID);
 
-		Assert.That(heroinViewModel.CurrentAction, Is.EqualTo(action1));
+		Assert.That(heroinViewModel.CurrentBeat, Is.EqualTo(beat1));
 		player.Next();
-		Assert.That(heroinViewModel.CurrentAction, Is.EqualTo(action2));
+		Assert.That(heroinViewModel.CurrentBeat, Is.EqualTo(beat2));
 	}
 }

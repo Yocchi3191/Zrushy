@@ -28,7 +28,7 @@ namespace Zrushy.Core.Presentation
 		{
 			this.engine = engine;
 			this.heroin = heroin;
-			engine.OnActionChanged += heroin.Act;
+			engine.OnBeatChanged += heroin.Act;
 		}
 
 		public void Play(ScenarioID scenarioID)

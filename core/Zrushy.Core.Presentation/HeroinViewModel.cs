@@ -4,12 +4,12 @@ namespace Zrushy.Core.Presentation
 {
 	public class HeroinViewModel
 	{
-		public Action? CurrentAction { get; private set; }
+		public Beat? CurrentBeat { get; private set; }
 		public event System.Action<HeroinViewModel>? OnUpdated;
 
-		internal void Act(Action action)
+		internal void Act(Beat beat)
 		{
-			CurrentAction = action;
+			CurrentBeat = beat;
 			OnUpdated?.Invoke(this);
 		}
 	}

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 using Zrushy.Core.Presentation;
 
@@ -19,10 +19,10 @@ public class HeroinView : MonoBehaviour
 
 	private void OnViewModelUpdated(HeroinViewModel vm)
 	{
-		var action = vm.CurrentAction;
+		var action = vm.CurrentBeat;
 		if (action != null)
 		{
-				Debug.Log($"[Heroin] {action.Dialogue} (anim: {action.AnimationName}, expr: {action.ExpressionName})");
+			Debug.Log($"[Heroin] {action.Dialogue} (anim: {action.AnimationName}, expr: {action.ExpressionName})");
 		}
 	}
 }
