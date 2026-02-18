@@ -11,9 +11,7 @@ using Zrushy.Core.Presentation;
 /// </summary>
 public class Clickable : MonoBehaviour, IPointerClickHandler
 {
-	[SerializeField] private string partId = "head"; // インスペクタで設定可能な部位ID
-
-	public string PartId => partId;
+	public string PartId => gameObject.name;
 
 	[Inject]
 	private PartController controller;
@@ -32,7 +30,7 @@ public class Clickable : MonoBehaviour, IPointerClickHandler
 	/// </summary>
 	public void OnClick()
 	{
-		PartID partID = new PartID(partId);
+		PartID partID = new PartID(gameObject.name);
 		PartInput input = new PartInput(partID);
 
 		// コントローラーにコマンドを送信（ViewModelを渡す）
