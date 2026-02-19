@@ -23,7 +23,7 @@ namespace Zrushy.Core.Presentation
 		/// <param name="input">ユーザー入力</param>
 		public void SendInput(PartInput input)
 		{
-			InteractPartCommand command = new InteractPartCommand(input.PartID);
+			InteractPartCommand command = new InteractPartCommand(input.PartID, input.Type);
 			interactPartUseCase.Execute(command);
 			scenarioInputGate.NotifyTouch(input.PartID.Value);
 		}

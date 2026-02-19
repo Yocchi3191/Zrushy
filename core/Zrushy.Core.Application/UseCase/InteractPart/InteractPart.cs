@@ -37,7 +37,7 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 		/// <returns>実行結果（ReactionとEvent）</returns>
 		public InteractPartResult Execute(InteractPartCommand command)
 		{
-			Interaction interaction = new Interaction(command.PartID);
+			Interaction interaction = new Interaction(command.PartID, command.Type);
 			body.Interact(interaction);
 			interactionHistory.Record(interaction);
 
