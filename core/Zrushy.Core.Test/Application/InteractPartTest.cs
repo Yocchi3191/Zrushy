@@ -48,49 +48,57 @@ public class InteractPartTest
 	}
 
 	[Test]
-	public void Executeで発火可能なイベントがなければScenarioToStartがnullを返す()
+	public void Executeで発火可能なイベントがなければEventBusに何も発行しない()
 	{
+		IScenarioEvent? published = null;
+		_eventBus.OnEventPublished += e => published = e;
 		var useCase = new InteractPart(_body, new StubEventRepository(), _eventBus, _interactionHistory);
 
-		var result = useCase.Execute(new InteractPartCommand(_partID));
+		useCase.Execute(new InteractPartCommand(_partID));
 
-		Assert.That(result.ScenarioToStart, Is.Null);
+		Assert.That(published, Is.Null);
 	}
 
 	[Test]
-	public void Executeで発火可能なイベントのScenarioIDを返す()
+	public void Executeで発火可能なイベントをEventBusに発行する()
 	{
+		IScenarioEvent? published = null;
+		_eventBus.OnEventPublished += e => published = e;
 		var evt = new StubEvent(canFire: true, priority: 1, testScenarioID);
 		var useCase = new InteractPart(_body, new StubEventRepository(evt), _eventBus, _interactionHistory);
 
-		var result = useCase.Execute(new InteractPartCommand(_partID));
+		useCase.Execute(new InteractPartCommand(_partID));
 
-		Assert.That(result.ScenarioToStart, Is.EqualTo(testScenarioID));
+		Assert.That(published?.ScenarioToStart, Is.EqualTo(testScenarioID));
 	}
 
 	[Test]
-	public void Executeで発火不可のイベントは無視してScenarioToStartがnullを返す()
+	public void Executeで発火不可のイベントはEventBusに発行しない()
 	{
+		IScenarioEvent? published = null;
+		_eventBus.OnEventPublished += e => published = e;
 		var evt = new StubEvent(canFire: false, priority: 1, testScenarioID);
 		var useCase = new InteractPart(_body, new StubEventRepository(evt), _eventBus, _interactionHistory);
 
-		var result = useCase.Execute(new InteractPartCommand(_partID));
+		useCase.Execute(new InteractPartCommand(_partID));
 
-		Assert.That(result.ScenarioToStart, Is.Null);
+		Assert.That(published, Is.Null);
 	}
 
 	[Test]
-	public void Executeで複数イベントがあれば最優先のものを返す()
+	public void Executeで複数イベントがあれば最優先のものをEventBusに発行する()
 	{
+		IScenarioEvent? published = null;
+		_eventBus.OnEventPublished += e => published = e;
 		var lowScenario = new ScenarioID("low_scenario");
 		var highScenario = new ScenarioID("high_scenario");
 		var low = new StubEvent(canFire: true, priority: 1, lowScenario);
 		var high = new StubEvent(canFire: true, priority: 10, highScenario);
 		var useCase = new InteractPart(_body, new StubEventRepository(low, high), _eventBus, _interactionHistory);
 
-		var result = useCase.Execute(new InteractPartCommand(_partID));
+		useCase.Execute(new InteractPartCommand(_partID));
 
-		Assert.That(result.ScenarioToStart, Is.EqualTo(highScenario));
+		Assert.That(published?.ScenarioToStart, Is.EqualTo(highScenario));
 	}
 
 	[Test]
