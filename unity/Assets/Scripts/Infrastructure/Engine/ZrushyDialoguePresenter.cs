@@ -3,7 +3,7 @@ using Yarn.Unity;
 
 public class ZrushyDialoguePresenter : DialoguePresenterBase
 {
-	private YarnScenarioRepository engine;
+	private YarnScenarioEngine engine;
 
 	// YarnScenarioEngine.Next() が呼ばれるまで待機するための仕組み
 	private TaskCompletionSource<bool> waitForNext;
@@ -11,7 +11,7 @@ public class ZrushyDialoguePresenter : DialoguePresenterBase
 	/// <summary>
 	/// YarnScenarioEngine から呼ばれる初期化メソッド
 	/// </summary>
-	public void Initialize(YarnScenarioRepository engine)
+	public void Initialize(YarnScenarioEngine engine)
 	{
 		this.engine = engine;
 	}

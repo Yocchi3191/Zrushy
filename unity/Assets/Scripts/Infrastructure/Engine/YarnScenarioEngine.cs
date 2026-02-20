@@ -4,7 +4,7 @@ using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
-public class YarnScenarioRepository : IScenarioRepository
+public class YarnScenarioEngine : IScenarioEngine
 {
 	private readonly DialogueRunner dialogueRunner;
 	private readonly ZrushyDialoguePresenter dialoguePresenter;
@@ -15,7 +15,7 @@ public class YarnScenarioRepository : IScenarioRepository
 	public bool IsScenarioFinished => isFinished;
 	public event System.Action<Beat> OnBeatChanged;
 
-	public YarnScenarioRepository(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
+	public YarnScenarioEngine(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
 	{
 		this.dialogueRunner = dialogueRunner;
 		this.dialoguePresenter = presenter;

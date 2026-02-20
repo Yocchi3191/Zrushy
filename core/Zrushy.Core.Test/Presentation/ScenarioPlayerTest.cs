@@ -15,7 +15,7 @@ public class ScenarioPlayerTest
 	private Beat beat1 = new Beat("test_1", "test_anim", "test_happy");
 	private Beat beat2 = new Beat("test_2", "test_anim", "test_happy");
 
-	IScenarioRepository repository;
+	IScenarioEngine repository;
 	HeroinViewModel heroinViewModel;
 
 	ScenarioPlayer player;
@@ -27,7 +27,7 @@ public class ScenarioPlayerTest
 			new List<Beat> { beat1, beat2 }
 		);
 
-		repository = Substitute.For<IScenarioRepository>();
+		repository = Substitute.For<IScenarioEngine>();
 		repository.When(x => x.Start(Arg.Any<ScenarioID>()))
 			.Do(_ => repository.OnBeatChanged += Raise.Event<System.Action<Beat>>(beat1));
 		repository.When(x => x.Next())
