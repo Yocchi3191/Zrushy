@@ -2,10 +2,8 @@
 using System.Linq;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
-using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Domain.Interactions.Entity
 {
@@ -17,6 +15,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	{
 		private readonly List<IPart> parts;
 		private readonly IEventBus eventBus;
+		private readonly ClimaxEventConfig climaxEventConfig;
 
 		/// <summary>
 		/// Body全体の興奮度パラメータ
@@ -33,11 +32,12 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 身体を作成する
 		/// </summary>
 		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
-		public Heroin(IEventBus eventBus)
+		public Heroin(IEventBus eventBus, ClimaxEventConfig climaxConfig)
 		{
 			parts = new List<IPart>();
 			this.eventBus = eventBus;
 			Arousal = new Arousal(0);
+			this.climaxEventConfig = climaxConfig;
 		}
 
 		/// <summary>
@@ -75,15 +75,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		{
 			if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
 			{
-				// 絶頂イベントを発火
-				var climaxEvent = new Event(
-					new EventID("climax"),
-					new ScenarioID("climax_scenario"),
-					priority: 1000 // 高優先度（割り込み）
-				);
-
-				eventBus.Publish(climaxEvent);
-
+				eventBus.Publish(new Event(climaxEventConfig.EventID, climaxEventConfig.ScenarioID, climaxEventConfig.Priority));
 				// クールダウンを適用
 				ApplyCooldown();
 			}

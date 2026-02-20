@@ -7,6 +7,7 @@ using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
@@ -32,6 +33,18 @@ namespace Zrushy.Core.DI
 			// Domain層
 			// Heroin（シングルトン）※ IEventBus に依存
 			Container.Bind<Heroin>().AsSingle();
+			Container.Bind<ClimaxEventConfig>().FromMethod(ctx =>
+			{
+				var runner = ctx.Container.Resolve<DialogueRunner>();
+				var node = runner.YarnProject.Program.Nodes["climax_scenario"];
+				int priority = 100;
+				foreach (var h in node.Headers)
+					if (h.Key == "priority") int.TryParse(h.Value.Trim(), out priority);
+				return new ClimaxEventConfig(
+					new Domain.Events.ValueObject.EventID("climax_scenario"),
+					new Domain.Scenarios.ValueObject.ScenarioID("climax_scenario"),
+					priority);
+			});
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
