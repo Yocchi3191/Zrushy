@@ -52,7 +52,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
 
 			// ScenarioEngine（YarnScenarioEngine を使用）
-			Container.Bind<IScenarioRepository>().To<YarnScenarioRepository>().AsSingle();
+			Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
 
 			// Application層
 			// UseCase（シングルトン）
