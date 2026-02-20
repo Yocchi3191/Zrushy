@@ -35,7 +35,7 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 		/// </summary>
 		/// <param name="command">操作コマンド</param>
 		/// <returns>実行結果（ReactionとEvent）</returns>
-		public InteractPartResult Execute(InteractPartCommand command)
+		public void Execute(InteractPartCommand command)
 		{
 			Interaction interaction = new Interaction(command.PartID, command.Type);
 			body.Interact(interaction);
@@ -50,8 +50,6 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 
 			if (fired != null)
 				eventBus.Publish(fired);
-
-			return new InteractPartResult(fired?.ScenarioToStart);
 		}
 	}
 }
