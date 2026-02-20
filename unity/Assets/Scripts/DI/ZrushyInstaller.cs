@@ -37,14 +37,14 @@ namespace Zrushy.Core.DI
 			{
 				var runner = ctx.Container.Resolve<DialogueRunner>();
 				var node = runner.YarnProject.Program.Nodes["climax_scenario"];
-				int priority = 100;
+				int priority = 1000;
 				foreach (var h in node.Headers)
 					if (h.Key == "priority") int.TryParse(h.Value.Trim(), out priority);
 				return new ClimaxEventConfig(
 					new Domain.Events.ValueObject.EventID("climax_scenario"),
 					new Domain.Scenarios.ValueObject.ScenarioID("climax_scenario"),
 					priority);
-			});
+			}).AsSingle();
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
