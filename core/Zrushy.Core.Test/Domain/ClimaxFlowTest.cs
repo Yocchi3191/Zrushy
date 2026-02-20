@@ -1,7 +1,9 @@
 ﻿using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Infrastructure.EventBus;
 
 namespace Zrushy.Core.Test.Domain;
@@ -12,16 +14,18 @@ namespace Zrushy.Core.Test.Domain;
 /// </summary>
 public class ClimaxFlowTest
 {
+	private const int CLIMAX_EVENT_PRIORITY = 100;
 	private static readonly PartConfig _partConfig = new(-2, 0.1f, 0.05f);
 	private Heroin _body;
 	private IEventBus _eventBus;
 	private PartID _partID;
+	ClimaxEventConfig _climaxEventConfig = new ClimaxEventConfig(new EventID("climax_scenario"), new ScenarioID("climax_scenario"), CLIMAX_EVENT_PRIORITY);
 
 	[SetUp]
 	public void Setup()
 	{
 		_eventBus = new EventBus(new FiredEventLog());
-		_body = new Heroin(_eventBus);
+		_body = new Heroin(_eventBus, _climaxEventConfig);
 		_partID = new PartID("test");
 
 		// 開発度50、好感度50の部位を追加
@@ -35,7 +39,7 @@ public class ClimaxFlowTest
 		bool climaxFired = false;
 		_eventBus.OnEventPublished += (e) =>
 		{
-			if (e.Priority >= 1000)
+			if (e.Priority >= CLIMAX_EVENT_PRIORITY)
 			{
 				climaxFired = true;
 			}
@@ -57,7 +61,7 @@ public class ClimaxFlowTest
 	public void 絶頂後はクールダウンが適用される()
 	{
 		// 絶頂が発火するまでInteractし続け、発火直前との比較でクールダウンを検証
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < CLIMAX_EVENT_PRIORITY; i++)
 		{
 			int arousalBefore = _body.Arousal.Value;
 			_body.Interact(new Interaction(_partID));
@@ -77,11 +81,11 @@ public class ClimaxFlowTest
 	public void 開発度が高いほどクールダウンが緩やかになる()
 	{
 		// Arrange: 開発度の異なる2つのケースを比較
-		var lowDevBody = new Heroin(_eventBus);
+		var lowDevBody = new Heroin(_eventBus, _climaxEventConfig);
 		var lowDevPartID = new PartID("low_dev");
 		lowDevBody.AddPart(new Part(lowDevPartID, new Development(10), new Affection(50), _partConfig));
 
-		var highDevBody = new Heroin(_eventBus);
+		var highDevBody = new Heroin(_eventBus, _climaxEventConfig);
 		var highDevPartID = new PartID("high_dev");
 		highDevBody.AddPart(new Part(highDevPartID, new Development(90), new Affection(50), _partConfig));
 
@@ -103,7 +107,7 @@ public class ClimaxFlowTest
 		IScenarioEvent? firedEvent = null;
 		_eventBus.OnEventPublished += (e) =>
 		{
-			if (e.Priority >= 1000)
+			if (e.Priority >= CLIMAX_EVENT_PRIORITY)
 			{
 				firedEvent = e;
 			}
@@ -117,7 +121,7 @@ public class ClimaxFlowTest
 
 		// Assert
 		Assert.That(firedEvent, Is.Not.Null);
-		Assert.That(firedEvent!.Priority, Is.EqualTo(1000));
+		Assert.That(firedEvent!.Priority, Is.EqualTo(CLIMAX_EVENT_PRIORITY));
 	}
 
 	[Test]

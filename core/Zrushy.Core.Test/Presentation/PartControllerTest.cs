@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using NSubstitute;
+﻿using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
+using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Presentation;
 
 namespace Zrushy.Core.Test.Presentation
@@ -20,12 +21,13 @@ namespace Zrushy.Core.Test.Presentation
 		private IEventRepository repo;
 		private IEventBus bus;
 		private IInteractionHistory history;
+		ClimaxEventConfig _climaxEventConfig = new ClimaxEventConfig(new EventID("climax_scenario"), new ScenarioID("climax_scenario"), 100);
 
 		[SetUp]
 		public void setup()
 		{
 			IEventBus heroinBus = Substitute.For<IEventBus>();
-			heroin = new Heroin(heroinBus);
+			heroin = new Heroin(heroinBus, _climaxEventConfig);
 
 			IPart headPart = Substitute.For<IPart>();
 			headPart.ID.Returns(new PartID("head"));

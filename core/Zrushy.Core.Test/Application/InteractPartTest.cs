@@ -3,10 +3,10 @@ using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
+using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 using Zrushy.Core.Infrastructure.EventBus;
 
@@ -20,13 +20,14 @@ public class InteractPartTest
 	private ScenarioID testScenarioID = new ScenarioID("test_scenario");
 	IEventBus _eventBus;
 	IInteractionHistory _interactionHistory;
+	ClimaxEventConfig _climaxEventConfig = new ClimaxEventConfig(new EventID("climax_scenario"), new ScenarioID("climax_scenario"), 100);
 
 	[SetUp]
 	public void Setup()
 	{
 		_partID = new PartID("head");
 		_eventBus = new EventBus(new FiredEventLog());
-		_body = new Heroin(_eventBus);
+		_body = new Heroin(_eventBus, _climaxEventConfig);
 		_body.AddPart(new Part(_partID, new Development(0), new Affection(0), _partConfig));
 
 		_interactionHistory = Substitute.For<IInteractionHistory>();
