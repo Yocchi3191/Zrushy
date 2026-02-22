@@ -12,6 +12,7 @@ using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
+using Zrushy.Core.Presentation.Unity;
 using Zrushy.Unity.Presentation;
 
 namespace Zrushy.Core.DI
@@ -73,6 +74,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<ApplyBonus>().AsSingle();
 
 			// Presentation層
+			Container.Bind<ClickableRegistry>().AsSingle();
 			Container.Bind<ScenarioInputGate>().AsSingle();
 			Container.Bind<ScenarioPlayer>().AsSingle();
 			Container.Bind<PartController>().AsSingle();
