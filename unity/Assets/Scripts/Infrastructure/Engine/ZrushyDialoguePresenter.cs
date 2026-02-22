@@ -1,20 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Yarn.Unity;
 
 public class ZrushyDialoguePresenter : DialoguePresenterBase
 {
-	private YarnScenarioEngine engine;
-
 	// YarnScenarioEngine.Next() が呼ばれるまで待機するための仕組み
 	private TaskCompletionSource<bool> waitForNext;
-
-	/// <summary>
-	/// YarnScenarioEngine から呼ばれる初期化メソッド
-	/// </summary>
-	public void Initialize(YarnScenarioEngine engine)
-	{
-		this.engine = engine;
-	}
+	public event Action<LocalizedLine> OnLineReady;
+	public event Action OnDialogueCompleted;
 
 	public override YarnTask OnDialogueStartedAsync()
 	{
@@ -24,8 +17,7 @@ public class ZrushyDialoguePresenter : DialoguePresenterBase
 
 	public override async YarnTask RunLineAsync(LocalizedLine line, LineCancellationToken token)
 	{
-		// Line → Action 変換（engine の内部状態を更新）
-		engine.SetLineAsAction(line);
+		OnLineReady?.Invoke(line);
 
 		// YarnScenarioEngine.Next() が呼ばれるまで待機
 		waitForNext = new TaskCompletionSource<bool>();
@@ -42,7 +34,7 @@ public class ZrushyDialoguePresenter : DialoguePresenterBase
 
 	public override YarnTask OnDialogueCompleteAsync()
 	{
-		engine.MarkFinished();
+		OnDialogueCompleted?.Invoke();
 		return YarnTask.CompletedTask;
 	}
 }

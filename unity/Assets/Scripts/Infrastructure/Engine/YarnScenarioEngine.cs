@@ -20,7 +20,8 @@ public class YarnScenarioEngine : IScenarioEngine
 		this.dialogueRunner = dialogueRunner;
 		this.dialoguePresenter = presenter;
 
-		presenter.Initialize(this);
+		presenter.OnLineReady += SetLineAsAction;
+		presenter.OnDialogueCompleted += MarkFinished;
 	}
 
 	public void Start(ScenarioID scenarioID)
@@ -45,7 +46,7 @@ public class YarnScenarioEngine : IScenarioEngine
 	/// <summary>
 	/// Yarn の Line → Action 変換
 	/// </summary>
-	internal void SetLineAsAction(LocalizedLine line)
+	private void SetLineAsAction(LocalizedLine line)
 	{
 		string dialogue = line.TextWithoutCharacterName.Text;
 		string anim = GetMetadata(line, "anim", "reaction_default");
@@ -54,7 +55,7 @@ public class YarnScenarioEngine : IScenarioEngine
 		OnBeatChanged?.Invoke(currentBeat);
 	}
 
-	internal void MarkFinished()
+	private void MarkFinished()
 	{
 		isFinished = true;
 	}
