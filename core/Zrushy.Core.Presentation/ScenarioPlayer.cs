@@ -77,7 +77,7 @@ namespace Zrushy.Core.Presentation
 
 			engine.Stop();
 			isPlaying = false;
-			// 注: OnScenarioFinished は発火しない（強制停止なので）
+			OnScenarioFinished?.Invoke();
 		}
 	}
 }
