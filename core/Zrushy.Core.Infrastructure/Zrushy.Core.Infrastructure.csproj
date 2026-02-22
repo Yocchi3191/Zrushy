@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
+		<ProjectReference Include="..\Zrushy.Core.Application\Zrushy.Core.Application.csproj" />
 		<ProjectReference Include="..\Zrushy.Core.Domain\Zrushy.Core.Domain.csproj" />
 		<InternalsVisibleTo Include="Zrushy.Core.Test" />
 	</ItemGroup>

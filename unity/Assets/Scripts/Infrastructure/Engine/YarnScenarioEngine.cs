@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Yarn.Unity;
 using Zrushy.Core.Domain.Scenarios.Entity;
+using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 

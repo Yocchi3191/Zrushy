@@ -1,7 +1,7 @@
-﻿using Zrushy.Core.Domain.Scenarios.Entity;
+using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
-namespace Zrushy.Core.Domain.Scenarios.Repository
+namespace Zrushy.Core.Application.Scenarios
 {
 	public interface IScenarioEngine
 	{

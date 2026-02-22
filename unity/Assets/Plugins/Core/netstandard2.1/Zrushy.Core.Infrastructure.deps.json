@@ -9,10 +9,22 @@
     ".NETStandard,Version=v2.1/": {
       "Zrushy.Core.Infrastructure/1.0.0": {
         "dependencies": {
+          "Zrushy.Core.Application": "1.0.0",
           "Zrushy.Core.Domain": "1.0.0"
         },
         "runtime": {
           "Zrushy.Core.Infrastructure.dll": {}
+        }
+      },
+      "Zrushy.Core.Application/1.0.0": {
+        "dependencies": {
+          "Zrushy.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Zrushy.Core.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Zrushy.Core.Domain/1.0.0": {
@@ -27,6 +39,11 @@
   },
   "libraries": {
     "Zrushy.Core.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Zrushy.Core.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
