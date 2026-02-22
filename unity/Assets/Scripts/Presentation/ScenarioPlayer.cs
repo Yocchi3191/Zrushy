@@ -1,8 +1,10 @@
-﻿using System;
+using System;
+using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
+using Zrushy.Core.Presentation;
 
-namespace Zrushy.Core.Presentation
+namespace Zrushy.Unity.Presentation
 {
 	public class ScenarioPlayer
 	{
@@ -16,13 +18,13 @@ namespace Zrushy.Core.Presentation
 		/// シナリオが開始されたときに発火するイベント
 		/// ScenarioDriver などが購読して自動進行を開始する
 		/// </summary>
-		public event System.Action? OnScenarioStarted;
+		public event Action? OnScenarioStarted;
 
 		/// <summary>
 		/// シナリオが終了したときに発火するイベント
 		/// ScenarioDriver などが購読して自動進行を停止する
 		/// </summary>
-		public event System.Action? OnScenarioFinished;
+		public event Action? OnScenarioFinished;
 
 		public ScenarioPlayer(IScenarioEngine engine, HeroinViewModel heroin)
 		{

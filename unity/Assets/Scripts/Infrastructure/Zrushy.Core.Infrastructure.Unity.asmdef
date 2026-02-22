@@ -13,7 +13,8 @@
         "Zrushy.Core.Presentation.dll",
         "YarnSpinner.dll",
         "Zrushy.Core.Infrastructure.dll",
-        "Yarn.Google.Protobuf.dll"
+        "Yarn.Google.Protobuf.dll",
+        "Zrushy.Core.Application.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

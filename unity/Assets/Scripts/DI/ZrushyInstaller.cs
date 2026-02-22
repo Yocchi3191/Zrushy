@@ -8,7 +8,7 @@ using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Domain.Scenarios.Repository;
+using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;

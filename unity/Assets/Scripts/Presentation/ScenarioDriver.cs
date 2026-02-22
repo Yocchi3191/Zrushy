@@ -2,7 +2,6 @@ using UnityEngine;
 using Zenject;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
-using Zrushy.Core.Presentation;
 
 namespace Zrushy.Unity.Presentation
 {

@@ -7,7 +7,7 @@ namespace Zrushy.Core.Presentation
 		public Beat? CurrentBeat { get; private set; }
 		public event System.Action<HeroinViewModel>? OnUpdated;
 
-		internal void Act(Beat beat)
+		public void Act(Beat beat)
 		{
 			CurrentBeat = beat;
 			OnUpdated?.Invoke(this);
