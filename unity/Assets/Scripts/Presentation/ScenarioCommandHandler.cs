@@ -1,11 +1,11 @@
-using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 using Yarn.Unity;
 using Zenject;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Presentation;
+using Zrushy.Core.Presentation.Unity;
 
 namespace Zrushy.Unity.Presentation
 {
@@ -22,6 +22,7 @@ namespace Zrushy.Unity.Presentation
 		[Inject] private ScenarioInputGate scenarioInputGate;
 		[Inject] private DialogueRunner dialogueRunner;
 		[Inject] private VirtualCursor virtualCursor;
+		[Inject] private ClickableRegistry clickableRegistry;
 
 		private void Start()
 		{
@@ -61,9 +62,7 @@ namespace Zrushy.Unity.Presentation
 		/// </summary>
 		private void HandleForceTouch(string partId)
 		{
-			var clickables = FindObjectsByType<Clickable>(FindObjectsSortMode.None);
-			var target = Array.Find(clickables, c => c.PartId == partId);
-			if (target == null)
+			if (!clickableRegistry.TryGet(partId, out var target))
 			{
 				Debug.LogWarning($"[ScenarioCommandHandler] force_touch: Clickable not found for partId='{partId}'");
 				return;
