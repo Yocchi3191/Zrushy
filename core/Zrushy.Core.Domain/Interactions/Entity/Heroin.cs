@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using Zrushy.Core.Domain.Events.Entity;
-using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
@@ -14,8 +12,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	public class Heroin
 	{
 		private readonly List<IPart> parts;
-		private readonly IEventBus eventBus;
-		private readonly ClimaxEventConfig climaxEventConfig;
 
 		/// <summary>
 		/// Body全体の興奮度パラメータ
@@ -31,13 +27,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <summary>
 		/// 身体を作成する
 		/// </summary>
-		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
-		public Heroin(IEventBus eventBus, ClimaxEventConfig climaxConfig)
+		public Heroin()
 		{
 			parts = new List<IPart>();
-			this.eventBus = eventBus;
 			Arousal = new Arousal(0);
-			this.climaxEventConfig = climaxConfig;
 		}
 
 		/// <summary>
@@ -51,7 +44,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
 		/// <summary>
 		/// さわり操作を実行する
-		/// 対象部位のパラメータを更新し、快感を蓄積し、絶頂判定を行う
+		/// 対象部位のパラメータを更新し、快感を蓄積する
 		/// </summary>
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
@@ -63,22 +56,15 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
-
-			// 絶頂判定とイベント発火
-			CheckAndHandleClimax();
 		}
 
 		/// <summary>
-		/// 絶頂判定を行い、閾値を超えていれば絶頂イベントを発火してクールダウンする
+		/// 絶頂閾値に達していればクールダウンを適用する（UseCase から呼ばれる）
 		/// </summary>
-		private void CheckAndHandleClimax()
+		public void ApplyCooldownIfClimax()
 		{
 			if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
-			{
-				eventBus.Publish(new Event(climaxEventConfig.EventID, climaxEventConfig.ScenarioID, climaxEventConfig.Priority));
-				// クールダウンを適用
 				ApplyCooldown();
-			}
 		}
 
 		/// <summary>

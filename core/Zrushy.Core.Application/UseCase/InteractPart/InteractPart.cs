@@ -13,6 +13,8 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 	/// </summary>
 	public class InteractPart
 	{
+		private static readonly PartID BodyPartID = new PartID("body");
+
 		private readonly Heroin body;
 		private readonly IEventRepository eventRepository;
 		private readonly IEventBus eventBus;
@@ -34,14 +36,15 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 		/// 部位をさわる操作を実行する
 		/// </summary>
 		/// <param name="command">操作コマンド</param>
-		/// <returns>実行結果（ReactionとEvent）</returns>
 		public void Execute(InteractPartCommand command)
 		{
 			Interaction interaction = new Interaction(command.PartID, command.Type);
 			body.Interact(interaction);
 			interactionHistory.Record(interaction);
 
-			IEnumerable<IScenarioEvent> candidates = eventRepository.GetEvents(command.PartID);
+			var partEvents = eventRepository.GetEvents(command.PartID);
+			var bodyEvents = eventRepository.GetEvents(BodyPartID);
+			IEnumerable<IScenarioEvent> candidates = partEvents.Concat(bodyEvents);
 
 			IScenarioEvent fired = candidates
 				.Where(e => e.CanFire())
@@ -50,6 +53,8 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 
 			if (fired != null)
 				eventBus.Publish(fired);
+
+			body.ApplyCooldownIfClimax();
 		}
 	}
 }
