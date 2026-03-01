@@ -47,7 +47,8 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 対象部位のパラメータを更新し、快感を蓄積する
 		/// </summary>
 		/// <param name="interaction">さわり操作</param>
-		public void Interact(Interaction interaction)
+		/// <returns>絶頂閾値に達した場合 true</returns>
+		public bool Interact(Interaction interaction)
 		{
 			IPart targetPart = GetPart(interaction.PartID);
 
@@ -56,22 +57,15 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
-		}
 
-		/// <summary>
-		/// 絶頂閾値に達していればクールダウンを適用する（UseCase から呼ばれる）
-		/// </summary>
-		public void ApplyCooldownIfClimax()
-		{
-			if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
-				ApplyCooldown();
+			return Arousal.IsAboveThreshold(CLIMAX_THRESHOLD);
 		}
 
 		/// <summary>
 		/// 絶頂後のクールダウンを適用して快感を減少させる
 		/// 全部位の平均開発度を使って減少量を補正する
 		/// </summary>
-		private void ApplyCooldown()
+		public void ApplyCooldown()
 		{
 			if (parts.Count == 0)
 			{

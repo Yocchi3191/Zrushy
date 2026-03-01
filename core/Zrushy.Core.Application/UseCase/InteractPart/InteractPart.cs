@@ -39,7 +39,7 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 		public void Execute(InteractPartCommand command)
 		{
 			Interaction interaction = new Interaction(command.PartID, command.Type);
-			body.Interact(interaction);
+			bool climaxOccurred = body.Interact(interaction);
 			interactionHistory.Record(interaction);
 
 			var partEvents = eventRepository.GetEvents(command.PartID);
@@ -54,7 +54,8 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 			if (fired != null)
 				eventBus.Publish(fired);
 
-			body.ApplyCooldownIfClimax();
+			if (climaxOccurred)
+				body.ApplyCooldown();
 		}
 	}
 }

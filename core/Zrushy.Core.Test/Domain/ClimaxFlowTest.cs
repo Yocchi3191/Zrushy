@@ -38,4 +38,38 @@ public class ClimaxFlowTest
 
 		Assert.That(_body.Arousal.IsAboveThreshold(CLIMAX_THRESHOLD), Is.True);
 	}
+
+	[Test]
+	public void 絶頂閾値に達したInteractはtrueを返す()
+	{
+		bool result = false;
+		for (int i = 0; i < 25; i++)
+		{
+			result = _body.Interact(new Interaction(_partID));
+		}
+
+		Assert.That(result, Is.True);
+	}
+
+	[Test]
+	public void 絶頂閾値未満のInteractはfalseを返す()
+	{
+		// 1回だけでは閾値に届かない
+		bool result = _body.Interact(new Interaction(_partID));
+
+		Assert.That(result, Is.False);
+	}
+
+	[Test]
+	public void ApplyCooldownを呼ぶとArousalが減少する()
+	{
+		// 閾値まで蓄積してからクールダウン
+		for (int i = 0; i < 25; i++)
+			_body.Interact(new Interaction(_partID));
+
+		int arousalBeforeCooldown = _body.Arousal.Value;
+		_body.ApplyCooldown();
+
+		Assert.That(_body.Arousal.Value, Is.LessThan(arousalBeforeCooldown));
+	}
 }
