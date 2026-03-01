@@ -70,9 +70,18 @@ public class YarnEventRepository : IEventRepository
 		}
 	}
 
+	private static readonly PartID GlobalPartID = new PartID("public");
+
 	public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID)
 	{
 		return cache.TryGetValue(partID, out var events)
+			? events.AsReadOnly()
+			: Array.Empty<IScenarioEvent>();
+	}
+
+	public IReadOnlyList<IScenarioEvent> GetGlobalEvents()
+	{
+		return cache.TryGetValue(GlobalPartID, out var events)
 			? events.AsReadOnly()
 			: Array.Empty<IScenarioEvent>();
 	}

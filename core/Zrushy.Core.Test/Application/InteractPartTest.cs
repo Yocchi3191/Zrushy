@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
@@ -140,5 +141,6 @@ public class InteractPartTest
 		}
 
 		public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID) => _events;
+		public IReadOnlyList<IScenarioEvent> GetGlobalEvents() => Array.Empty<IScenarioEvent>();
 	}
 }

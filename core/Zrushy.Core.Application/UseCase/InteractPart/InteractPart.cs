@@ -13,8 +13,6 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 	/// </summary>
 	public class InteractPart
 	{
-		private static readonly PartID BodyPartID = new PartID("body");
-
 		private readonly Heroin body;
 		private readonly IEventRepository eventRepository;
 		private readonly IEventBus eventBus;
@@ -43,8 +41,8 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 			interactionHistory.Record(interaction);
 
 			var partEvents = eventRepository.GetEvents(command.PartID);
-			var bodyEvents = eventRepository.GetEvents(BodyPartID);
-			IEnumerable<IScenarioEvent> candidates = partEvents.Concat(bodyEvents);
+			var globalEvents = eventRepository.GetGlobalEvents();
+			IEnumerable<IScenarioEvent> candidates = partEvents.Concat(globalEvents);
 
 			IScenarioEvent fired = candidates
 				.Where(e => e.CanFire())

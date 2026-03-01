@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
@@ -7,9 +8,8 @@ namespace Zrushy.Core.Infrastructure.Repository
 {
 	public class EventRepository : IEventRepository
 	{
-		public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID)
-		{
-			return new List<IScenarioEvent>();
-		}
+		public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID) => Array.Empty<IScenarioEvent>();
+
+		public IReadOnlyList<IScenarioEvent> GetGlobalEvents() => Array.Empty<IScenarioEvent>();
 	}
 }
