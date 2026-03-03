@@ -47,6 +47,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<ArousalConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<DevelopmentConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<HeroinStateConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
 
 			// Yarn Spinner（シーンから取得）

@@ -27,6 +27,11 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		private const int CLIMAX_THRESHOLD = 100;
 
 		/// <summary>
+		/// 絶頂状態かどうか
+		/// </summary>
+		public bool IsClimax => Arousal.IsAboveThreshold(CLIMAX_THRESHOLD);
+
+		/// <summary>
 		/// 身体を作成する
 		/// </summary>
 		public Heroin(IEventEvaluator eventEvaluator)
