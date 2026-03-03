@@ -1,15 +1,14 @@
 ﻿using Yarn.Unity;
 using Zenject;
 using Zrushy.Core.Application;
+using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
 using Zrushy.Core.Domain.Events.Service;
-using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
-using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
