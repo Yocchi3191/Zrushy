@@ -1,0 +1,25 @@
+name: Notify discord on PR
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          ZRUSHY_DISCORD_WEBHOOK_URL: ${{secrets.ZRUSHY_DISCORD_WEBHOOK_URL}}
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{
+          "content": "📢 新しいPRが作成されました！",
+          "embeds":[{
+          "title": "${{ github.event.pull_request.title }}",
+              "url": "${{ github.event.pull_request.html_url }}",
+              "description": "by **${{ github.event.pull_request.user.login }}**",
+              "color": 5814783
+            }]
+          }' \
+          $DISCORD_WEBHOOK_URL
