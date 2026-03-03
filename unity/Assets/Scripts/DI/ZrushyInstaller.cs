@@ -1,8 +1,10 @@
 ﻿using Yarn.Unity;
 using Zenject;
+using Zrushy.Core.Application;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
@@ -31,6 +33,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
 			// Domain層
+			Container.Bind<IEventEvaluator>().To<EventEvaluator>().AsSingle();
 			Container.Bind<Heroin>().AsSingle();
 
 			// Repository（シングルトン）
