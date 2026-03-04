@@ -70,7 +70,28 @@ public class ArousalTest
 		Assert.That(result.Value, Is.EqualTo(40));
 	}
 
+	// --- IsAboveThreshold テスト ---
+
+	[Test]
+	public void 閾値以上では絶頂状態と判定される()
+	{
+		Assert.That(new Arousal(100).IsAboveThreshold(100), Is.True);
+	}
+
+	[Test]
+	public void 閾値未満では絶頂状態と判定されない()
+	{
+		Assert.That(new Arousal(99).IsAboveThreshold(100), Is.False);
+	}
+
 	// --- ApplyCooldown テスト ---
+
+	[Test]
+	public void クールダウンを適用すると快感が減少する()
+	{
+		var result = new Arousal(100).ApplyCooldown(new Development(0));
+		Assert.That(result.Value, Is.LessThan(100));
+	}
 
 	[Test]
 	public void クールダウンで下限未満になった場合マイナス100にクランプされる()

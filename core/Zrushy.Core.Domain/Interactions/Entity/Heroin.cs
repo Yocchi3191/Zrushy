@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using Zrushy.Core.Domain.Events.Entity;
-using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
@@ -14,8 +13,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	public class Heroin
 	{
 		private readonly List<IPart> parts;
-		private readonly IEventBus eventBus;
-		private readonly ClimaxEventConfig climaxEventConfig;
+		private readonly IEventEvaluator eventEvaluator;
 
 		/// <summary>
 		/// Body全体の興奮度パラメータ
@@ -29,15 +27,18 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		private const int CLIMAX_THRESHOLD = 100;
 
 		/// <summary>
+		/// 絶頂状態かどうか
+		/// </summary>
+		public bool IsClimax => Arousal.IsAboveThreshold(CLIMAX_THRESHOLD);
+
+		/// <summary>
 		/// 身体を作成する
 		/// </summary>
-		/// <param name="eventBus">イベントバス（絶頂イベント発火用）</param>
-		public Heroin(IEventBus eventBus, ClimaxEventConfig climaxConfig)
+		public Heroin(IEventEvaluator eventEvaluator)
 		{
 			parts = new List<IPart>();
-			this.eventBus = eventBus;
 			Arousal = new Arousal(0);
-			this.climaxEventConfig = climaxConfig;
+			this.eventEvaluator = eventEvaluator;
 		}
 
 		/// <summary>
@@ -51,7 +52,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
 		/// <summary>
 		/// さわり操作を実行する
-		/// 対象部位のパラメータを更新し、快感を蓄積し、絶頂判定を行う
+		/// 対象部位のパラメータを更新し、快感を蓄積し、イベント発火条件を評価する
 		/// </summary>
 		/// <param name="interaction">さわり操作</param>
 		public void Interact(Interaction interaction)
@@ -64,21 +65,11 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
 
-			// 絶頂判定とイベント発火
-			CheckAndHandleClimax();
-		}
+			// イベント発火条件を評価（履歴記録・条件評価・発火まで委譲）
+			eventEvaluator.Evaluate(interaction);
 
-		/// <summary>
-		/// 絶頂判定を行い、閾値を超えていれば絶頂イベントを発火してクールダウンする
-		/// </summary>
-		private void CheckAndHandleClimax()
-		{
 			if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
-			{
-				eventBus.Publish(new Event(climaxEventConfig.EventID, climaxEventConfig.ScenarioID, climaxEventConfig.Priority));
-				// クールダウンを適用
 				ApplyCooldown();
-			}
 		}
 
 		/// <summary>

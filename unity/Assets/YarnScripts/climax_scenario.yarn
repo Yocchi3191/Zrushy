@@ -1,4 +1,6 @@
-﻿title: climax_scenario
+title: climax_scenario
+tags: part:public
+condition: heroin:climax
 priority: 1000
 ---
 あっ、う、～～～～～～～っっっ！

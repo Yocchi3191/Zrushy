@@ -1,5 +1,7 @@
 ﻿using Yarn.Unity;
 using Zenject;
+using Zrushy.Core.Application;
+using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
@@ -7,8 +9,6 @@ using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
-using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Application.Scenarios;
 using Zrushy.Core.Infrastructure.EventBus;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
@@ -32,20 +32,8 @@ namespace Zrushy.Core.DI
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
 			// Domain層
-			// Heroin（シングルトン）※ IEventBus に依存
+			Container.Bind<IEventEvaluator>().To<EventEvaluator>().AsSingle();
 			Container.Bind<Heroin>().AsSingle();
-			Container.Bind<ClimaxEventConfig>().FromMethod(ctx =>
-			{
-				var runner = ctx.Container.Resolve<DialogueRunner>();
-				var node = runner.YarnProject.Program.Nodes["climax_scenario"];
-				int priority = 1000;
-				foreach (var h in node.Headers)
-					if (h.Key == "priority") int.TryParse(h.Value.Trim(), out priority);
-				return new ClimaxEventConfig(
-					new Domain.Events.ValueObject.EventID("climax_scenario"),
-					new Domain.Scenarios.ValueObject.ScenarioID("climax_scenario"),
-					priority);
-			}).AsSingle();
 
 			// Repository（シングルトン）
 			Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
@@ -59,6 +47,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<ArousalConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<DevelopmentConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
+			Container.Bind<IConditionParser>().To<HeroinStateConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
 
 			// Yarn Spinner（シーンから取得）
