@@ -1,0 +1,41 @@
+name: Run NUnit Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "core/**/*.cs"
+      - "core/**/*.csproj"
+  pull_request:
+    branches: [main]
+    paths:
+      - "core/**/*.cs"
+      - "core/**/*.csproj"
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      has-cs: ${{ steps.filter.outputs.cs }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/path-filer@v3
+        id: filter
+        with:
+          filters: |
+            cs: "**/*.cs"
+            csproj: "**/*.csproj"
+
+  test:
+    needs: check-changes
+    if: needs.check-changes.outputs.has-cs == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Test
+        run: dotnet test
+        working-directory: core

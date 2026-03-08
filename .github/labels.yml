@@ -1,0 +1,14 @@
+labels:
+  # type系
+  - name: "type: epic"
+    color: "8B5CF6"
+    description: "機能単位のIssue"
+
+  - name: "type: task"
+    color: "3B82F6"
+    description: "作業単位のIssue"
+
+  # status系
+  - name: "status: planning"
+    color: "F59E0B"
+    description: "見積もり中"
