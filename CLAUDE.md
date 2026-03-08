@@ -25,7 +25,9 @@
 githubを使っています
 
 ghコマンドが使えるため、prやissueの確認を依頼した際は使ってください
-使用できるラベルは `./.github/
+使用できるラベルは `./.github/labels.yml`に書いてあるものになります
+
+`./tools/gh-sync-labels/sync-labels.sh`を使って、labels.ymlのラベル設定をgithubに反映させることができます
 
 ## このプロジェクトについて
 
