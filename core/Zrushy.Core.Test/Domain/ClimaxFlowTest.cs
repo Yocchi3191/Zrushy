@@ -1,6 +1,4 @@
-using NSubstitute;
-using Zrushy.Core.Domain.Events.Service;
-using Zrushy.Core.Domain.Interactions.Entity;
+﻿using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Test.Domain;
@@ -19,7 +17,7 @@ public class ClimaxFlowTest
 	[SetUp]
 	public void Setup()
 	{
-		_body = new Heroin(Substitute.For<IEventEvaluator>());
+		_body = new Heroin();
 		_partID = new PartID("test");
 
 		// 開発度50、好感度50の部位を追加

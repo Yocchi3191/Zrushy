@@ -1,4 +1,4 @@
-using NSubstitute;
+﻿using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Entity;
@@ -17,14 +17,14 @@ public class InteractPartTest
 	public void Setup()
 	{
 		_partID = new PartID("head");
-		_body = new Heroin(Substitute.For<IEventEvaluator>());
+		_body = new Heroin();
 		_body.AddPart(new Part(_partID, new Development(0), new Affection(0), _partConfig));
 	}
 
 	[Test]
 	public void Executeでパラメータが更新される()
 	{
-		var useCase = new InteractPart(_body);
+		var useCase = new InteractPart(_body, Substitute.For<IEventEvaluator>());
 
 		useCase.Execute(new InteractPartCommand(_partID));
 
@@ -38,7 +38,7 @@ public class InteractPartTest
 	[Test]
 	public void Executeで存在しないパーツは例外を投げる()
 	{
-		var useCase = new InteractPart(_body);
+		var useCase = new InteractPart(_body, Substitute.For<IEventEvaluator>());
 
 		Assert.Throws<PartNotFoundException>(() =>
 			useCase.Execute(new InteractPartCommand(new PartID("nonexistent"))));

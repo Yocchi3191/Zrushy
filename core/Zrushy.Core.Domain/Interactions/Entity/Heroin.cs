@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Exception;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
@@ -13,7 +12,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 	public class Heroin
 	{
 		private readonly List<IPart> parts;
-		private readonly IEventEvaluator eventEvaluator;
 
 		/// <summary>
 		/// Body全体の興奮度パラメータ
@@ -34,11 +32,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// <summary>
 		/// 身体を作成する
 		/// </summary>
-		public Heroin(IEventEvaluator eventEvaluator)
+		public Heroin()
 		{
 			parts = new List<IPart>();
 			Arousal = new Arousal(0);
-			this.eventEvaluator = eventEvaluator;
 		}
 
 		/// <summary>
@@ -65,9 +62,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 			// 部位のパラメータを更新
 			targetPart.Interact(interaction);
 
-			// イベント発火条件を評価（履歴記録・条件評価・発火まで委譲）
-			eventEvaluator.Evaluate(interaction);
-
 			if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
 				ApplyCooldown();
 		}
@@ -76,7 +70,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 		/// 絶頂後のクールダウンを適用して快感を減少させる
 		/// 全部位の平均開発度を使って減少量を補正する
 		/// </summary>
-		private void ApplyCooldown()
+		public void ApplyCooldown()
 		{
 			if (parts.Count == 0)
 			{
