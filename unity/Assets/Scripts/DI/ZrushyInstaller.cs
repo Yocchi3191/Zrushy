@@ -25,20 +25,54 @@ namespace Zrushy.Core.DI
 	{
 		public override void InstallBindings()
 		{
-			// FiredEventLog（シングルトン）
-			Container.Bind<IFiredEventLog>().To<FiredEventLog>().AsSingle();
+			InstallDomain();
+			InstallInfrastructure();
+			InstallApplication();
+			InstallPresentation();
+		}
 
-			// EventBus（シングルトン）※ Body より先にバインド（依存順序）
+		private void InstallPresentation()
+		{
+			Container.Bind<ClickableRegistry>().AsSingle();
+			Container.Bind<ScenarioInputGate>().AsSingle();
+			Container.Bind<ScenarioPlayer>().AsSingle();
+			Container.Bind<PartController>().AsSingle();
+			Container.Bind<VirtualCursor>().FromComponentInHierarchy().AsSingle();
+			Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
+
+			// ViewModel
+			Container.Bind<HeroinViewModel>().AsSingle();
+		}
+
+		private void InstallInfrastructure()
+		{
+			Container.Bind<IFiredEventLog>().To<FiredEventLog>().AsSingle();
 			Container.Bind<IEventBus>().To<EventBus>().AsSingle();
 
-			// Domain層
-			Container.Bind<IEventEvaluator>().To<EventEvaluator>().AsSingle();
-			Container.Bind<Heroin>().AsSingle();
+			// Yarn Spinner（シーンから取得）
+			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
+			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
 
-			// Repository（シングルトン）
+			// ScenarioEngine（YarnScenarioEngine を使用）
+			Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
 			Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
+
 			Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
 			Container.Bind<IPartParameterReader>().To<BodyParameterReader>().AsSingle();
+		}
+
+		private void InstallApplication()
+		{
+			// Application層
+			// UseCase（シングルトン）
+			Container.Bind<InteractPart>().To<InteractPart>().AsSingle();
+			Container.Bind<ApplyBonus>().AsSingle();
+		}
+
+		private void InstallDomain()
+		{
+			Container.Bind<IEventEvaluator>().To<EventEvaluator>().AsSingle();
+			Container.Bind<Heroin>().AsSingle();
 
 			// ConditionFactory（シングルトン）
 			Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();
@@ -49,29 +83,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<HeroinStateConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
-
-			// Yarn Spinner（シーンから取得）
-			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
-			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
-
-			// ScenarioEngine（YarnScenarioEngine を使用）
-			Container.Bind<IScenarioEngine>().To<YarnScenarioEngine>().AsSingle();
-
-			// Application層
-			// UseCase（シングルトン）
-			Container.Bind<InteractPart>().To<InteractPart>().AsSingle();
-			Container.Bind<ApplyBonus>().AsSingle();
-
-			// Presentation層
-			Container.Bind<ClickableRegistry>().AsSingle();
-			Container.Bind<ScenarioInputGate>().AsSingle();
-			Container.Bind<ScenarioPlayer>().AsSingle();
-			Container.Bind<PartController>().AsSingle();
-			Container.Bind<VirtualCursor>().FromComponentInHierarchy().AsSingle();
-			Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
-
-			// ViewModel
-			Container.Bind<HeroinViewModel>().AsSingle();
 		}
 	}
 }
