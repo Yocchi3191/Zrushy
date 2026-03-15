@@ -3,3 +3,8 @@ tools/gh-sync-labels/
 
 # ビルドファイル
 .dll
+
+# krita バックアップファイル
+*.kra~
+.*.kra-autosave.kra
+*~
