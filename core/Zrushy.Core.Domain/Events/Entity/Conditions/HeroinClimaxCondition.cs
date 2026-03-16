@@ -1,17 +1,16 @@
-using System;
-using Zrushy.Core.Domain.Interactions.Entity;
+﻿using Zrushy.Core.Domain.Interactions.Entity;
 
 namespace Zrushy.Core.Domain.Events.Entity.Conditions
 {
 	internal class HeroinClimaxCondition : ICondition
 	{
-		private readonly Func<Heroin> heroinFactory;
+		private readonly Heroin heroin;
 
-		public HeroinClimaxCondition(Func<Heroin> heroinFactory)
+		public HeroinClimaxCondition(Heroin heroin)
 		{
-			this.heroinFactory = heroinFactory;
+			this.heroin = heroin;
 		}
 
-		public bool CanFire() => heroinFactory().IsClimax;
+		public bool CanFire() => heroin.IsClimax;
 	}
 }
