@@ -15,9 +15,9 @@ namespace Zrushy.Core.Presentation
             this.changeSprite = changeSprite;
             this.heroinViewModel = heroinViewModel;
         }
-        public void ChangeSprite(SpriteLayerID id, ExpressionType type)
+        public void ChangeSprite(SpriteLayerID id, LayerState state)
         {
-            string newSpritePath = changeSprite.Execute(id, type);
+            string newSpritePath = changeSprite.Execute(id, state);
             heroinViewModel.UpdateSprite(id, newSpritePath);
         }
     }

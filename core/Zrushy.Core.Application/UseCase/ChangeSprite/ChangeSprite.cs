@@ -14,9 +14,9 @@ namespace Zrushy.Core.Application.UseCase.ChangeSprite
             this.repository = repository;
         }
 
-        public string Execute(SpriteLayerID id, ExpressionType type)
+        public string Execute(SpriteLayerID id, LayerState state)
         {
-            return repository.Get(id, type);
+            return repository.Get(id, state);
         }
     }
 }

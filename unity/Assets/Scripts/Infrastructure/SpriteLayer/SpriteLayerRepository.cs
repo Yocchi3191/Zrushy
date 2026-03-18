@@ -8,9 +8,9 @@ namespace Zrushy.Core.Infrastructure.Unity.SpriteLayer
 	public class SpriteLayerRepository : ISpriteLayerRepository
 	{
 		private readonly string resourceRootPath = "Heroin";
-		public string Get(SpriteLayerID id, ExpressionType type)
+		public string Get(SpriteLayerID id, LayerState state)
 		{
-			return $"{resourceRootPath}/{id.value}/{type.type}";
+			return $"{resourceRootPath}/{id.value}/{state.type}";
 		}
 	}
 }

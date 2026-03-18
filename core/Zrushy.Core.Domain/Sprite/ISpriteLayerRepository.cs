@@ -5,6 +5,6 @@ namespace Zrushy.Core.Domain.Sprite
 {
     public interface ISpriteLayerRepository
     {
-        string Get(SpriteLayerID id, ExpressionType type);
+        string Get(SpriteLayerID id, LayerState state);
     }
 }

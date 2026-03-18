@@ -3,5 +3,5 @@
 
 namespace Zrushy.Core.Domain.Sprite
 {
-    public record ExpressionType(string type);
+    public record LayerState(string type);
 }
