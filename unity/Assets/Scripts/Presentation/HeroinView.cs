@@ -7,70 +7,73 @@ using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Sprite;
 using Zrushy.Core.Presentation;
 
-public class HeroinView : MonoBehaviour
+namespace Zrushy.Presentation.Unity
 {
-	[Inject]
-	private HeroinViewModel viewModel;
-
-	private Beat currentBeat;
-	[SerializeField] private SpriteLayerBindings[] bindings;
-
-	private void Start()
+	public class HeroinView : MonoBehaviour
 	{
-		viewModel.OnUpdated += OnViewModelUpdated;
-	}
+		[Inject]
+		private HeroinViewModel viewModel;
 
-	private void OnDestroy()
-	{
-		viewModel.OnUpdated -= OnViewModelUpdated;
-	}
+		private Beat currentBeat;
+		[SerializeField] private SpriteLayerBindings[] bindings;
 
-	private void OnViewModelUpdated(HeroinViewModel vm)
-	{
-		PlayBeat(vm.CurrentBeat);
-		UpdateSpriteLayers(vm.SpritePaths);
-	}
-
-	private void PlayBeat(Beat beat)
-	{
-		this.currentBeat = beat;
-		if (this.currentBeat != null)
+		private void Start()
 		{
-			Debug.Log($"[Heroin] {this.currentBeat.Dialogue} (anim: {this.currentBeat.AnimationName}, expr: {this.currentBeat.ExpressionName})");
+			viewModel.OnUpdated += OnViewModelUpdated;
 		}
-	}
 
-	private void UpdateSpriteLayers(Dictionary<SpriteLayerID, string> paths)
-	{
-		foreach (var path in paths)
+		private void OnDestroy()
 		{
-			var layerID = path.Key;
-			var binding = bindings.FirstOrDefault(b => b.LayerID == layerID.value);
-
-			if (binding.Image == null)
-				continue;
-
-			if (path.Value.EndsWith("/none"))
-			{
-				binding.Image.enabled = false;
-				continue;
-			}
-
-			Sprite sprite = Resources.Load<Sprite>(path.Value);
-			if (sprite == null)
-			{
-				Debug.LogWarning($"Sprite not found at path '{path.Value}' for layer '{layerID.value}'");
-				continue;
-			}
-			binding.Image.enabled = true;
-			binding.Image.sprite = Resources.Load<Sprite>(path.Value);
+			viewModel.OnUpdated -= OnViewModelUpdated;
 		}
-	}
 
-	[System.Serializable]
-	private struct SpriteLayerBindings
-	{
-		public string LayerID;
-		public Image Image;
+		private void OnViewModelUpdated(HeroinViewModel vm)
+		{
+			PlayBeat(vm.CurrentBeat);
+			UpdateSpriteLayers(vm.SpritePaths);
+		}
+
+		private void PlayBeat(Beat beat)
+		{
+			this.currentBeat = beat;
+			if (this.currentBeat != null)
+			{
+				Debug.Log($"[Heroin] {this.currentBeat.Dialogue} (anim: {this.currentBeat.AnimationName}, expr: {this.currentBeat.ExpressionName})");
+			}
+		}
+
+		private void UpdateSpriteLayers(Dictionary<SpriteLayerID, string> paths)
+		{
+			foreach (var path in paths)
+			{
+				var layerID = path.Key;
+				var binding = bindings.FirstOrDefault(b => b.LayerID == layerID.value);
+
+				if (binding.Image == null)
+					continue;
+
+				if (path.Value.EndsWith("/none"))
+				{
+					binding.Image.enabled = false;
+					continue;
+				}
+
+				Sprite sprite = Resources.Load<Sprite>(path.Value);
+				if (sprite == null)
+				{
+					Debug.LogWarning($"Sprite not found at path '{path.Value}' for layer '{layerID.value}'");
+					continue;
+				}
+				binding.Image.enabled = true;
+				binding.Image.sprite = Resources.Load<Sprite>(path.Value);
+			}
+		}
+
+		[System.Serializable]
+		private struct SpriteLayerBindings
+		{
+			public string LayerID;
+			public Image Image;
+		}
 	}
 }
