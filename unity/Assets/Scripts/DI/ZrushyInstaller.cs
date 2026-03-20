@@ -47,7 +47,7 @@ namespace Zrushy.Core.DI
 
 			Container.Bind<HeroinViewModel>().AsSingle();
 
-			Container.Bind<ILogger>().FromInstance(Debug.unityLogger).AsSingle();
+			Container.Bind<Application.ILogger>().To<Infrastructure.Logger>().AsSingle();
 		}
 
 		private void InstallInfrastructure()

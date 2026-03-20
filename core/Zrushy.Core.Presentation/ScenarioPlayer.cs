@@ -25,6 +25,8 @@ namespace Zrushy.Core.Presentation
         public bool IsPlaying => isPlaying;
         private bool isPlaying = false;
 
+        private ILogger logger;
+
         /// <summary>
         /// シナリオが開始されたときに発火するイベント
         /// ScenarioDriver などが購読して自動進行を開始する
@@ -37,12 +39,16 @@ namespace Zrushy.Core.Presentation
         /// </summary>
         public event Action? OnScenarioFinished;
 
-        public ScenarioPlayer(GetScenario getScenario, HeroinViewModel heroin, EventBus eventBus, IBeatProvider beatProvider)
+        public ScenarioPlayer(GetScenario getScenario,
+            HeroinViewModel heroin,
+            EventBus eventBus,
+            IBeatProvider beatProvider,
+            ILogger logger)
         {
             this.getScenario = getScenario;
             this.heroin = heroin;
             this.beatProvider = beatProvider;
-
+            this.logger = logger;
             this._eventBus = eventBus;
             _eventBus.OnEventPublished += Play; // Eventが発火したらシナリオ開始
         }
@@ -68,7 +74,7 @@ namespace Zrushy.Core.Presentation
             {
                 // シナリオが見つからない場合はログを出力して処理を中断
                 // isPlaying は false のままにする
-                Console.WriteLine($"[ScenarioPlayer] {ex.Message}");
+                logger.Error($"[ScenarioPlayer] {ex.Message}");
                 throw;
             }
         }

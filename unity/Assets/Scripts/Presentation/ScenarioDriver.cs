@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 using Zrushy.Core.Presentation;
+using ILogger = Zrushy.Core.Application.ILogger;
 
 namespace Zrushy.Unity.Presentation
 {
@@ -24,7 +25,7 @@ namespace Zrushy.Unity.Presentation
 		{
 			if (scenarioPlayer == null)
 			{
-				logger.LogError("ScenarioDriver", "ScenarioPlayer is not assigned.");
+				logger.Error("ScenarioPlayer が割り当てられていません");
 			}
 		}
 
