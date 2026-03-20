@@ -1832,6 +1832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f8382d0b9ed2a42917e6b87b689897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.DI::Zrushy.Core.DI.ZrushyInstaller
+  yarnProject: {fileID: 7545569452688597077, guid: 0be765063e77aa843806d299ec30566f, type: 3}
 --- !u!114 &2070870870
 MonoBehaviour:
   m_ObjectHideFlags: 0

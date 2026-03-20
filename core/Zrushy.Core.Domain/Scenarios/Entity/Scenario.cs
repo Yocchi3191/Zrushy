@@ -1,31 +1,29 @@
-﻿using System.Collections.Generic;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Domain.Scenarios.Entity
 {
-	public class Scenario
-	{
-		public ScenarioID ID { get; }
-		private readonly IReadOnlyList<Beat> actions;
+    /// <summary>
+    /// イベント発火時に再生するシナリオ
+    /// </summary>
+    public class Scenario
+    {
+        public ScenarioID ID { get; }
+        private readonly IBeatProvider beatProvider;
+        private bool _isFinished = false;
 
-		public int Count => actions.Count;
-		public Beat this[int index] => actions[index];
+        public Scenario(ScenarioID id, IBeatProvider beatProvider)
+        {
+            this.ID = id;
+            this.beatProvider = beatProvider;
+            this.beatProvider.OnCompleted += () => _isFinished = true;
+            this.beatProvider.Start(id);
+        }
 
-		public Scenario(ScenarioID id, IReadOnlyList<Beat> actions)
-		{
-			this.ID = id;
-			this.actions = actions;
-		}
-
-		public override bool Equals(object obj)
-		{
-			Scenario target = (Scenario)obj;
-			return target.ID == ID;
-		}
-
-		public override int GetHashCode()
-		{
-			return ID.GetHashCode();
-		}
-	}
+        public Beat? Current => this.beatProvider.Current;
+        public void Next() => this.beatProvider.Advance();
+        public bool IsFinished => _isFinished;
+    }
 }

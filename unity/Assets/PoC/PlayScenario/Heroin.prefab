@@ -137,9 +137,9 @@ Transform:
   m_GameObject: {fileID: 636006210654742737}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -292.62845, y: 468.55548, z: 0}
-  m_LocalScale: {x: 2.022472, y: 2.022472, z: 2.022472}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -282, y: 426, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2593875705693479046}
   - {fileID: 5263553050312943721}
@@ -459,8 +459,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2726660840728128927}
   - {fileID: 4640372942210718212}
+  - {fileID: 2726660840728128927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03e88911fffb2479a75adf0f9a6a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::HeroinView
+  bindings: []
 --- !u!114 &2463250723744384787
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -13,7 +13,7 @@ namespace Zrushy.Unity.Presentation
 	public class DialogueAdvancePanel : MonoBehaviour, IPointerClickHandler
 	{
 		[Inject]
-		private ScenarioPlayer scenarioPlayer;
+		private IScenarioAdvancable scenarioPlayer;
 
 		private const float AUTO_ADVANCE_INTERVAL = 3f;
 		private Coroutine autoAdvanceCoroutine;
