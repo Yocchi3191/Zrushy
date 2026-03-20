@@ -47,6 +47,9 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// <param name="part">追加する部位</param>
         public void AddPart(IPart part)
         {
+            if (parts.Any(p => p.ID == part.ID))
+                throw new DuplicatePartException(part.ID);
+
             parts.Add(part);
         }
 
@@ -64,9 +67,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
             // 部位のパラメータを更新
             targetPart.Interact(interaction);
-
-            if (Arousal.IsAboveThreshold(CLIMAX_THRESHOLD))
-                ApplyCooldown();
         }
 
         /// <summary>
@@ -85,6 +85,9 @@ namespace Zrushy.Core.Domain.Interactions.Entity
             // 全部位の平均開発度を計算
             int totalDevelopment = parts.Sum(p => p.Development.Value);
             int avgDevelopment = totalDevelopment / parts.Count;
+
+            // 平均開発度を使ってクールダウンを適用
+            Arousal = Arousal.ApplyCooldown(new Development(avgDevelopment));
         }
 
         /// <summary>
