@@ -1,5 +1,4 @@
-﻿using System;
-using Yarn.Unity;
+﻿using Yarn.Unity;
 using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
@@ -8,13 +7,15 @@ public class YarnBeatProvider : IBeatProvider
 	private readonly DialogueRunner dialogueRunner;
 	private readonly ZrushyDialoguePresenter dialoguePresenter;
 
+	public bool IsCompleted { get; private set; }
+
 	public YarnBeatProvider(DialogueRunner dialogueRunner, ZrushyDialoguePresenter presenter)
 	{
 		this.dialogueRunner = dialogueRunner;
 		this.dialoguePresenter = presenter;
 
 		dialoguePresenter.OnLineReady += line => Current = ConvertToBeat(line);
-		dialoguePresenter.OnDialogueCompleted += () => OnCompleted?.Invoke();
+		dialoguePresenter.OnDialogueCompleted += () => IsCompleted = true;
 	}
 
 	private Beat ConvertToBeat(LocalizedLine line)
@@ -37,8 +38,6 @@ public class YarnBeatProvider : IBeatProvider
 
 	public Beat Current { get; private set; }
 
-	public event Action OnCompleted;
-
 	public void Advance()
 	{
 		dialoguePresenter.Advance();
@@ -46,6 +45,7 @@ public class YarnBeatProvider : IBeatProvider
 
 	public void Start(ScenarioID id)
 	{
+		this.IsCompleted = false;
 		dialogueRunner.StartDialogue(id.Value);
 	}
 }

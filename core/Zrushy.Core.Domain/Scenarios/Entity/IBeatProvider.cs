@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Domain.Scenarios.Entity
@@ -11,7 +10,7 @@ namespace Zrushy.Core.Domain.Scenarios.Entity
     /// </summary>
     public interface IBeatProvider
     {
-        event Action OnCompleted;
+        bool IsCompleted { get; }
         Beat? Current { get; }
 
         void Advance();
