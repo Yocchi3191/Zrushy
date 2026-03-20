@@ -11,6 +11,7 @@ using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Scenarios.Entity;
+using Zrushy.Core.Domain.Scenarios.Service;
 using Zrushy.Core.Infrastructure;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
@@ -44,7 +45,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
 			Container.Bind<IScenarioAdvancable>().To<ScenarioPlayer>().AsSingle();
 
-			// ViewModel
 			Container.Bind<HeroinViewModel>().AsSingle();
 
 			Container.Bind<ILogger>().FromInstance(Debug.unityLogger).AsSingle();
@@ -55,7 +55,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<IFiredEventLog>().To<FiredEventLog>().AsSingle();
 			Container.Bind<EventBus>().AsSingle();
 
-			// Yarn Spinner（シーンから取得）
 			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
 			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
 
@@ -69,12 +68,11 @@ namespace Zrushy.Core.DI
 
 		private void InstallApplication()
 		{
-			// Application層
-			// UseCase（シングルトン）
 			Container.Bind<InteractPart>().To<InteractPart>().AsSingle();
 			Container.Bind<ApplyBonus>().AsSingle();
 			Container.Bind<GetScenario>().AsSingle();
 			Container.Bind<IScenarioProvider>().To<YarnScenarioProvider>().AsSingle();
+			Container.Bind<ScenarioSelector>().AsSingle();
 		}
 
 		private void InstallDomain()
@@ -82,7 +80,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<IEventEvaluator>().To<EventEvaluator>().AsSingle();
 			Container.Bind<Heroin>().AsSingle();
 
-			// ConditionFactory（シングルトン）
 			Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<FirstTouchConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<EventFiredConditionParser>().AsSingle();

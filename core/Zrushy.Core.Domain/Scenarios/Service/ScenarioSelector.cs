@@ -8,7 +8,7 @@ namespace Zrushy.Core.Domain.Scenarios.Service
 {
     public class ScenarioSelector
     {
-        public static ScenarioID Select(ScenarioID[] scenarios)
+        public ScenarioID Select(ScenarioID[] scenarios)
         {
             if (scenarios == null || scenarios.Length == 0)
             {

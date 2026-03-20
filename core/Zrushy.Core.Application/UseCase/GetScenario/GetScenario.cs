@@ -10,15 +10,18 @@ namespace Zrushy.Core.Application.UseCase.GetScenario
     public class GetScenario
     {
         private readonly IScenarioProvider provider;
-        public GetScenario(IScenarioProvider provider)
+        private readonly ScenarioSelector selector;
+
+        public GetScenario(IScenarioProvider provider, ScenarioSelector selector)
         {
             this.provider = provider;
+            this.selector = selector;
         }
 
         public ScenarioID Execute(EventID triggeredEvent)
         {
             ScenarioID[] scenarioIDs = provider.Get(triggeredEvent);
-            return ScenarioSelector.Select(scenarioIDs);
+            return selector.Select(scenarioIDs);
         }
     }
 }
