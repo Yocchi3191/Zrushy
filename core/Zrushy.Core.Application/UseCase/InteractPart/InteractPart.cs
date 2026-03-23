@@ -1,3 +1,4 @@
+﻿using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
@@ -8,11 +9,13 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 	/// </summary>
 	public class InteractPart
 	{
-		private readonly Heroin body;
+		private readonly Heroin heroin;
+		private readonly IEventEvaluator eventEvaluator;
 
-		public InteractPart(Heroin body)
+		public InteractPart(Heroin heroin, IEventEvaluator eventEvaluator)
 		{
-			this.body = body;
+			this.heroin = heroin;
+			this.eventEvaluator = eventEvaluator;
 		}
 
 		/// <summary>
@@ -21,7 +24,10 @@ namespace Zrushy.Core.Application.UseCase.InteractPart
 		/// <param name="command">操作コマンド</param>
 		public void Execute(InteractPartCommand command)
 		{
-			body.Interact(new Interaction(command.PartID, command.Type));
+			Interaction interaction = new Interaction(command.PartID, command.Type);
+			heroin.Interact(interaction);
+			eventEvaluator.Evaluate(interaction);
+			if (heroin.IsClimax) heroin.ApplyCooldown();
 		}
 	}
 }

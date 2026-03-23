@@ -1,5 +1,4 @@
-using System;
-using Zrushy.Core.Domain.Events.Entity;
+﻿using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Entity.Conditions;
 using Zrushy.Core.Domain.Interactions.Entity;
 
@@ -11,19 +10,19 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 	/// </summary>
 	public class HeroinStateConditionParser : IConditionParser
 	{
-		private readonly Func<Heroin> heroinFactory;
+		private readonly Heroin heroin;
 
 		public string Type => "heroin";
 
-		public HeroinStateConditionParser(Func<Heroin> heroinFactory)
+		public HeroinStateConditionParser(Heroin heroin)
 		{
-			this.heroinFactory = heroinFactory;
+			this.heroin = heroin;
 		}
 
 		public ICondition? Parse(string[] parts)
 		{
 			if (parts.Length != 2 || parts[1] != "climax") return null;
-			return new HeroinClimaxCondition(heroinFactory);
+			return new HeroinClimaxCondition(heroin);
 		}
 	}
 }

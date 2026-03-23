@@ -1,4 +1,4 @@
-using NSubstitute;
+﻿using NSubstitute;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Entity;
@@ -20,7 +20,7 @@ namespace Zrushy.Core.Test.Presentation
 		public void setup()
 		{
 			eventEvaluator = Substitute.For<IEventEvaluator>();
-			heroin = new Heroin(eventEvaluator);
+			heroin = new Heroin();
 
 			IPart headPart = Substitute.For<IPart>();
 			headPart.ID.Returns(new PartID("head"));
@@ -31,7 +31,7 @@ namespace Zrushy.Core.Test.Presentation
 		[Test]
 		public void SendInput_頭をさわる入力を受け取ったら_InteractPartが正しいコマンドで呼ばれる()
 		{
-			InteractPart interactPart = new InteractPart(heroin);
+			InteractPart interactPart = new InteractPart(heroin, eventEvaluator);
 			PartController controller = new PartController(interactPart, new ScenarioInputGate());
 			PartInput input = new PartInput(new PartID("head"));
 

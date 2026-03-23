@@ -1,21 +1,20 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
-using Zrushy.Core.Domain.Events.Entity;
-using Zrushy.Core.Domain.Events.Repository;
+using Zrushy.Core.Presentation;
+using ILogger = Zrushy.Core.Application.ILogger;
 
 namespace Zrushy.Unity.Presentation
 {
 	/// <summary>
-	/// シナリオの進行を管理
-	/// EventBus からのイベントを受け取り、シナリオの開始・進行を行う
+	/// シナリオを進めるクラス
 	/// </summary>
 	public class ScenarioDriver : MonoBehaviour
 	{
 		[Inject]
-		private ScenarioPlayer scenarioPlayer;
+		private IScenarioAdvancable scenarioPlayer;
 
 		[Inject]
-		private IEventBus eventBus;
+		private ILogger logger;
 
 		/// <summary>
 		/// この優先度以上のイベントは現在のシナリオを割り込む
@@ -24,31 +23,19 @@ namespace Zrushy.Unity.Presentation
 
 		private void Start()
 		{
-			eventBus.OnEventPublished += OnEventFired;
+			if (scenarioPlayer == null)
+			{
+				logger.Error("ScenarioPlayer が割り当てられていません");
+			}
 		}
 
 		/// <summary>
-		/// EventBus からイベントが発火されたときの処理
-		/// 高優先度イベントは現在のシナリオを割り込み、通常イベントは進行または開始
+		/// シナリオを進める
+		/// unity側での集約ルートとしてデバッグ時などに使えそうなので、薄いけど残しておく
 		/// </summary>
-		private void OnEventFired(IScenarioEvent gameEvent)
+		public void Next()
 		{
-			if (gameEvent.Priority >= INTERRUPT_PRIORITY_THRESHOLD && scenarioPlayer.IsPlaying)
-			{
-				scenarioPlayer.Stop();
-				scenarioPlayer.Play(gameEvent.ScenarioToStart);
-			}
-			else if (!scenarioPlayer.IsPlaying)
-			{
-				scenarioPlayer.Play(gameEvent.ScenarioToStart);
-			}
-			// 再生中のタッチは無視（InteractPart でパラメータは加算済み）
-		}
-
-		private void OnDestroy()
-		{
-			if (eventBus != null)
-				eventBus.OnEventPublished -= OnEventFired;
+			scenarioPlayer.Next();
 		}
 	}
 }

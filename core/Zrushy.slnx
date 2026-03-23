@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/ソリューション項目/">
+    <File Path=".editorconfig" />
     <File Path="Directory.Build.props" />
   </Folder>
   <Project Path="Zrushy.Core.Application/Zrushy.Core.Application.csproj" Id="c4fd5ae9-18af-4bdd-bcbf-9dfc339538e6">

@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using Zenject;
-using Zrushy.Unity.Presentation;
+using Zrushy.Core.Presentation;
 
 namespace Zrushy.Presentation.Unity
 {
 	public class ScenarioPlayingMessage : MonoBehaviour
 	{
 		[Inject]
-		private ScenarioPlayer scenarioPlayer;
+		private IScenarioAdvancable scenarioPlayer;
 
 		[SerializeField]
 		private GameObject target;

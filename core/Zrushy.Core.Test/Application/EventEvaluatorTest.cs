@@ -1,5 +1,6 @@
-using System;
-using System.Collections.Generic;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using NSubstitute;
 using Zrushy.Core.Application;
 using Zrushy.Core.Domain.Events.Entity;
@@ -8,121 +9,120 @@ using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
-using Zrushy.Core.Infrastructure.EventBus;
 
 namespace Zrushy.Core.Test.Application;
 
 public class EventEvaluatorTest
 {
-	private IInteractionHistory _history;
-	private IEventBus _eventBus;
-	private PartID _partID;
-	private ScenarioID _testScenarioID;
+    private IInteractionHistory _history;
+    private EventBus _eventBus;
+    private PartID _partID;
+    private ScenarioID _testScenarioID;
 
-	[SetUp]
-	public void Setup()
-	{
-		_partID = new PartID("head");
-		_testScenarioID = new ScenarioID("test_scenario");
-		_history = Substitute.For<IInteractionHistory>();
-		_eventBus = new EventBus(new FiredEventLog());
-	}
+    [SetUp]
+    public void Setup()
+    {
+        _partID = new PartID("head");
+        _testScenarioID = new ScenarioID("test_scenario");
+        _history = Substitute.For<IInteractionHistory>();
+        _eventBus = new EventBus(new FiredEventLog());
+    }
 
-	[Test]
-	public void 発火可能なイベントがなければEventBusに何も発行しない()
-	{
-		IScenarioEvent? published = null;
-		_eventBus.OnEventPublished += e => published = e;
-		var evaluator = new EventEvaluator(_history, new StubEventRepository(), _eventBus);
+    [Test]
+    public void 発火可能なイベントがなければEventBusに何も発行しない()
+    {
+        EventID? published = null;
+        _eventBus.OnEventPublished += e => published = e;
+        var evaluator = new EventEvaluator(_history, new StubEventRepository(), _eventBus);
 
-		evaluator.Evaluate(new Interaction(_partID));
+        evaluator.Evaluate(new Interaction(_partID));
 
-		Assert.That(published, Is.Null);
-	}
+        Assert.That(published, Is.Null);
+    }
 
-	[Test]
-	public void 発火可能なイベントをEventBusに発行する()
-	{
-		IScenarioEvent? published = null;
-		_eventBus.OnEventPublished += e => published = e;
-		var evt = new StubEvent(canFire: true, priority: 1, _testScenarioID);
-		var evaluator = new EventEvaluator(_history, new StubEventRepository(evt), _eventBus);
+    [Test]
+    public void 発火可能なイベントをEventBusに発行する()
+    {
+        EventID? published = null;
+        _eventBus.OnEventPublished += e => published = e;
+        var evt = new StubEvent(canFire: true, priority: 1, _testScenarioID);
+        var evaluator = new EventEvaluator(_history, new StubEventRepository(evt), _eventBus);
 
-		evaluator.Evaluate(new Interaction(_partID));
+        evaluator.Evaluate(new Interaction(_partID));
 
-		Assert.That(published?.ScenarioToStart, Is.EqualTo(_testScenarioID));
-	}
+        Assert.That(published, Is.EqualTo(evt.ID));
+    }
 
-	[Test]
-	public void 発火不可のイベントはEventBusに発行しない()
-	{
-		IScenarioEvent? published = null;
-		_eventBus.OnEventPublished += e => published = e;
-		var evt = new StubEvent(canFire: false, priority: 1, _testScenarioID);
-		var evaluator = new EventEvaluator(_history, new StubEventRepository(evt), _eventBus);
+    [Test]
+    public void 発火不可のイベントはEventBusに発行しない()
+    {
+        EventID? published = null;
+        _eventBus.OnEventPublished += e => published = e;
+        var evt = new StubEvent(canFire: false, priority: 1, _testScenarioID);
+        var evaluator = new EventEvaluator(_history, new StubEventRepository(evt), _eventBus);
 
-		evaluator.Evaluate(new Interaction(_partID));
+        evaluator.Evaluate(new Interaction(_partID));
 
-		Assert.That(published, Is.Null);
-	}
+        Assert.That(published, Is.Null);
+    }
 
-	[Test]
-	public void 複数イベントがあれば最優先のものをEventBusに発行する()
-	{
-		IScenarioEvent? published = null;
-		_eventBus.OnEventPublished += e => published = e;
-		var lowScenario = new ScenarioID("low_scenario");
-		var highScenario = new ScenarioID("high_scenario");
-		var low = new StubEvent(canFire: true, priority: 1, lowScenario);
-		var high = new StubEvent(canFire: true, priority: 10, highScenario);
-		var evaluator = new EventEvaluator(_history, new StubEventRepository(low, high), _eventBus);
+    [Test]
+    public void 複数イベントがあれば最優先のものをEventBusに発行する()
+    {
+        EventID? published = null;
+        _eventBus.OnEventPublished += e => published = e;
+        var lowScenario = new ScenarioID("low_scenario");
+        var highScenario = new ScenarioID("high_scenario");
+        var low = new StubEvent(canFire: true, priority: 1, lowScenario);
+        var high = new StubEvent(canFire: true, priority: 10, highScenario);
+        var evaluator = new EventEvaluator(_history, new StubEventRepository(low, high), _eventBus);
 
-		evaluator.Evaluate(new Interaction(_partID));
+        evaluator.Evaluate(new Interaction(_partID));
 
-		Assert.That(published?.ScenarioToStart, Is.EqualTo(highScenario));
-	}
+        Assert.That(published, Is.EqualTo(high.ID));
+    }
 
-	[Test]
-	public void インタラクション履歴が記録される()
-	{
-		var evaluator = new EventEvaluator(_history, new StubEventRepository(), _eventBus);
-		var interaction = new Interaction(_partID);
+    [Test]
+    public void インタラクション履歴が記録される()
+    {
+        var evaluator = new EventEvaluator(_history, new StubEventRepository(), _eventBus);
+        var interaction = new Interaction(_partID);
 
-		evaluator.Evaluate(interaction);
+        evaluator.Evaluate(interaction);
 
-		_history.Received(1).Record(interaction);
-	}
+        _history.Received(1).Record(interaction);
+    }
 
-	// --- Stubs ---
+    // --- Stubs ---
 
-	private class StubEvent : IScenarioEvent
-	{
-		public EventID ID { get; }
-		public ScenarioID ScenarioToStart { get; }
-		public int Priority { get; }
-		private readonly bool _canFire;
+    private class StubEvent : IScenarioEvent
+    {
+        public EventID ID { get; }
+        public ScenarioID ScenarioToStart { get; }
+        public int Priority { get; }
+        private readonly bool _canFire;
 
-		public StubEvent(bool canFire, int priority, ScenarioID scenarioId)
-		{
-			_canFire = canFire;
-			Priority = priority;
-			ID = new EventID(scenarioId.Value);
-			ScenarioToStart = scenarioId;
-		}
+        public StubEvent(bool canFire, int priority, ScenarioID scenarioId)
+        {
+            _canFire = canFire;
+            Priority = priority;
+            ID = new EventID(scenarioId.Value);
+            ScenarioToStart = scenarioId;
+        }
 
-		public bool CanFire() => _canFire;
-	}
+        public bool CanFire() => _canFire;
+    }
 
-	private class StubEventRepository : IEventRepository
-	{
-		private readonly IReadOnlyList<IScenarioEvent> _events;
+    private class StubEventRepository : IEventRepository
+    {
+        private readonly IReadOnlyList<IScenarioEvent> _events;
 
-		public StubEventRepository(params IScenarioEvent[] events)
-		{
-			_events = events;
-		}
+        public StubEventRepository(params IScenarioEvent[] events)
+        {
+            _events = events;
+        }
 
-		public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID) => _events;
-		public IReadOnlyList<IScenarioEvent> GetGlobalEvents() => Array.Empty<IScenarioEvent>();
-	}
+        public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID) => _events;
+        public IReadOnlyList<IScenarioEvent> GetGlobalEvents() => Array.Empty<IScenarioEvent>();
+    }
 }
