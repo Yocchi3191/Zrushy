@@ -62,7 +62,10 @@ namespace Zrushy.Unity.Presentation
 		private IEnumerator AutoAdvanceRoutine()
 		{
 			yield return new WaitForSeconds(AUTO_ADVANCE_INTERVAL);
-			if (scenarioPlayer.IsPlaying) AdvanceDialogue();
+			if (scenarioPlayer.IsPlaying)
+				AdvanceDialogue();
+			else
+				StartAutoAdvance();
 		}
 	}
 }
