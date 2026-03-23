@@ -16,6 +16,7 @@ using Zrushy.Core.Infrastructure;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
 using Zrushy.Core.Presentation.Unity;
+using Zrushy.Unity.Infrastructure.Scenario;
 using Zrushy.Unity.Presentation;
 
 namespace Zrushy.Core.DI

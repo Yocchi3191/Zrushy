@@ -1,7 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-using System;
+﻿using System;
 using Zrushy.Core.Application;
 using Zrushy.Core.Application.UseCase.GetScenario;
 using Zrushy.Core.Domain.Events.ValueObject;
@@ -51,49 +48,25 @@ namespace Zrushy.Core.Presentation
             this.logger = logger;
             this._eventBus = eventBus;
             _eventBus.OnEventPublished += Play; // Eventが発火したらシナリオ開始
+
+            beatProvider.OnBeatReady += heroin.Act;
+            beatProvider.OnCompleted += FinishScenario;
         }
 
         public void Play(EventID firedEventID)
         {
             if (isPlaying) return;
 
-            try
-            {
-                ScenarioID scenarioID = getScenario.Execute(firedEventID);
-                _currentScenario = new Scenario(scenarioID, this.beatProvider);
-                isPlaying = true;
-                Beat? beat = _currentScenario.Current;
-
-                if (beat != null)
-                    heroin.Act(beat);
-
-                // シナリオ開始イベントを発火
-                OnScenarioStarted?.Invoke();
-            }
-            catch (ScenarioNotFoundException ex)
-            {
-                // シナリオが見つからない場合はログを出力して処理を中断
-                // isPlaying は false のままにする
-                logger.Error($"[ScenarioPlayer] {ex.Message}");
-                throw;
-            }
+            ScenarioID scenarioID = getScenario.Execute(firedEventID);
+            _currentScenario = new Scenario(scenarioID, beatProvider);
+            isPlaying = true;
+            OnScenarioStarted?.Invoke();
         }
 
         public void Next()
         {
             if (!isPlaying || _currentScenario == null) return;
-
             this._currentScenario.Next();
-            Beat? next = _currentScenario.Current;
-            if (next != null)
-            {
-                heroin.Act(next);
-            }
-
-            if (_currentScenario.IsFinished)
-            {
-                FinishScenario();
-            }
         }
 
         /// <summary>

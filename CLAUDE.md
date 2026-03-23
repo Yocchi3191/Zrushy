@@ -81,3 +81,8 @@ EventEvaluator.Evaluate → Event.CanFire() (ICondition[] AND評価)
   → EventBus.Publish → ScenarioDriver.OnEventFired → ScenarioPlayer.Play
   → YarnScenarioEngine.Start → DialogueRunner.StartDialogue
 ```
+
+## レビュー
+
+PRを上げたらレビューをclaudeに依頼しています
+レビュー内容はPRにコメントとして投稿してください
