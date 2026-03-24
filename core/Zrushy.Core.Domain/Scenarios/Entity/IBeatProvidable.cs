@@ -6,7 +6,7 @@ namespace Zrushy.Core.Domain.Scenarios.Entity
     /// <summary>
     /// Scenario が再生する Beat を提供するインターフェース
     /// </summary>
-    public interface IBeatProvider
+    public interface IBeatProvidable
     {
         bool IsCompleted { get; }
         Beat? Current { get; }
