@@ -8,7 +8,7 @@ namespace Zrushy.Unity.Infrastructure.Scenario
 	/// <summary>
 	/// Yarn Spinner の DialogueRunner と連携して、シナリオのビートを提供するクラス。
 	/// </summary>
-	public class YarnBeatProvider : IBeatProvidable
+	public class YarnBeatProvider : IBeatProvider
 	{
 		private readonly DialogueRunner dialogueRunner;
 		private readonly ZrushyDialoguePresenter dialoguePresenter;

@@ -90,7 +90,7 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<HeroinStateConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
 
-			Container.Bind<IBeatProvidable>().To<YarnBeatProvider>().AsSingle();
+			Container.Bind<IBeatProvider>().To<YarnBeatProvider>().AsSingle();
 		}
 	}
 }

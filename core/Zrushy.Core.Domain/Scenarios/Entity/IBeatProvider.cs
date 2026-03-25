@@ -4,9 +4,9 @@ using Zrushy.Core.Domain.Scenarios.ValueObject;
 namespace Zrushy.Core.Domain.Scenarios.Entity
 {
     /// <summary>
-    /// Scenario が再生する Beat を提供するインターフェース
+    /// 1シナリオに含まれる Beat を提供するインターフェース
     /// </summary>
-    public interface IBeatProvidable
+    public interface IBeatProvider
     {
         bool IsCompleted { get; }
         Beat? Current { get; }

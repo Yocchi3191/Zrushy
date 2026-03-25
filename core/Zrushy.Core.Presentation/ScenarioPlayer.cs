@@ -15,7 +15,7 @@ namespace Zrushy.Core.Presentation
         private readonly GetScenario getScenario;
         private readonly HeroinViewModel heroin;
         private readonly EventBus _eventBus;
-        private readonly IBeatProvidable beatProvider;
+        private readonly IBeatProvider beatProvider;
 
         public bool IsPlaying => isPlaying;
         private bool isPlaying = false;
@@ -34,17 +34,17 @@ namespace Zrushy.Core.Presentation
         public ScenarioPlayer(GetScenario getScenario,
             HeroinViewModel heroin,
             EventBus eventBus,
-            IBeatProvidable beatProvidable
+            IBeatProvider beatProvider
             )
         {
             this.getScenario = getScenario;
             this.heroin = heroin;
-            this.beatProvider = beatProvidable;
+            this.beatProvider = beatProvider;
             this._eventBus = eventBus;
             _eventBus.OnEventPublished += Play; // Eventが発火したらシナリオ開始
 
-            beatProvidable.OnBeatReady += this.heroin.Act;
-            beatProvidable.OnCompleted += FinishScenario;
+            beatProvider.OnBeatReady += this.heroin.Act;
+            beatProvider.OnCompleted += FinishScenario;
         }
 
         public void Play(EventID firedEventID)
