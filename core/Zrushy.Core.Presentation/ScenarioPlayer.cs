@@ -34,8 +34,7 @@ namespace Zrushy.Core.Presentation
         public ScenarioPlayer(GetScenario getScenario,
             HeroinViewModel heroin,
             EventBus eventBus,
-            IBeatProvider beatProvider
-            )
+            IBeatProvider beatProvider)
         {
             this.getScenario = getScenario;
             this.heroin = heroin;
