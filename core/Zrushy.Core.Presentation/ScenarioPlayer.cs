@@ -3,7 +3,6 @@ using Zrushy.Core.Application;
 using Zrushy.Core.Application.UseCase.GetScenario;
 using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Scenarios.Entity;
-using Zrushy.Core.Domain.Scenarios.Repository;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
 namespace Zrushy.Core.Presentation
@@ -17,13 +16,9 @@ namespace Zrushy.Core.Presentation
         private readonly HeroinViewModel heroin;
         private readonly EventBus _eventBus;
         private readonly IBeatProvider beatProvider;
-        private Scenario? _currentScenario = null;
 
         public bool IsPlaying => isPlaying;
         private bool isPlaying = false;
-
-        private ILogger logger;
-
         /// <summary>
         /// シナリオが開始されたときに発火するイベント
         /// ScenarioDriver などが購読して自動進行を開始する
@@ -39,17 +34,15 @@ namespace Zrushy.Core.Presentation
         public ScenarioPlayer(GetScenario getScenario,
             HeroinViewModel heroin,
             EventBus eventBus,
-            IBeatProvider beatProvider,
-            ILogger logger)
+            IBeatProvider beatProvider)
         {
             this.getScenario = getScenario;
             this.heroin = heroin;
             this.beatProvider = beatProvider;
-            this.logger = logger;
             this._eventBus = eventBus;
             _eventBus.OnEventPublished += Play; // Eventが発火したらシナリオ開始
 
-            beatProvider.OnBeatReady += heroin.Act;
+            beatProvider.OnBeatReady += this.heroin.Act;
             beatProvider.OnCompleted += FinishScenario;
         }
 
@@ -58,15 +51,15 @@ namespace Zrushy.Core.Presentation
             if (isPlaying) return;
 
             ScenarioID scenarioID = getScenario.Execute(firedEventID);
-            _currentScenario = new Scenario(scenarioID, beatProvider);
+            beatProvider.Start(scenarioID);
             isPlaying = true;
             OnScenarioStarted?.Invoke();
         }
 
         public void Next()
         {
-            if (!isPlaying || _currentScenario == null) return;
-            this._currentScenario.Next();
+            if (!isPlaying) return;
+            beatProvider.Advance();
         }
 
         /// <summary>
@@ -77,13 +70,11 @@ namespace Zrushy.Core.Presentation
         {
             if (!isPlaying) return;
 
-            _currentScenario = null;
             FinishScenario();
         }
 
         private void FinishScenario()
         {
-
             isPlaying = false;
             OnScenarioFinished?.Invoke();
         }
