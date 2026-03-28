@@ -10,13 +10,11 @@ using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
-using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Scenarios.Service;
 using Zrushy.Core.Infrastructure;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Presentation;
 using Zrushy.Core.Presentation.Unity;
-using Zrushy.Unity.Infrastructure.Scenario;
 using Zrushy.Unity.Presentation;
 
 namespace Zrushy.Core.DI
@@ -57,7 +55,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<EventBus>().AsSingle();
 
 			Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
-			Container.Bind<ZrushyDialoguePresenter>().FromComponentInHierarchy().AsSingle();
 
 			Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
 
@@ -89,8 +86,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<IConditionParser>().To<AffectionConditionParser>().AsSingle();
 			Container.Bind<IConditionParser>().To<HeroinStateConditionParser>().AsSingle();
 			Container.Bind<IConditionFactory>().To<ConditionFactory>().AsSingle();
-
-			Container.Bind<IBeatProvider>().To<YarnBeatProvider>().AsSingle();
 		}
 	}
 }

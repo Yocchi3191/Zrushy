@@ -438,7 +438,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3993883761811251429}
   - component: {fileID: 6741150947123960614}
-  - component: {fileID: 2463250723744384787}
   - component: {fileID: 5418222170107839408}
   m_Layer: 5
   m_Name: Heroin
@@ -481,18 +480,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::HeroinView
   bindings: []
---- !u!114 &2463250723744384787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3422817769240820167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 732680d19dd8cdd4d9736769a1c29860, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::ScenarioDriver
 --- !u!222 &5418222170107839408
 CanvasRenderer:
   m_ObjectHideFlags: 0
