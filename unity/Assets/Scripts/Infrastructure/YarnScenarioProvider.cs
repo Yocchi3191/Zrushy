@@ -18,13 +18,17 @@ namespace Zrushy.Core.Infrastructure
 			this.yarnProject = yarnProject;
 		}
 
-		public ScenarioID[] Get(EventID triggeredEvent)
+		public ScenarioInfo[] GetPlayableScenarios(EventID triggeredEvent)
 		{
 			var nodeName = triggeredEvent.Value;
-			if (yarnProject.NodeNames.Contains(nodeName))
-				return new[] { new ScenarioID(nodeName) };
+			var headers = yarnProject.Program.Nodes[nodeName].Headers;
 
-			return System.Array.Empty<ScenarioID>();
+			var priorityHeader = headers.FirstOrDefault(h => h.Key == "priority");
+			var priority = priorityHeader != null ? int.Parse(priorityHeader.Value) : 0;
+
+			if (yarnProject.NodeNames.Contains(nodeName))
+				return new[] { new ScenarioInfo(new ScenarioID(nodeName), new Priority(priority)) };
+			return System.Array.Empty<ScenarioInfo>();
 		}
 	}
 }

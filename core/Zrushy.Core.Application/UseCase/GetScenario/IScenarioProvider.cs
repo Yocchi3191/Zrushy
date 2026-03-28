@@ -11,6 +11,6 @@ namespace Zrushy.Core.Application.UseCase.GetScenario
     /// </summary>
     public interface IScenarioProvider
     {
-        ScenarioID[] Get(EventID triggeredEvent);
+        ScenarioInfo[] GetPlayableScenarios(EventID triggeredEvent);
     }
 }

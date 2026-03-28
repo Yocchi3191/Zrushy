@@ -42,7 +42,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<PartController>().AsSingle();
 			Container.Bind<VirtualCursor>().FromComponentInHierarchy().AsSingle();
 			Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
-			Container.Bind<IScenarioAdvancable>().To<ScenarioPlayer>().AsSingle();
 
 			Container.Bind<HeroinViewModel>().AsSingle();
 
