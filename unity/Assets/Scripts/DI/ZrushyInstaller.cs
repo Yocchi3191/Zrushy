@@ -43,8 +43,6 @@ namespace Zrushy.Core.DI
 			Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
 
 			Container.Bind<HeroinViewModel>().AsSingle();
-
-			Container.Bind<Application.ILogger>().To<Application.ILogger>().AsSingle();
 		}
 
 		private void InstallInfrastructure()

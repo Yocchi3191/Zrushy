@@ -51,6 +51,7 @@ namespace Zrushy.Core.Presentation.Unity
 		private async Task HandleWaitForTouch(string targetPartId)
 		{
 			var touched = await scenarioInputGate.WaitForNextTouch();
+			dialogueRunner.VariableStorage.SetValue("$expected_part", targetPartId);
 			dialogueRunner.VariableStorage.SetValue("$touched_part", touched);
 		}
 
