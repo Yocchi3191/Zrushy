@@ -21,10 +21,13 @@ namespace Zrushy.Core.Infrastructure
 		public ScenarioInfo[] GetPlayableScenarios(EventID triggeredEvent)
 		{
 			var nodeName = triggeredEvent.Value;
+			if (!yarnProject.NodeNames.Contains(nodeName))
+				return System.Array.Empty<ScenarioInfo>();
+
 			var headers = yarnProject.Program.Nodes[nodeName].Headers;
 
 			var priorityHeader = headers.FirstOrDefault(h => h.Key == "priority");
-			var priority = priorityHeader != null ? int.Parse(priorityHeader.Value) : 0;
+			var priority = priorityHeader != null && int.TryParse(priorityHeader.Value, out var parsedPriority) ? parsedPriority : 0;
 
 			if (yarnProject.NodeNames.Contains(nodeName))
 				return new[] { new ScenarioInfo(new ScenarioID(nodeName), new Priority(priority)) };
