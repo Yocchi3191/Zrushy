@@ -35,9 +35,9 @@ namespace Zrushy.Core.Infrastructure.Unity
 			currentScenarioPriority = scenarioInfo.Priority;
 		}
 
-		private bool CanStartNewScenario(ScenarioInfo newScenarioPriority)
+		private bool CanStartNewScenario(ScenarioInfo newScenarioInfo)
 		{
-			return !dialogueRunner.IsDialogueRunning || newScenarioPriority.Priority.CompareTo(currentScenarioPriority) > 0;
+			return !dialogueRunner.IsDialogueRunning || newScenarioInfo.Priority.CompareTo(currentScenarioPriority) > 0;
 		}
 	}
 }
