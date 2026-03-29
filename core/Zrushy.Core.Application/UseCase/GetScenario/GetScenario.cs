@@ -18,10 +18,10 @@ namespace Zrushy.Core.Application.UseCase.GetScenario
             this.selector = selector;
         }
 
-        public ScenarioID Execute(EventID triggeredEvent)
+        public ScenarioInfo Execute(EventID triggeredEvent)
         {
-            ScenarioID[] scenarioIDs = provider.Get(triggeredEvent);
-            return selector.Select(scenarioIDs);
+            ScenarioInfo[] scenarios = provider.GetPlayableScenarios(triggeredEvent);
+            return selector.SelectScenarioInfoToPlay(scenarios);
         }
     }
 }

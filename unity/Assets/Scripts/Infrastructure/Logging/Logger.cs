@@ -1,6 +1,6 @@
 ﻿using ILogger = Zrushy.Core.Application.ILogger;
 
-namespace Zrushy.Core.Infrastructure
+namespace Zrushy.Core.Infrastructure.Unity
 {
 	public class Logger : ILogger
 	{

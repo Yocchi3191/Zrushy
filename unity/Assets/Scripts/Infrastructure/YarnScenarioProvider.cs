@@ -4,7 +4,7 @@ using Zrushy.Core.Application.UseCase.GetScenario;
 using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
-namespace Zrushy.Core.Infrastructure
+namespace Zrushy.Core.Infrastructure.Unity
 {
 	/// <summary>
 	/// yarnProjectのノード名をシナリオIDとして返すプロバイダ
@@ -18,13 +18,18 @@ namespace Zrushy.Core.Infrastructure
 			this.yarnProject = yarnProject;
 		}
 
-		public ScenarioID[] Get(EventID triggeredEvent)
+		public ScenarioInfo[] GetPlayableScenarios(EventID triggeredEvent)
 		{
 			var nodeName = triggeredEvent.Value;
-			if (yarnProject.NodeNames.Contains(nodeName))
-				return new[] { new ScenarioID(nodeName) };
+			if (!yarnProject.NodeNames.Contains(nodeName))
+				return System.Array.Empty<ScenarioInfo>();
 
-			return System.Array.Empty<ScenarioID>();
+			var headers = yarnProject.Program.Nodes[nodeName].Headers;
+
+			var priorityHeader = headers.FirstOrDefault(h => h.Key == "priority");
+			var priority = priorityHeader != null && int.TryParse(priorityHeader.Value, out var parsedPriority) ? parsedPriority : 0;
+
+			return new[] { new ScenarioInfo(new ScenarioID(nodeName), new Priority(priority)) };
 		}
 	}
 }

@@ -3,7 +3,7 @@
 
 using Zrushy.Core.Domain.Sprite;
 
-namespace Zrushy.Core.Infrastructure.Unity.SpriteLayer
+namespace Zrushy.Core.Infrastructure.Unity
 {
 	public class SpriteLayerRepository : ISpriteLayerRepository
 	{
