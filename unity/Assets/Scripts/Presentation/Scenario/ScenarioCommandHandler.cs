@@ -4,10 +4,8 @@ using Yarn.Unity;
 using Zenject;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Domain.Interactions.ValueObject;
-using Zrushy.Core.Presentation;
-using Zrushy.Core.Presentation.Unity;
 
-namespace Zrushy.Unity.Presentation
+namespace Zrushy.Core.Presentation.Unity
 {
 	/// <summary>
 	/// Yarn Spinner カスタムコマンドのハブ

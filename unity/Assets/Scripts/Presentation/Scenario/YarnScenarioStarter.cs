@@ -6,7 +6,7 @@ using Zrushy.Core.Application.UseCase.GetScenario;
 using Zrushy.Core.Domain.Events.ValueObject;
 using Zrushy.Core.Domain.Scenarios.ValueObject;
 
-namespace Zrushy.Core.Infrastructure
+namespace Zrushy.Core.Infrastructure.Unity
 {
 	/// <summary>
 	/// おさわりのイベント発火に応じてシナリオを開始するクラス

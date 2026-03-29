@@ -1,6 +1,6 @@
 {
     "name": "Zrushy.Core.Infrastructure.Unity",
-    "rootNamespace": "Zrushy.Core.Infrastructure",
+    "rootNamespace": "Zrushy.Core.Infrastructure.Unity",
     "references": [
         "YarnSpinner.Unity"
     ],
