@@ -1,6 +1,6 @@
 {
-    "name": "Zrushy.Core.Config",
-    "rootNamespace": "Zrushy.Core.Config",
+    "name": "Zrushy.Core.MasterData",
+    "rootNamespace": "Zrushy.Core.MasterData",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
