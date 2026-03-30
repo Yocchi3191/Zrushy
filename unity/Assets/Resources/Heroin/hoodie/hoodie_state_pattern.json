@@ -1,0 +1,166 @@
+{
+  "layerID": "hoodie",
+  "initialState": "zipper_up",
+  "transitions": [
+    // ジッパー上がり -> ジッパー半開
+    {
+      "from": "zipper_up",
+      "type": "Stroke",
+      "direction": "Down",
+      "to": "zipper_half"
+    }, // ジッパー半開 -> ジッパー上がり
+    {
+      "from": "zipper_half",
+      "type": "Stroke",
+      "direction": "Up",
+      "to": "zipper_up"
+    },
+    // ジッパー半開 -> ジッパー下がり
+    {
+      "from": "zipper_half",
+      "type": "Stroke",
+      "direction": "Down",
+      "to": "zipper_down"
+    },
+    // ジッパー下がり -> ジッパー半開
+    {
+      "from": "zipper_down",
+      "type": "Stroke",
+      "direction": "Up",
+      "to": "zipper_half"
+    },
+    // ジッパー半開 -> 右半開
+    {
+      "from": "zipper_half",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "right_half_open"
+    },
+    // ジッパー半開 -> 左半開
+    {
+      "from": "zipper_half",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "left_half_open"
+    },
+    // 右半開 -> 両半開
+    {
+      "from": "right_half_open",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "both_half_open"
+    },
+    // 右半開 -> ジッパー半開
+    {
+      "from": "right_half_open",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "zipper_half"
+    },
+    // 左半開 -> 両半開
+    {
+      "from": "left_half_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "both_half_open"
+    },
+    // 左半開 -> ジッパー半開
+    {
+      "from": "left_half_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "zipper_half"
+    },
+    // 両半開 -> 右半開
+    {
+      "from": "both_half_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "right_half_open"
+    },
+    // 両半開 -> 左半開
+    {
+      "from": "both_half_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "left_half_open"
+    },
+    // 右半開 -> ジッパー下がり
+    {
+      "from": "right_half_open",
+      "type": "Stroke",
+      "direction": "Down",
+      "to": "zipper_down"
+    },
+    // 左半開 -> ジッパー下がり
+    {
+      "from": "left_half_open",
+      "type": "Stroke",
+      "direction": "Down",
+      "to": "zipper_down"
+    },
+    // 両半開 -> ジッパー下がり
+    {
+      "from": "both_half_open",
+      "type": "Stroke",
+      "direction": "Down",
+      "to": "zipper_down"
+    },
+    // ジッパー下がり -> 右開き
+    {
+      "from": "zipper_down",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "right_open"
+    },
+    // ジッパー下がり -> 左開き
+    {
+      "from": "zipper_down",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "left_open"
+    },
+    // 右開き -> 両開き
+    {
+      "from": "right_open",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "both_open"
+    },
+    // 左開き -> 両開き
+    {
+      "from": "left_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "both_open"
+    },
+    // 両開き -> 右開き
+    {
+      "from": "both_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "right_open"
+    },
+    // 両開き -> 左開き
+    {
+      "from": "both_open",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "left_open"
+    },
+    // 右開き -> ジッパー下がり
+    {
+      "from": "right_open",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "zipper_down"
+    },
+    // 左開き -> ジッパー下がり
+    {
+      "from": "left_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "zipper_down"
+    }
+  ]
+}
