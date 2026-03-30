@@ -3,18 +3,15 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using Zrushy.Core.Domain.Scenarios.Entity;
 using Zrushy.Core.Domain.Sprite;
-using Zrushy.Core.Presentation;
 
-namespace Zrushy.Presentation.Unity
+namespace Zrushy.Core.Presentation.Unity
 {
 	public class HeroinView : MonoBehaviour
 	{
 		[Inject]
 		private HeroinViewModel viewModel;
 
-		private Beat currentBeat;
 		[SerializeField] private SpriteLayerBindings[] bindings;
 
 		private void Start()
@@ -29,17 +26,7 @@ namespace Zrushy.Presentation.Unity
 
 		private void OnViewModelUpdated(HeroinViewModel vm)
 		{
-			PlayBeat(vm.CurrentBeat);
 			UpdateSpriteLayers(vm.SpritePaths);
-		}
-
-		private void PlayBeat(Beat beat)
-		{
-			this.currentBeat = beat;
-			if (this.currentBeat != null)
-			{
-				Debug.Log($"[Heroin] {this.currentBeat.Dialogue} (anim: {this.currentBeat.AnimationName}, expr: {this.currentBeat.ExpressionName})");
-			}
 		}
 
 		private void UpdateSpriteLayers(Dictionary<SpriteLayerID, string> paths)

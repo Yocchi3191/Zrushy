@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 using Zrushy.Core.Domain.Interactions.ValueObject;
@@ -26,6 +27,8 @@ namespace Zrushy.Core.Presentation.Unity
 
 		[Inject]
 		private ClickableRegistry registry;
+
+		public event Action<PartInput, Vector2> OnInputSent;
 
 		private void Start()
 		{
@@ -91,7 +94,7 @@ namespace Zrushy.Core.Presentation.Unity
 			if (Time.time - _lastDragSendTime < DragInterval) return;
 			_lastDragSendTime = Time.time;
 			Debug.Log($"[Clickable] {gameObject.name}: ドラッグ → Stroke");
-			SendInput(InteractionType.Stroke);
+			SendInput(InteractionType.Stroke, eventData.delta.normalized);
 		}
 
 		/// <summary>
@@ -111,9 +114,34 @@ namespace Zrushy.Core.Presentation.Unity
 			SendInput(InteractionType.Finger);
 		}
 
-		private void SendInput(InteractionType type)
+		/// <summary>
+		/// coreへの入力送信
+		/// Clickableを購読するクラスへのイベント発火を行う
+		/// </summary>
+		/// <param name="type"></param>
+		private void SendInput(InteractionType type, Vector2 direction = default)
+		{
+			SendInputToCore(type);
+			SendInputToSubscribers(new PartInput(new PartID(gameObject.name), type), direction);
+		}
+
+		/// <summary>
+		/// coreへの入力送信
+		/// </summary>
+		/// <param name="type"></param>
+		private void SendInputToCore(InteractionType type)
 		{
 			controller.SendInput(new PartInput(new PartID(gameObject.name), type));
+		}
+
+		/// <summary>
+		/// Clickable購読クラスへのイベント発火
+		/// </summary>
+		/// <param name="input"></param>
+		private void SendInputToSubscribers(PartInput input, Vector2 direction)
+		{
+			OnInputSent?.Invoke(input, direction);
+			Debug.Log($"[Clickable] {gameObject.name}: OnInputSent event invoked with {input}");
 		}
 	}
 }
