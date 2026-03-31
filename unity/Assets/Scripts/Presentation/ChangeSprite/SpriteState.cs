@@ -15,13 +15,9 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 		Image image;
 		private Sprite currentState;
 		[SerializeField] private DragDirectionThresholdSetting setting;
-		[SerializeField] private Clickable[] clickables;
 
 		public event Action<Sprite> OnStateChanged;
 		public Sprite CurrentState => currentState;
-
-		private Action<PartInput, Vector2> onInputSent;
-
 		private void Awake()
 		{
 			image = gameObject.GetComponent<Image>();
@@ -32,19 +28,6 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 		void Start()
 		{
 			currentState = statePattern.initialState;
-
-			if (clickables == null || clickables.Length == 0) return;
-
-			onInputSent = (input, direction) => TryTransition(input.Type, direction);
-			foreach (var clickable in clickables)
-				clickable.OnInputSent += onInputSent;
-		}
-
-		void OnDestroy()
-		{
-			if (clickables == null) return;
-			foreach (var clickable in clickables)
-				clickable.OnInputSent -= onInputSent;
 		}
 
 		/// <summary>
