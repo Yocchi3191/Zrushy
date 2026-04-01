@@ -2,6 +2,7 @@
 using UnityEngine;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Presentation.Unity.ChangeSprite;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Zrushy.Core.Presentation.Unity
 {
@@ -23,22 +24,22 @@ namespace Zrushy.Core.Presentation.Unity
 		/// <param name="direction">ドラッグ方向</param>
 		/// <param name="setting">ドラッグ方向の閾値設定</param>
 		/// <returns>ステート遷移可能かどうか</returns>
-		internal bool CanTransition(InteractionType type, Vector2 direction, DragDirectionThresholdSetting setting)
+		internal bool CanTransition(PartInput input, DragDirectionThresholdSetting setting)
 		{
-			if (type != requiredType) return false;
+			if (input.Type != requiredType) return false;
 
 			if (requiredType == InteractionType.Stroke)
 			{
 				Vector2 required = requiredDirection switch
 				{
-					CardinalDirection.Up => Vector2.up,
-					CardinalDirection.Down => Vector2.down,
-					CardinalDirection.Left => Vector2.left,
-					CardinalDirection.Right => Vector2.right,
-					_ => Vector2.zero
+					CardinalDirection.Up => new Vector2(0, 1),
+					CardinalDirection.Down => new Vector2(0, -1),
+					CardinalDirection.Left => new Vector2(-1, 0),
+					CardinalDirection.Right => new Vector2(1, 0),
+					_ => Vector2.Zero
 				};
 
-				float dot = Vector2.Dot(direction.normalized, required);
+				float dot = Vector2.Dot(Vector2.Normalize(input.Direction), required);
 				return dot >= setting.DragDirectionThreshold;
 			}
 

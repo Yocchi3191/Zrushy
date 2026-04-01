@@ -33,11 +33,11 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 		/// <summary>
 		/// 入力がスプライト遷移条件を満たすか判定し、満たすなら状態遷移させる
 		/// </summary>
-		public void TryTransition(InteractionType type, Vector2 direction)
+		public void TryTransition(PartInput input)
 		{
 			var matched = statePattern.transitions
 				.Where(t => t.fromState == currentState)
-				.FirstOrDefault(t => t.CanTransition(type, direction, setting));
+				.FirstOrDefault(t => t.CanTransition(input, setting));
 
 			if (matched == null) return;
 
