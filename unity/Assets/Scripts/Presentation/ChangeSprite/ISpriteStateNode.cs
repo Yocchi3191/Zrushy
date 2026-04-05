@@ -1,15 +1,13 @@
-﻿
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Zrushy.Core.Presentation.Unity
 {
 	public interface ISpriteStateNode
 	{
 		/// <summary>
-		/// 状態を変更したときに発火するイベント
+		/// 現在の状態
 		/// </summary>
-		event Action<Sprite> OnStateChanged;
+		Sprite CurrentState { get; }
 
 		/// <summary>
 		/// 状態を強制変更する

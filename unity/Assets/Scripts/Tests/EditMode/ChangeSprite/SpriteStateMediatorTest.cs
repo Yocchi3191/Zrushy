@@ -1,32 +1,19 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NSubstitute.ReceivedExtensions;
+using NUnit.Framework;
 using UnityEngine;
 using Zrushy.Core.Presentation.Unity;
 
-/// TODO
-/// 振る舞い: 入力に応じてイラストを差し替える
-/// 入力: Clickable
-/// 入力判定(有効？) -> 有効なら差し替え&状態遷移 : SpriteState
-/// Clickable "*" --> "1" SpriteState
+/// Mediatorパターン
+/// ISpriteStateNodeは状態遷移したらMediatorに通知する
 /// 
-/// 特殊ケース: パーカーのフードの開閉
-/// 服LRの開閉はジッパーの状態に依存する
-/// ジッパーの状態遷移に応じて服LRの状態も遷移させる必要がある
-/// 複数SpriteStateの連携: SpriteStateMediator
-///
-/// SpriteStateは状態遷移する入力タイプが決まっている
-/// 同じ入力タイプを登録すると、入力が片方の状態遷移にだけ持っていかれる
-/// => clickable分けたら？ ……そうかも
-/// ということはclickableは自分の入力を伝えるSpriteStateを知っている必要がある ほんとか？
-/// ここなにかいい方法さがす
-///
-/// clickable "1" -- "*" SpriteState があるなら、routerは必要
-/// ある？
-/// ……なさそう
-/// というか、無くできる。
-/// clickableの解釈を「おさわり」できる箇所に限定する
-/// 服とかの一部部位は「マウス入力で状態を変えられる」オブジェクトに解釈を変える。つまり別オブジェクト
-/// とすると、別オブジェクト "1' -- "1" SpriteStateにできる
-///
+/// ISpriteStateNodeには、他のISpriteStateNodeの状態遷移に影響があるもの(Controller)がいる
+/// Mediatorは自分のパーツに関するISpriteStateNodeを知っている
+/// 誰がControllerかも知っている
+///  
+/// MediatorはControllerの各状態ごとの、Dependentsに許可されている状態を知っている
+/// 
+/// 以上を使って、Controllerが状態遷移したら、MediatorはDependentsのうち違反しているものを遷移させる
 
 
 namespace Zrushy.Core.Test.Unity.EditMode
@@ -34,28 +21,86 @@ namespace Zrushy.Core.Test.Unity.EditMode
 	public class SpriteStateMediatorTest
 	{
 		HoodieStateMediator mediator;
+		ISpriteStateNode controller;
+		ISpriteStateNode[] dependents;
+		ConstraintEntry[] constraints;
 
 		[SetUp]
 		public void Setup()
 		{
+			controller = Substitute.For<ISpriteStateNode>();
+			dependents = new ISpriteStateNode[]
+			{
+				Substitute.For<ISpriteStateNode>(),
+				Substitute.For<ISpriteStateNode>(),
+			};
+			constraints = Builder();
+
 			mediator = new GameObject().AddComponent<HoodieStateMediator>();
+			mediator.Construct(controller, dependents, constraints);
 		}
+
 
 		[TearDown]
 		public void TearDown()
 		{
 			GameObject.DestroyImmediate(mediator.gameObject);
+			foreach (var entry in constraints)
+				ScriptableObject.DestroyImmediate(entry);
+		}
+
+		// Dependent遷移時の条件違反チェックはmediator側で行う
+		// Dependent側にチェック機構がないので
+		// 作るにしてもDependentがControllerを知らなければいけないので、Mediatorパターンのメリットがなくなる
+
+		[Test]
+		public void Dependentが状態遷移した場合_違反していなければ遷移させない()
+		{
+			// Given
+			var dependent = dependents[0];
+			dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
+
+			// When
+			mediator.OnStateChanged(dependent);
+
+			// Then
+			dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
+		}
+
+		[Test]
+		public void Dependentが状態遷移した場合_違反していれば遷移させる()
+		{
+			// Given
+			var dependent = dependents[0];
+			dependent.IsAbove(Arg.Any<Sprite>()).Returns(true); // 遷移後の状態が違反している
+
+			// When
+			mediator.OnStateChanged(dependent);
+
+			// Then
+			dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
+			dependent.Received(1).ForceState(Arg.Any<Sprite>()); // 違反しているdependentは強制遷移される
 		}
 
 		[Test]
 		public void Controllerが状態遷移した場合_Dependentsのうち違反していないものは遷移させない()
 		{
-			// TODO
-			Assert.Fail("まだ実装されていません");
-			// 1. ConstraintEntryを用意する
-			// 2. controllerとdependentsを用意する
-			// 3. controllerの状態を遷移させる
-			// 4. 遷移後のcontrollerの状態に応じて、dependentsのうち違反していないものが遷移していないことを確認する
+			// Given
+			controller.CurrentState.Returns(constraints[0].ControllerState); // controllerの状態を遷移させる
+			foreach (var dependent in dependents)
+			{
+				dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 状態が違反しているdependentはいない
+			}
+
+			// When
+			mediator.OnStateChanged(controller);
+
+			// Then
+			foreach (var dependent in dependents)
+			{
+				dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // mediatorはdependentsに確認したか
+				dependent.DidNotReceive<ISpriteStateNode>().ForceState(Arg.Any<Sprite>()); // 違反しているdependentはいないので、強制遷移したものはいない
+			}
 		}
 
 		[Test]
@@ -69,5 +114,28 @@ namespace Zrushy.Core.Test.Unity.EditMode
 			// 4. 遷移後のcontrollerの状態に応じて、dependentsのうち違反しているものが遷移していることを確認する
 		}
 
+		private ConstraintEntry[] Builder()
+		{
+			return new ConstraintEntry[]
+			{
+				CreateEntry(CreateSprite(), CreateSprite()),
+				CreateEntry(CreateSprite(), CreateSprite()),
+				CreateEntry(CreateSprite(), CreateSprite()),
+			};
+		}
+
+		private ConstraintEntry CreateEntry(Sprite controllerState, Sprite maxAllowedState)
+		{
+			var entry = ScriptableObject.CreateInstance<ConstraintEntry>();
+			entry.ControllerState = controllerState;
+			entry.MaxAllowedState = maxAllowedState;
+			return entry;
+		}
+
+		private Sprite CreateSprite()
+		{
+			var texture = new Texture2D(1, 1);
+			return Sprite.Create(texture, new Rect(0, 0, 1, 1), Vector2.zero);
+		}
 	}
 }

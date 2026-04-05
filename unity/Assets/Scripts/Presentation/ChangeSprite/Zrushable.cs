@@ -20,7 +20,7 @@ namespace Zrushy.Core.Presentation.Unity
 
 		public void OnBeginDrag(PointerEventData eventData)
 		{
-			this.dragStartPosition = eventData.position;
+			this.dragStartPosition = eventData.position; // ドラッグ開始位置を保存したほうがドラッグ方向の計算が安定するらしい
 		}
 
 		public void OnEndDrag(PointerEventData eventData)

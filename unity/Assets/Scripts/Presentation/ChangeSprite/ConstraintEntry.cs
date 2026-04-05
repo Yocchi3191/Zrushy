@@ -10,6 +10,6 @@ namespace Zrushy.Core.Presentation.Unity
 	public class ConstraintEntry : ScriptableObject
 	{
 		public Sprite ControllerState;
-		public Sprite maxAllowedState;
+		public Sprite MaxAllowedState;
 	}
 }

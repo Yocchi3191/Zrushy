@@ -41,10 +41,11 @@ namespace Zrushy.Core.Test.Unity.EditMode
 
 		// A Test behaves as an ordinary method
 		[Test]
-		public void マウス入力を受け取ったら_ずらしていいか問い合わせる()
+		public void ドラッグしたら_ずらしていいか問い合わせる()
 		{
 			// When
-			zrushable.OnPointerClick(new PointerEventData(null));
+			zrushable.OnBeginDrag(new PointerEventData(null));
+			zrushable.OnEndDrag(new PointerEventData(null));
 			// Then
 			zrushyPermission.Received(1).CanZrushy(Arg.Any<ZrushyInput>());
 		}
@@ -55,7 +56,8 @@ namespace Zrushy.Core.Test.Unity.EditMode
 			// Given
 			zrushyPermission.CanZrushy(Arg.Any<ZrushyInput>()).Returns(true);
 			// When
-			zrushable.OnPointerClick(new PointerEventData(null));
+			zrushable.OnBeginDrag(new PointerEventData(null));
+			zrushable.OnEndDrag(new PointerEventData(null));
 			// Then
 			spriteInputHandler.Received(1).TryTransition(Arg.Any<ZrushyInput>());
 		}
@@ -66,7 +68,8 @@ namespace Zrushy.Core.Test.Unity.EditMode
 			// Given
 			zrushyPermission.CanZrushy(Arg.Any<ZrushyInput>()).Returns(false);
 			// When
-			zrushable.OnPointerClick(new PointerEventData(null));
+			zrushable.OnBeginDrag(new PointerEventData(null));
+			zrushable.OnEndDrag(new PointerEventData(null));
 			// Then
 			spriteInputHandler.DidNotReceive().TryTransition(Arg.Any<ZrushyInput>());
 		}
