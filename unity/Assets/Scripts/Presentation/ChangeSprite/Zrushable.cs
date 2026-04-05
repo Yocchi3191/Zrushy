@@ -1,44 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Zrushy.Core.Application.UseCase.CanZrushy;
-using Zrushy.Core.Domain.Interactions.ValueObject;
-using Vector2 = System.Numerics.Vector2;
 
 namespace Zrushy.Core.Presentation.Unity
 {
-	public class Zrushable : MonoBehaviour
+	public class Zrushable : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 	{
 		private ISpriteInputHandler _spriteInputHandler;
 		private IZrushyPermission _zrushyPermission;
+
+		private Vector2 dragStartPosition;
+
+
 		internal void Construct(ISpriteInputHandler spriteInputHandler, IZrushyPermission zrushyPermission)
 		{
 			_spriteInputHandler = spriteInputHandler;
 			_zrushyPermission = zrushyPermission;
 		}
 
-		internal void OnPointerClick(PointerEventData pointerEventData)
+		public void OnBeginDrag(PointerEventData eventData)
 		{
-			InteractionType type = pointerEventData.button == PointerEventData.InputButton.Right
-				? InteractionType.Tongue
-				: InteractionType.Finger;
-			PartInput input = new PartInput(new PartID(gameObject.name), type, Vector2.Zero);
+			this.dragStartPosition = eventData.position;
+		}
 
-			if (!_zrushyPermission.CanZrushy())
+		public void OnEndDrag(PointerEventData eventData)
+		{
+			var endPosition = eventData.position;
+			var dragVector = endPosition - dragStartPosition;
+
+			ZrushyInput input = new ZrushyInput(new System.Numerics.Vector2(dragVector.x, dragVector.y));
+			if (!_zrushyPermission.CanZrushy(input))
 				return;
 
 			_spriteInputHandler.TryTransition(input);
-		}
-
-		// Start is called once before the first execution of Update after the MonoBehaviour is created
-		void Start()
-		{
-
-		}
-
-		// Update is called once per frame
-		void Update()
-		{
-
 		}
 	}
 }

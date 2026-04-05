@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using NSubstitute;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 using Zrushy.Core.Presentation.Unity;
 
 /// TODO
@@ -36,14 +33,12 @@ namespace Zrushy.Core.Test.Unity.EditMode
 {
 	public class SpriteStateMediatorTest
 	{
-		ISpriteStateRouter router;
-		SpriteStateMediator mediator;
+		HoodieStateMediator mediator;
 
 		[SetUp]
 		public void Setup()
 		{
-			router = Substitute.For<ISpriteStateRouter>();
-			mediator = new GameObject().AddComponent<SpriteStateMediator>();
+			mediator = new GameObject().AddComponent<HoodieStateMediator>();
 		}
 
 		[TearDown]
@@ -52,46 +47,27 @@ namespace Zrushy.Core.Test.Unity.EditMode
 			GameObject.DestroyImmediate(mediator.gameObject);
 		}
 
-		[UnityTest]
-		public IEnumerator Controllerが状態遷移したら_MaxStateより上のDependentsは_強制的に状態遷移させられる()
+		[Test]
+		public void Controllerが状態遷移した場合_Dependentsのうち違反していないものは遷移させない()
 		{
-			// Given
-			var controllerState = NewSprite();
-			var maxAllowed = NewSprite();
-
-			var controller = Substitute.For<ISpriteStateNode>();
-			var dependent = Substitute.For<ISpriteStateNode>();
-			router.Controller.Returns(controller);
-			router.Dependents.Returns(new[] { dependent });
-
-			var entry = ScriptableObject.CreateInstance<ConstraintEntry>();
-			entry.ControllerState = controllerState;
-			entry.maxAllowedState = maxAllowed;
-
-			mediator.Construct(router, new[] { entry });
-
-			dependent.IsAbove(maxAllowed).Returns(true);
-
-			yield return null; // Start() を走らせて OnStateChanged を購読させる
-
-			// When
-			controller.OnStateChanged += Raise.Event<System.Action<Sprite>>(controllerState);
-
-			// Then
-			dependent.Received(1).ForceState(maxAllowed);
+			// TODO
+			Assert.Fail("まだ実装されていません");
+			// 1. ConstraintEntryを用意する
+			// 2. controllerとdependentsを用意する
+			// 3. controllerの状態を遷移させる
+			// 4. 遷移後のcontrollerの状態に応じて、dependentsのうち違反していないものが遷移していないことを確認する
 		}
 
-		// When:  dependent の currentState が maxAllowedState 以下
-		// Then:  dependent に ForceState は呼ばれない
 		[Test]
-		public void Controllerが状態遷移したとき_MaxAllowedStateより下の状態にいるDependentsは_状態遷移しない() { }
+		public void Controllerが状態遷移した場合_Dependentsのうち違反しているものを遷移させる()
+		{
+			// TODO
+			Assert.Fail("まだ実装されていません");
+			// 1. ConstraintEntryを用意する
+			// 2. controllerとdependentsを用意する
+			// 3. controllerの状態を遷移させる
+			// 4. 遷移後のcontrollerの状態に応じて、dependentsのうち違反しているものが遷移していることを確認する
+		}
 
-		// When:  変化後の controllerState に対応する ConstraintEntry がない
-		// Then:  何もしない
-		[Test]
-		public void Controllerが状態遷移したとき_対応するConstraintEntryがない場合は_何もしない() { }
-
-		Sprite NewSprite() =>
-			Sprite.Create(new Texture2D(1, 1), new Rect(0, 0, 1, 1), Vector2.zero);
 	}
 }
