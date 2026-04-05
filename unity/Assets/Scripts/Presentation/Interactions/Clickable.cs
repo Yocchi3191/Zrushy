@@ -28,8 +28,6 @@ namespace Zrushy.Core.Presentation.Unity
 		[Inject]
 		private ClickableRegistry registry;
 
-		[SerializeField] ISpriteInputHandler spriteInputHandler;
-
 		private void Start()
 		{
 			registry.Register(this);
@@ -123,7 +121,6 @@ namespace Zrushy.Core.Presentation.Unity
 		{
 			PartInput input = new PartInput(new PartID(gameObject.name), type, direction);
 			controller.SendInput(input);
-			spriteInputHandler?.TryTransition(input);
 		}
 	}
 }
