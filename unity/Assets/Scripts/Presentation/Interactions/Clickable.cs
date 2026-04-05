@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 using Zrushy.Core.Domain.Interactions.ValueObject;
@@ -29,7 +28,7 @@ namespace Zrushy.Core.Presentation.Unity
 		[Inject]
 		private ClickableRegistry registry;
 
-		public event Action<PartInput, Vector2> OnInputSent;
+		[SerializeField] ISpriteInputHandler spriteInputHandler;
 
 		private void Start()
 		{

@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Application.UseCase.CanZrushy;
 using Zrushy.Core.Presentation.Unity.ChangeSprite;
 using Vector2 = System.Numerics.Vector2;
 
@@ -13,7 +13,6 @@ namespace Zrushy.Core.Presentation.Unity
 	public class StateTransition
 	{
 		public Sprite fromState; // 遷移元スプライト
-		public InteractionType requiredType;
 		public CardinalDirection requiredDirection;
 		public Sprite toState; // 遷移先スプライト
 
@@ -24,26 +23,25 @@ namespace Zrushy.Core.Presentation.Unity
 		/// <param name="direction">ドラッグ方向</param>
 		/// <param name="setting">ドラッグ方向の閾値設定</param>
 		/// <returns>ステート遷移可能かどうか</returns>
-		internal bool CanTransition(PartInput input, DragDirectionThresholdSetting setting)
+		internal bool CanTransition(ZrushyInput input, DragDirectionThresholdSetting setting)
 		{
-			if (input.Type != requiredType) return false;
+			float dot = Vector2.Dot(input.Direction, required);
+			return dot >= setting.DragDirectionThreshold;
+		}
 
-			if (requiredType == InteractionType.Stroke)
+		private Vector2 required
+		{
+			get
 			{
-				Vector2 required = requiredDirection switch
+				return requiredDirection switch
 				{
 					CardinalDirection.Up => new Vector2(0, 1),
 					CardinalDirection.Down => new Vector2(0, -1),
 					CardinalDirection.Left => new Vector2(-1, 0),
 					CardinalDirection.Right => new Vector2(1, 0),
-					_ => Vector2.Zero
+					_ => throw new ArgumentOutOfRangeException()
 				};
-
-				float dot = Vector2.Dot(Vector2.Normalize(input.Direction), required);
-				return dot >= setting.DragDirectionThreshold;
 			}
-
-			return true;
 		}
 	}
 }
