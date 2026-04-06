@@ -29,12 +29,12 @@ knowledge/  # 設計ドキュメント、仕様、アーキテクチャメモ
 
 **レイヤー構成:**
 
-| レイヤー | 名前空間 | 内容 |
-|---|---|---|
-| Domain | `Zrushy.Core.Domain` | エンティティ、値オブジェクト、インターフェース定義 |
-| Application | `Zrushy.Core.Application` | ユースケース |
-| Presentation | `Zrushy.Core.Presentation` | コントローラー、ViewModel |
-| Infrastructure | Unityサイド | リポジトリ実装、エンジン |
+| レイヤー     | 名前空間                                     | 内容                                               |
+| ------------ | -------------------------------------------- | -------------------------------------------------- |
+| Domain       | `Zrushy.Core.Domain`                         | エンティティ、値オブジェクト、インターフェース定義 |
+| Application  | `Zrushy.Core.Application`                    | ユースケース                                       |
+| Presentation | `Zrushy.Core.Presentation`                   | コントローラー、ViewModel                          |
+| Unity        | `Presentation.Unity`, `Infrastructure.Unity` | 画面、マスタ取得などのUnity依存が必要な機能        |
 
 コアライブラリはUnity非依存で、DLLにコンパイルされて `unity/Assets/Plugins/Core/` に自動配置されます。
 
@@ -44,9 +44,17 @@ knowledge/  # 設計ドキュメント、仕様、アーキテクチャメモ
 
 ## 開発スタイル
 
-- **テスト駆動開発（TDD）** — 実装前にテストを書く
+- **テスト駆動開発（TDD）** — テストとともに実装する
 - **クリーンアーキテクチャ** — 依存関係のルールを厳守（内側のレイヤーは外側に依存しない）
-- **フィーチャーブランチ + PR** — すべての変更はプルリクエスト経由でコードレビューを行う
+- **Github Flow + PR** — すべての変更はプルリクエスト経由でコードレビューを行う
+
+---
+
+## 設計上のこだわり
+
+- Unity非依存のコアを .NET でビルドし、DLL経由でUnityへ注入することでテスタビリティを確保
+- ICondition[] のAND評価でイベント発火条件を組み合わせ可能に設計([実装](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Entity/Conditions/EventFiredCondition.cs) ,[利用](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Entity/Event.cs))
+- [ConditionFactory](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Service/ConditionFactory.cs) + [IConditionParser](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Service/IConditionParser.cs) によるOCPに準拠したイベント条件の拡張機構
 
 ---
 
