@@ -53,7 +53,7 @@ knowledge/  # 設計ドキュメント、仕様、アーキテクチャメモ
 ## 設計上のこだわり
 
 - Unity非依存のコアを .NET でビルドし、DLL経由でUnityへ注入することでテスタビリティを確保
-- ICondition[] のAND評価でイベント発火条件を組み合わせ可能に設計([実装](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Entity/Conditions/EventFiredCondition.cs) ,[利用](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Entity/Event.cs))
+- `ICondition[]` のAND評価でイベント発火条件を組み合わせ可能に設計([実装](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Entity/Conditions/EventFiredCondition.cs) ,[利用](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Entity/Event.cs))
 - [ConditionFactory](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Service/ConditionFactory.cs) + [IConditionParser](https://github.com/Yocchi3191/Zrushy/blob/main/core/Zrushy.Core.Domain/Events/Service/IConditionParser.cs) によるOCPに準拠したイベント条件の拡張機構
 
 ---
