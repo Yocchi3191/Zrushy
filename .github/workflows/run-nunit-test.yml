@@ -13,25 +13,7 @@ on:
       - "core/**/*.csproj"
 
 jobs:
-  check-changes:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-    outputs:
-      has-cs: ${{ steps.filter.outputs.cs }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            cs: "**/*.cs"
-            csproj: "**/*.csproj"
-
   test:
-    needs: check-changes
-    if: needs.check-changes.outputs.has-cs == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
