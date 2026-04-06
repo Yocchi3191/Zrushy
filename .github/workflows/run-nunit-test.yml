@@ -3,14 +3,8 @@ name: Run NUnit Test
 on:
   push:
     branches: [main]
-    paths:
-      - "core/**/*.cs"
-      - "core/**/*.csproj"
   pull_request:
     branches: [main]
-    paths:
-      - "core/**/*.cs"
-      - "core/**/*.csproj"
 
 jobs:
   test:
