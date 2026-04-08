@@ -58,13 +58,13 @@ namespace Zrushy.Core.Presentation.Unity
 		private void ControllerOperation(ISpriteStateNode changed)
 		{
 			// 1. controllerの状態に応じた制約をconstraintsから探す
-			var constraint = constraints.FirstOrDefault(c => c.ControllerState == changed.CurrentState);
+			ConstraintEntry constraint = constraints.FirstOrDefault(c => c.ControllerState == changed.CurrentState);
 
 			if (constraint == null)
 				throw new Exception($"対応する制約がconstraintsから見つかりませんでした。制約条件の登録漏れの可能性があります。ControllerState: {changed.CurrentState}");
 
 			// 2. 制約に従って、dependentsのうち違反しているものを遷移させる
-			foreach (var dependent in dependents)
+			foreach (ISpriteStateNode dependent in dependents)
 			{
 				if (!dependent.IsAbove(constraint.MaxAllowedState))
 					continue;

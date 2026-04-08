@@ -101,7 +101,8 @@ namespace Zrushy.Core.Test.Unity.EditMode
 		public void Dependentが状態遷移した場合_違反していれば遷移させる()
 		{
 			// Given
-			var dependent = dependents[0];
+			controller.CurrentState.Returns(constraints[0].ControllerState); // 違反チェックにcontrollerのStateが必要
+			ISpriteStateNode dependent = dependents[0];
 			dependent.IsAbove(Arg.Any<Sprite>()).Returns(true); // 遷移後の状態が違反している
 
 			// When
@@ -136,12 +137,55 @@ namespace Zrushy.Core.Test.Unity.EditMode
 		[Test]
 		public void Controllerが状態遷移した場合_Dependentsのうち違反しているものを遷移させる()
 		{
-			// TODO
-			Assert.Fail("まだ実装されていません");
-			// 1. ConstraintEntryを用意する
-			// 2. controllerとdependentsを用意する
-			// 3. controllerの状態を遷移させる
-			// 4. 遷移後のcontrollerの状態に応じて、dependentsのうち違反しているものが遷移していることを確認する
+			// Given
+			controller.CurrentState.Returns(constraints[0].ControllerState);
+			foreach (var dependent in dependents)
+			{
+				dependent.IsAbove(Arg.Any<Sprite>()).Returns(true); // 違反している
+			}
+
+			// When
+			mediator.OnStateChanged(controller);
+
+			// Then
+			foreach (var dependent in dependents)
+			{
+				// 違反しているISpriteStateNodeは、すべて現在許可されている状態に強制遷移させられている
+				dependent.Received(1).ForceState(constraints[0].MaxAllowedState);
+			}
+		}
+
+		[Test]
+		public void 三角測量_違反しているものとしていないものがある場合_違反しているものだけ遷移させられる()
+		{
+			// Given
+			controller.CurrentState.Returns(constraints[0].ControllerState);
+			dependents[0].IsAbove(Arg.Any<Sprite>()).Returns(true); // 違反している
+			dependents[1].IsAbove(Arg.Any<Sprite>()).Returns(false); // 違反していない
+
+			// When
+			mediator.OnStateChanged(controller);
+
+			// Then
+			dependents[0].Received(1).ForceState(constraints[0].MaxAllowedState); // 0番目は違反しているので強制遷移させられる
+			dependents[1].DidNotReceive().ForceState(Arg.Any<Sprite>()); // 1番目は違反していないので遷移させられていない
+		}
+
+		[Test]
+		public void Dependentの条件違反時の強制遷移は_Controllerの状態を基準にしたMaxAllowedState()
+		{
+			// Given
+			controller.CurrentState.Returns(constraints[1].ControllerState);
+			dependents[0].IsAbove(Arg.Any<Sprite>()).Returns(true); // 強制遷移対象
+			dependents[1].IsAbove(Arg.Any<Sprite>()).Returns(false); // 対象外
+
+			// When
+			mediator.OnStateChanged(controller);
+
+			// Then
+			dependents[0].Received().ForceState(constraints[1].MaxAllowedState); // 0ではなく1のmaxに強制遷移している
+			dependents[0].DidNotReceive().ForceState(constraints[0].MaxAllowedState); // 0ではなく1のmaxに強制遷移している
+			dependents[1].DidNotReceive().ForceState(constraints[1].MaxAllowedState); // 何もされていない
 		}
 
 		private ConstraintEntry[] Builder()
