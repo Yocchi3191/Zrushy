@@ -15,6 +15,11 @@ using Zrushy.Core.Presentation.Unity;
 /// 
 /// 以上を使って、Controllerが状態遷移したら、MediatorはDependentsのうち違反しているものを遷移させる
 
+/// TODO
+/// ForceStateがMaxAllowedStateで呼ばれるか
+/// 未登録ノードからの変更通知に対する例外スロー
+/// 制約条件未対応時に例外スロー
+/// 一部だけ違反している場合の挙動
 
 namespace Zrushy.Core.Test.Unity.EditMode
 {
@@ -57,7 +62,32 @@ namespace Zrushy.Core.Test.Unity.EditMode
 		public void Dependentが状態遷移した場合_違反していなければ遷移させない()
 		{
 			// Given
-			var dependent = dependents[0];
+			controller.CurrentState.Returns(constraints[0].ControllerState); // controllerの状態を遷移させる
+
+			ISpriteStateNode dependent = dependents[0];
+			dependent.CurrentState.Returns(constraints[0].MaxAllowedState); // 遷移後の状態は許可されている状態
+			dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
+
+			// When
+			mediator.OnStateChanged(dependent);
+
+			// Then
+			dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
+		}
+
+		[Test]
+		public void Dependentが状態遷移した場合_違反していなければ遷移させない_三角測量()
+		{
+			// ConstraintEntry 0--1--2
+			// controller: 2
+			// dependent: 1 に遷移
+			// この場合もdependentは違反していないので、強制遷移させられない
+
+			// Given
+			controller.CurrentState.Returns(constraints[2].ControllerState); // controllerの状態を遷移させる
+
+			ISpriteStateNode dependent = dependents[0];
+			dependent.CurrentState.Returns(constraints[1].MaxAllowedState); // 遷移後の状態は許可されている状態
 			dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
 
 			// When

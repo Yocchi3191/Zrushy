@@ -49,7 +49,10 @@ namespace Zrushy.Core.Presentation.Unity
 
 		private void DependentOperation(ISpriteStateNode changed)
 		{
-			throw new NotImplementedException();
+			// 遷移後がcontrollerの制約条件に違反していた場合は、許可されている最大の状態に遷移させる
+			ConstraintEntry entry = constraints.FirstOrDefault(c => c.ControllerState == controller.CurrentState);
+			if (changed.IsAbove(entry.MaxAllowedState))
+				changed.ForceState(entry.MaxAllowedState);
 		}
 
 		private void ControllerOperation(ISpriteStateNode changed)
