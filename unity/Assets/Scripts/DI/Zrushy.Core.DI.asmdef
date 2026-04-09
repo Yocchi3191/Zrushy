@@ -6,7 +6,7 @@
         "Zrushy.Core.Presentation.Unity",
         "Zrushy.Core.Infrastructure.Unity",
         "YarnSpinner.Unity",
-        "Zrushy.Core.Config"
+        "Zrushy.Core.MasterData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

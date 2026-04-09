@@ -1,10 +1,11 @@
-{
+﻿{
     "name": "Zrushy.Core.Presentation.Unity",
     "rootNamespace": "Zrushy.Core.Presentation.Unity",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:34aa492b82754644eac2f903cd496268"
+        "GUID:34aa492b82754644eac2f903cd496268",
+        "GUID:5dda746689f88ed4f9fb3865ad086ca6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -20,5 +21,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": false,
+    "internalVisibleTo": []
 }

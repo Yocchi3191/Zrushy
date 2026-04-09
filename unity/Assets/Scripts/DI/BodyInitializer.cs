@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.ValueObject;
@@ -19,6 +20,7 @@ namespace Zrushy.Core.DI
 		[SerializeField] private PartConfigAsset defaultPartConfig;
 		[SerializeField] private PartConfigAsset chestPartConfig;
 		[SerializeField] private SecretPartConfigAsset secretPartConfig;
+		[SerializeField] private List<string> defaultPartIds;
 
 		private void Start()
 		{
@@ -31,21 +33,6 @@ namespace Zrushy.Core.DI
 		/// </summary>
 		private void InitializeBody()
 		{
-			body.AddPart(new ChestPart(
-				new PartID("chest"),
-				new Development(0),
-				new Affection(0),
-				chestPartConfig.ToConfig()
-			));
-
-			body.AddPart(new SecretPart(
-				new PartID("secret"),
-				new Development(0),
-				new Affection(0),
-				secretPartConfig.ToConfig()
-			));
-
-			string[] defaultPartIds = { "head", "torso", "arm", "hand", "waist", "leg", "foot" };
 			foreach (var id in defaultPartIds)
 			{
 				body.AddPart(new Part(
