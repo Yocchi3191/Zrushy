@@ -1,16 +1,19 @@
-﻿using Zrushy.Core.Domain.Interactions.Entity;
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
+
+using Zrushy.Core.Domain.Interactions.Entity;
 
 namespace Zrushy.Core.Domain.Events.Entity.Conditions
 {
-	internal class HeroinClimaxCondition : ICondition
-	{
-		private readonly Heroin heroin;
+    internal class HeroinClimaxCondition : ICondition
+    {
+        private readonly Heroin _heroin;
 
-		public HeroinClimaxCondition(Heroin heroin)
-		{
-			this.heroin = heroin;
-		}
+        public HeroinClimaxCondition(Heroin heroin)
+        {
+            _heroin = heroin;
+        }
 
-		public bool CanFire() => heroin.IsClimax;
-	}
+        public bool CanFire() => _heroin.IsClimax;
+    }
 }

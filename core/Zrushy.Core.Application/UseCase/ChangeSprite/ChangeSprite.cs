@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
 using Zrushy.Core.Domain.Sprite;
 
@@ -8,15 +8,15 @@ namespace Zrushy.Core.Application.UseCase.ChangeSprite
     public class ChangeSprite
     {
 
-        private readonly ISpriteLayerRepository repository;
+        private readonly ISpriteLayerRepository _repository;
         public ChangeSprite(ISpriteLayerRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public string Execute(SpriteLayerID id, LayerState state)
         {
-            return repository.Get(id, state);
+            return _repository.Get(id, state);
         }
     }
 }

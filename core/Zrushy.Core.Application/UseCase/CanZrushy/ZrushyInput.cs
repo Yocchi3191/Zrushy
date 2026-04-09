@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
+
+using System.Numerics;
 
 namespace Zrushy.Core.Application.UseCase.CanZrushy
 {
@@ -11,7 +14,7 @@ namespace Zrushy.Core.Application.UseCase.CanZrushy
 
         public ZrushyInput(Vector2 direction)
         {
-            this.Direction = Vector2.Normalize(direction);
+            Direction = Vector2.Normalize(direction);
         }
     }
 }

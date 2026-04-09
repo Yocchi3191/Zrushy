@@ -1,6 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Linq;
 using Zrushy.Core.Domain.Events.Entity;
 using Zrushy.Core.Domain.Events.Repository;
@@ -15,26 +16,26 @@ namespace Zrushy.Core.Application
     /// </summary>
     public class EventEvaluator : IEventEvaluator
     {
-        private readonly IInteractionHistory interactionHistory;
-        private readonly IEventRepository eventRepository;
-        private readonly EventBus eventBus;
+        private readonly IInteractionHistory _interactionHistory;
+        private readonly IEventRepository _eventRepository;
+        private readonly EventBus _eventBus;
 
         public EventEvaluator(
             IInteractionHistory interactionHistory,
             IEventRepository eventRepository,
             EventBus eventBus)
         {
-            this.interactionHistory = interactionHistory;
-            this.eventRepository = eventRepository;
-            this.eventBus = eventBus;
+            _interactionHistory = interactionHistory;
+            _eventRepository = eventRepository;
+            _eventBus = eventBus;
         }
 
         public void Evaluate(Interaction interaction)
         {
-            interactionHistory.Record(interaction);
+            _interactionHistory.Record(interaction);
 
-            var partEvents = eventRepository.GetEvents(interaction.PartID);
-            var globalEvents = eventRepository.GetGlobalEvents();
+            IReadOnlyList<IScenarioEvent> partEvents = _eventRepository.GetEvents(interaction.PartID);
+            IReadOnlyList<IScenarioEvent> globalEvents = _eventRepository.GetGlobalEvents();
 
             IScenarioEvent fired = partEvents.Concat(globalEvents)
                 .Where(e => e.CanFire())
@@ -42,7 +43,9 @@ namespace Zrushy.Core.Application
                 .FirstOrDefault();
 
             if (fired != null)
-                eventBus.Publish(fired);
+            {
+                _eventBus.Publish(fired);
+            }
         }
     }
 }

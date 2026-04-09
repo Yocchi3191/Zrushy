@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 using Zrushy.Core.Domain.Interactions.ValueObject;
@@ -6,121 +9,121 @@ using Vector2 = System.Numerics.Vector2;
 
 namespace Zrushy.Core.Presentation.Unity
 {
-	/// <summary>
-	/// マウス入力の受け付け
-	/// 入力種別を判定して InteractionType に変換し PartController へ送る
-	/// </summary>
-	public class Clickable : MonoBehaviour,
-		IPointerClickHandler,
-		IPointerDownHandler,
-		IPointerUpHandler,
-		IDragHandler,
-		IScrollHandler
-	{
-		private const float LongPressThreshold = 0.5f;
-		private const float DragInterval = 0.2f;
+    /// <summary>
+    /// マウス入力の受け付け
+    /// 入力種別を判定して InteractionType に変換し PartController へ送る
+    /// </summary>
+    public class Clickable : MonoBehaviour,
+        IPointerClickHandler,
+        IPointerDownHandler,
+        IPointerUpHandler,
+        IDragHandler,
+        IScrollHandler
+    {
+        private const float LongPressThreshold = 0.5f;
+        private const float DragInterval = 0.2f;
 
-		public string PartId => gameObject.name;
+        public string PartId => gameObject.name;
 
-		[Inject]
-		private PartController controller;
+        [Inject]
+        private PartController _controller;
 
-		[Inject]
-		private ClickableRegistry registry;
+        [Inject]
+        private ClickableRegistry _registry;
 
-		private void Start()
-		{
-			registry.Register(this);
-		}
+        private void Start()
+        {
+            _registry.Register(this);
+        }
 
-		private void OnDestroy()
-		{
-			registry.Unregister(this);
-		}
+        private void OnDestroy()
+        {
+            _registry.Unregister(this);
+        }
 
-		private float _pointerDownTime;
-		private bool _longPressHandled;
-		private bool _isDragging;
-		private float _lastDragSendTime;
+        private float _pointerDownTime;
+        private bool _longPressHandled;
+        private bool _isDragging;
+        private float _lastDragSendTime;
 
-		public void OnPointerDown(PointerEventData eventData)
-		{
-			Debug.Log($"[Clickable] {gameObject.name}: PointerDown ({eventData.button})");
-			_pointerDownTime = Time.time;
-			_longPressHandled = false;
-			_isDragging = false;
-		}
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Debug.Log($"[Clickable] {gameObject.name}: PointerDown ({eventData.button})");
+            _pointerDownTime = Time.time;
+            _longPressHandled = false;
+            _isDragging = false;
+        }
 
-		public void OnPointerUp(PointerEventData eventData)
-		{
-			if (_isDragging) return;
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (_isDragging) return;
 
-			float duration = Time.time - _pointerDownTime;
-			if (duration >= LongPressThreshold)
-			{
-				_longPressHandled = true;
-				InteractionType type = eventData.button == PointerEventData.InputButton.Right
-					? InteractionType.Oral
-					: InteractionType.Press;
-				Debug.Log($"[Clickable] {gameObject.name}: 長押し → {type} ({duration:F2}s)");
-				SendInput(type);
-			}
-		}
+            float duration = Time.time - _pointerDownTime;
+            if (duration >= LongPressThreshold)
+            {
+                _longPressHandled = true;
+                InteractionType type = eventData.button == PointerEventData.InputButton.Right
+                    ? InteractionType.Oral
+                    : InteractionType.Press;
+                Debug.Log($"[Clickable] {gameObject.name}: 長押し → {type} ({duration:F2}s)");
+                SendInput(type);
+            }
+        }
 
-		/// <summary>
-		/// IPointerClickHandler の実装（短押し）
-		/// 長押し・ドラッグ後は発火しない
-		/// </summary>
-		public void OnPointerClick(PointerEventData eventData)
-		{
-			if (_longPressHandled) return;
+        /// <summary>
+        /// IPointerClickHandler の実装（短押し）
+        /// 長押し・ドラッグ後は発火しない
+        /// </summary>
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_longPressHandled) return;
 
-			InteractionType type = eventData.button == PointerEventData.InputButton.Right
-				? InteractionType.Tongue
-				: InteractionType.Finger;
-			Debug.Log($"[Clickable] {gameObject.name}: クリック → {type}");
-			SendInput(type);
-		}
+            InteractionType type = eventData.button == PointerEventData.InputButton.Right
+                ? InteractionType.Tongue
+                : InteractionType.Finger;
+            Debug.Log($"[Clickable] {gameObject.name}: クリック → {type}");
+            SendInput(type);
+        }
 
-		/// <summary>
-		/// IDragHandler の実装
-		/// 一定間隔で Stroke を発火する
-		/// </summary>
-		public void OnDrag(PointerEventData eventData)
-		{
-			_isDragging = true;
-			if (Time.time - _lastDragSendTime < DragInterval) return;
-			_lastDragSendTime = Time.time;
-			Debug.Log($"[Clickable] {gameObject.name}: ドラッグ → Stroke");
-			SendInput(InteractionType.Stroke, new Vector2(eventData.delta.x, eventData.delta.y));
-		}
+        /// <summary>
+        /// IDragHandler の実装
+        /// 一定間隔で Stroke を発火する
+        /// </summary>
+        public void OnDrag(PointerEventData eventData)
+        {
+            _isDragging = true;
+            if (Time.time - _lastDragSendTime < DragInterval) return;
+            _lastDragSendTime = Time.time;
+            Debug.Log($"[Clickable] {gameObject.name}: ドラッグ → Stroke");
+            SendInput(InteractionType.Stroke, new Vector2(eventData.delta.x, eventData.delta.y));
+        }
 
-		/// <summary>
-		/// IScrollHandler の実装
-		/// </summary>
-		public void OnScroll(PointerEventData eventData)
-		{
-			Debug.Log($"[Clickable] {gameObject.name}: スクロール → Lick (delta: {eventData.scrollDelta})");
-			SendInput(InteractionType.Lick);
-		}
+        /// <summary>
+        /// IScrollHandler の実装
+        /// </summary>
+        public void OnScroll(PointerEventData eventData)
+        {
+            Debug.Log($"[Clickable] {gameObject.name}: スクロール → Lick (delta: {eventData.scrollDelta})");
+            SendInput(InteractionType.Lick);
+        }
 
-		/// <summary>
-		/// UIボタンからも呼び出し可能
-		/// </summary>
-		public void OnClick()
-		{
-			SendInput(InteractionType.Finger);
-		}
+        /// <summary>
+        /// UIボタンからも呼び出し可能
+        /// </summary>
+        public void OnClick()
+        {
+            SendInput(InteractionType.Finger);
+        }
 
-		/// <summary>
-		/// おさわりの入力を送る
-		/// </summary>
-		/// <param name="type"></param>
-		/// <param name="direction"></param>
-		private void SendInput(InteractionType type, Vector2 direction = default)
-		{
-			PartInput input = new PartInput(new PartID(gameObject.name), type, direction);
-			controller.SendInput(input);
-		}
-	}
+        /// <summary>
+        /// おさわりの入力を送る
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="direction"></param>
+        private void SendInput(InteractionType type, Vector2 direction = default)
+        {
+            PartInput input = new PartInput(new PartID(gameObject.name), type, direction);
+            _controller.SendInput(input);
+        }
+    }
 }
