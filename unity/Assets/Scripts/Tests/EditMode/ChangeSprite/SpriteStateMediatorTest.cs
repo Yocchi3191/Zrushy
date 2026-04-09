@@ -4,23 +4,6 @@ using NUnit.Framework;
 using UnityEngine;
 using Zrushy.Core.Presentation.Unity;
 
-/// Mediatorパターン
-/// ISpriteStateNodeは状態遷移したらMediatorに通知する
-/// 
-/// ISpriteStateNodeには、他のISpriteStateNodeの状態遷移に影響があるもの(Controller)がいる
-/// Mediatorは自分のパーツに関するISpriteStateNodeを知っている
-/// 誰がControllerかも知っている
-///  
-/// MediatorはControllerの各状態ごとの、Dependentsに許可されている状態を知っている
-/// 
-/// 以上を使って、Controllerが状態遷移したら、MediatorはDependentsのうち違反しているものを遷移させる
-
-/// TODO
-/// ForceStateがMaxAllowedStateで呼ばれるか
-/// 未登録ノードからの変更通知に対する例外スロー
-/// 制約条件未対応時に例外スロー
-/// 一部だけ違反している場合の挙動
-
 namespace Zrushy.Core.Test.Unity.EditMode
 {
 	public class SpriteStateMediatorTest
