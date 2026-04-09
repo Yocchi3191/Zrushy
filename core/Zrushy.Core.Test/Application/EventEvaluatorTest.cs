@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
 using NSubstitute;
 using Zrushy.Core.Application;
@@ -95,32 +95,19 @@ public class EventEvaluatorTest
 
     // --- Stubs ---
 
-    private class StubEvent : IScenarioEvent
+    private class StubEvent(bool canFire, int priority, ScenarioID scenarioId) : IScenarioEvent
     {
-        public EventID ID { get; }
-        public ScenarioID ScenarioToStart { get; }
-        public int Priority { get; }
-        private readonly bool _canFire;
-
-        public StubEvent(bool canFire, int priority, ScenarioID scenarioId)
-        {
-            _canFire = canFire;
-            Priority = priority;
-            ID = new EventID(scenarioId.Value);
-            ScenarioToStart = scenarioId;
-        }
+        public EventID ID { get; } = new EventID(scenarioId.Value);
+        public ScenarioID ScenarioToStart { get; } = scenarioId;
+        public int Priority { get; } = priority;
+        private readonly bool _canFire = canFire;
 
         public bool CanFire() => _canFire;
     }
 
-    private class StubEventRepository : IEventRepository
+    private class StubEventRepository(params IScenarioEvent[] events) : IEventRepository
     {
-        private readonly IReadOnlyList<IScenarioEvent> _events;
-
-        public StubEventRepository(params IScenarioEvent[] events)
-        {
-            _events = events;
-        }
+        private readonly IReadOnlyList<IScenarioEvent> _events = events;
 
         public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID) => _events;
         public IReadOnlyList<IScenarioEvent> GetGlobalEvents() => Array.Empty<IScenarioEvent>();

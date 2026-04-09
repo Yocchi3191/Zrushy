@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
+
+using System.Numerics;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Presentation

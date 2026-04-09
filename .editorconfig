@@ -74,7 +74,7 @@ dotnet_naming_style.static_prefix_style.required_prefix = s_
 dotnet_naming_style.static_prefix_style.capitalization = camel_case
 
 # internal and private fields should be _camelCase
-dotnet_naming_rule.camel_case_for_private_internal_fields.severity = suggestion
+dotnet_naming_rule.camel_case_for_private_internal_fields.severity = warning
 dotnet_naming_rule.camel_case_for_private_internal_fields.symbols  = private_internal_fields
 dotnet_naming_rule.camel_case_for_private_internal_fields.style    = camel_case_underscore_style
 dotnet_naming_symbols.private_internal_fields.applicable_kinds = field
@@ -85,7 +85,7 @@ dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 # Code style defaults
 csharp_using_directive_placement = outside_namespace:suggestion
 dotnet_sort_system_directives_first = true
-csharp_prefer_braces = true:silent
+csharp_prefer_braces = true
 csharp_preserve_single_line_blocks = true:none
 csharp_preserve_single_line_statements = false:none
 csharp_prefer_static_local_function = true:suggestion
@@ -138,6 +138,14 @@ dotnet_diagnostic.IDE0071.severity = silent
 # IDE0031: Use null propagation - keep as silent hint to avoid build errors with TreatWarningsAsErrors
 dotnet_diagnostic.IDE0031.severity = silent
 
+# IDE0161: file-scoped namespace - C# 9.0 (Unity) does not support it
+dotnet_diagnostic.IDE0161.severity = none
+
+# IDE0003: 修飾子を削除
+dotnet_diagnostic.IDE0003.severity = warning
+
+dotnet_diagnostic.IDE1006.severity = warning
+
 # Space preferences
 csharp_space_after_cast = false
 csharp_space_after_colon_in_inheritance_clause = true
@@ -161,6 +169,9 @@ csharp_space_between_method_declaration_name_and_open_parenthesis = false
 csharp_space_between_method_declaration_parameter_list_parentheses = false
 csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
+
+# license
+file_header_template = Copyright (c) yoshioyocchi314@gmail.com\nLicensed under the MIT License.
 
 # Xml project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]

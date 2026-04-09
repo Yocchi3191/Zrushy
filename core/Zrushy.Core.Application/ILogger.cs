@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
 namespace Zrushy.Core.Application
 {
@@ -9,9 +9,9 @@ namespace Zrushy.Core.Application
     /// </summary>
     public interface ILogger
     {
-        public void Info(string message);
-        public void Warn(string message);
-        public void Error(string message);
-        public void Debug(string message);
+        void Info(string message);
+        void Warn(string message);
+        void Error(string message);
+        void Debug(string message);
     }
 }

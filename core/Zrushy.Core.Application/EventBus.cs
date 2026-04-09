@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
 using System;
 using Zrushy.Core.Domain.Events.Entity;
@@ -13,11 +13,11 @@ namespace Zrushy.Core.Application
     /// </summary>
 	public class EventBus
     {
-        private readonly IFiredEventLog firedEventLog;
+        private readonly IFiredEventLog _firedEventLog;
 
         public EventBus(IFiredEventLog firedEventLog)
         {
-            this.firedEventLog = firedEventLog;
+            _firedEventLog = firedEventLog;
         }
 
         public event Action<EventID>? OnEventPublished;
@@ -25,9 +25,11 @@ namespace Zrushy.Core.Application
         public void Publish(IScenarioEvent gameEvent)
         {
             if (gameEvent == null)
+            {
                 return;
+            }
 
-            firedEventLog.Record(gameEvent.ID);
+            _firedEventLog.Record(gameEvent.ID);
             OnEventPublished?.Invoke(gameEvent.ID);
         }
     }

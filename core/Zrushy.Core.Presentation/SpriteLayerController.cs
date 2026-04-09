@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
 using Zrushy.Core.Application.UseCase.ChangeSprite;
 using Zrushy.Core.Domain.Sprite;
@@ -8,17 +8,17 @@ namespace Zrushy.Core.Presentation
 {
     public class SpriteLayerController
     {
-        private readonly ChangeSprite changeSprite;
-        private readonly HeroinViewModel heroinViewModel;
+        private readonly ChangeSprite _changeSprite;
+        private readonly HeroinViewModel _heroinViewModel;
         public SpriteLayerController(ChangeSprite changeSprite, HeroinViewModel heroinViewModel)
         {
-            this.changeSprite = changeSprite;
-            this.heroinViewModel = heroinViewModel;
+            _changeSprite = changeSprite;
+            _heroinViewModel = heroinViewModel;
         }
         public void ChangeSprite(SpriteLayerID id, LayerState state)
         {
-            string newSpritePath = changeSprite.Execute(id, state);
-            heroinViewModel.UpdateSprite(id, newSpritePath);
+            string newSpritePath = _changeSprite.Execute(id, state);
+            _heroinViewModel.UpdateSprite(id, newSpritePath);
         }
     }
 }

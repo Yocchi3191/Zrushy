@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
     /// </summary>
     public class Heroin
     {
-        private readonly List<IPart> parts;
+        private readonly List<IPart> _parts;
 
         /// <summary>
         /// Body全体の興奮度パラメータ
@@ -37,7 +37,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// </summary>
         public Heroin()
         {
-            parts = new List<IPart>();
+            _parts = new List<IPart>();
             Arousal = new Arousal(0);
         }
 
@@ -47,10 +47,12 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// <param name="part">追加する部位</param>
         public void AddPart(IPart part)
         {
-            if (parts.Any(p => p.ID == part.ID))
+            if (_parts.Any(p => p.ID == part.ID))
+            {
                 throw new DuplicatePartException(part.ID);
+            }
 
-            parts.Add(part);
+            _parts.Add(part);
         }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// </summary>
         public void ApplyCooldown()
         {
-            if (parts.Count == 0)
+            if (_parts.Count == 0)
             {
                 // 部位がない場合は固定値で減少
                 Arousal = Arousal.ApplyCooldown(new Development(0));
@@ -83,8 +85,8 @@ namespace Zrushy.Core.Domain.Interactions.Entity
             }
 
             // 全部位の平均開発度を計算
-            int totalDevelopment = parts.Sum(p => p.Development.Value);
-            int avgDevelopment = totalDevelopment / parts.Count;
+            int totalDevelopment = _parts.Sum(p => p.Development.Value);
+            int avgDevelopment = totalDevelopment / _parts.Count;
 
             // 平均開発度を使ってクールダウンを適用
             Arousal = Arousal.ApplyCooldown(new Development(avgDevelopment));
@@ -108,7 +110,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// <exception cref="PartNotFoundException">部位が見つからない場合</exception>
         public IPart GetPart(PartID partID)
         {
-            return parts.Find(p => p.ID.Equals(partID))
+            return _parts.Find(p => p.ID.Equals(partID))
                 ?? throw new PartNotFoundException(partID);
         }
     }

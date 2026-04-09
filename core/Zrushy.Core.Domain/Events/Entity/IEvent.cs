@@ -1,7 +1,10 @@
-﻿namespace Zrushy.Core.Domain.Events.Entity
+﻿// Copyright (c) yoshioyocchi314@gmail.com
+// Licensed under the MIT License.
+
+namespace Zrushy.Core.Domain.Events.Entity
 {
-	public interface IEvent
-	{
-		bool CanFire();
-	}
+    public interface IEvent
+    {
+        bool CanFire();
+    }
 }
