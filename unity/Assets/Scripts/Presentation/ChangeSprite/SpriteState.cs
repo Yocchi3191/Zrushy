@@ -64,9 +64,9 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             OnStateChanged?.Invoke(this);
         }
 
-        public bool IsAbove(Sprite maxAllowed)
+        public bool IsAbove(Sprite targetState)
         {
-            throw new NotImplementedException();
+            return _statePattern.IndexOf(CurrentState) > _statePattern.IndexOf(targetState);
         }
 
     }
