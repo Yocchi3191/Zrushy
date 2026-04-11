@@ -16,11 +16,17 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
     {
         [SerializeField] private SpriteStatePattern _statePattern;
         Image _image;
-        private Sprite _currentState;
         [SerializeField] private DragDirectionThresholdSetting _setting;
 
-        public event Action<Sprite> OnStateChanged; // 状態遷移イベント
-        public Sprite CurrentState => _currentState;
+        public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
+        public Sprite CurrentState { get; private set; }
+
+        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting)
+        {
+            _statePattern = pattern;
+            _setting = setting;
+            CurrentState = pattern.initialState;
+        }
 
         private void Awake()
         {
@@ -31,7 +37,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 
         void Start()
         {
-            _currentState = _statePattern.initialState;
+            CurrentState = _statePattern.initialState;
         }
 
         /// <summary>
@@ -40,7 +46,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         public void TryTransition(ZrushyInput input)
         {
             StateTransition matched = _statePattern.transitions
-                .Where(t => t.fromState == _currentState)
+                .Where(t => t.fromState == CurrentState)
                 .FirstOrDefault(t => t.CanTransition(input, _setting));
 
             if (matched == null) return;
@@ -53,14 +59,15 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         /// </summary>
         public void ForceState(Sprite newState)
         {
-            _currentState = newState;
-            _image.sprite = _currentState;
-            OnStateChanged?.Invoke(_currentState);
+            CurrentState = newState;
+            _image.sprite = CurrentState;
+            OnStateChanged?.Invoke(this);
         }
 
         public bool IsAbove(Sprite maxAllowed)
         {
             throw new NotImplementedException();
         }
+
     }
 }

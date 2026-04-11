@@ -1,6 +1,7 @@
 ﻿// Copyright (c) yoshioyocchi314@gmail.com
 // Licensed under the MIT License.
 
+using System;
 using UnityEngine;
 
 namespace Zrushy.Core.Presentation.Unity
@@ -24,5 +25,10 @@ namespace Zrushy.Core.Presentation.Unity
         /// <param name="maxAllowed"></param>
         /// <returns></returns>
         bool IsAbove(Sprite maxAllowed);
+
+        /// <summary>
+        /// 状態遷移した際に通知する
+        /// </summary>
+        event Action<ISpriteStateNode> OnStateChanged;
     }
 }
