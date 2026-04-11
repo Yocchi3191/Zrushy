@@ -1,14 +1,26 @@
 labels:
   # type系
-  - name: "type: epic"
-    color: "8B5CF6"
-    description: "機能単位のIssue"
+  - name: "type: bug"
+    color: "EF4444"
+    description: "バグ報告"
 
-  - name: "type: task"
-    color: "3B82F6"
-    description: "作業単位のIssue"
+  # topic系
+  - name: "topic: おさわり"
+    color: "059669"
+    description: "部位・タッチ操作・入力パターン・VirtualCursor"
 
-  # status系
-  - name: "status: planning"
-    color: "F59E0B"
-    description: "見積もり中"
+  - name: "topic: シナリオ"
+    color: "059669"
+    description: "YarnSpinner・イベント発火・シナリオ内容"
+
+  - name: "topic: ビジュアル"
+    color: "059669"
+    description: "アニメーション・スプライト・UI表示"
+
+  - name: "topic: パラメータ"
+    color: "059669"
+    description: "Arousal・Development・ゲームバランス設計"
+
+  - name: "topic: 基盤"
+    color: "059669"
+    description: "アーキテクチャ・リファクタ・CI・設計"
