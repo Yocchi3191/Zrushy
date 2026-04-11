@@ -30,13 +30,13 @@ namespace Zrushy.Core.Test.Unity.EditMode
 
             _pattern = ScriptableObject.CreateInstance<SpriteStatePattern>();
             _pattern.initialState = _initialSprite;
-            _pattern.transitions.Add(new StateTransition
+            _pattern.Add(new StateTransition
             {
                 fromState = _initialSprite,
                 requiredDirection = CardinalDirection.Down,
                 toState = _nextSprite
             });
-            _pattern.transitions.Add(new StateTransition
+            _pattern.Add(new StateTransition
             {
                 fromState = _nextSprite,
                 requiredDirection = CardinalDirection.Down,

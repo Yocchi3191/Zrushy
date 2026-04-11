@@ -45,7 +45,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         /// </summary>
         public void TryTransition(ZrushyInput input)
         {
-            StateTransition matched = _statePattern.transitions
+            StateTransition matched = _statePattern.Transitions
                 .Where(t => t.fromState == CurrentState)
                 .FirstOrDefault(t => t.CanTransition(input, _setting));
 
