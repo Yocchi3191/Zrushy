@@ -1,0 +1,33 @@
+name: Bug
+description: バグ報告
+labels: ["type: bug"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 問題
+      description: 何が起きているか
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+    validations:
+      required: true
+
+  - type: textarea
+    id: cause
+    attributes:
+      label: 原因・関連箇所
+      description: 分かっていれば、関連するクラス・ファイルを記載
+    validations:
+      required: false
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 解決案
+    validations:
+      required: false
