@@ -16,6 +16,7 @@
 ### ソース管理
 
 - GitHub / gh コマンドで操作（github-operations skill を使うこと）
+- issue管理は personal-issue-management skill を使うこと
 - 利用可能ラベル: `.github/labels.yml`
 - ラベルをGitHubに反映: `tools/gh-sync-labels/sync-labels.sh`
 
