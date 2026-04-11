@@ -24,7 +24,7 @@ namespace Zrushy.Core.Presentation.Unity
         /// </summary>
         /// <param name="maxAllowed"></param>
         /// <returns></returns>
-        bool IsAbove(Sprite maxAllowed);
+        bool IsAbove(Sprite target);
 
         /// <summary>
         /// 状態遷移した際に通知する
