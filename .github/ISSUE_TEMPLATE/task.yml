@@ -1,0 +1,27 @@
+name: Task
+description: 機能追加・仕様設計・リファクタなど
+labels: []
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景
+      description: なぜこの作業が必要か
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: やること
+      description: 具体的な作業内容・仕様
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 注意点・依存関係
+      description: 実装上の注意、先に終わらせるべきissueなど
+    validations:
+      required: false
