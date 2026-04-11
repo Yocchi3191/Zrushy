@@ -19,7 +19,6 @@ namespace Zrushy.Core.Test.Unity.EditMode
     /// x TryTransition_無効な入力の場合何もしない
     /// x TryTransition_有効な入力の場合は状態遷移する
     /// x TryTransition_遷移した場合イベント発火
-    /// TODO:_現状mediatorのOnStateChangedを直接叩かせているので、イベント駆動でmediatorがnodeを知っている構造に変更する
     /// 
     /// IsAbove_patternsのうち現在より前のインデックスのspriteが渡された場合、false
     /// IsAbove_〃_先のインデックスのspriteが渡された場合、true

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) yoshioyocchi314@gmail.com
 // Licensed under the MIT License.
 
+using System;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
@@ -36,7 +37,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
         public void TearDown()
         {
             GameObject.DestroyImmediate(_mediator.gameObject);
-            foreach (var entry in _constraints)
+            foreach (ConstraintEntry entry in _constraints)
                 ScriptableObject.DestroyImmediate(entry);
         }
 
@@ -55,7 +56,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
 
             // When
-            _mediator.OnStateChanged(dependent);
+            dependent.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(dependent);
 
             // Then
             dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
@@ -77,7 +78,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
 
             // When
-            _mediator.OnStateChanged(dependent);
+            dependent.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(dependent);
 
             // Then
             dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
@@ -92,7 +93,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             dependent.IsAbove(Arg.Any<Sprite>()).Returns(true); // 遷移後の状態が違反している
 
             // When
-            _mediator.OnStateChanged(dependent);
+            dependent.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(dependent);
 
             // Then
             dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
@@ -110,7 +111,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             }
 
             // When
-            _mediator.OnStateChanged(_controller);
+            _controller.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(_controller);
 
             // Then
             foreach (var dependent in _dependents)
@@ -131,7 +132,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             }
 
             // When
-            _mediator.OnStateChanged(_controller);
+            _controller.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(_controller);
 
             // Then
             foreach (var dependent in _dependents)
@@ -150,7 +151,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _dependents[1].IsAbove(Arg.Any<Sprite>()).Returns(false); // 違反していない
 
             // When
-            _mediator.OnStateChanged(_controller);
+            _controller.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(_controller);
 
             // Then
             _dependents[0].Received(1).ForceState(_constraints[0].MaxAllowedState); // 0番目は違反しているので強制遷移させられる
@@ -166,7 +167,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _dependents[1].IsAbove(Arg.Any<Sprite>()).Returns(false); // 対象外
 
             // When
-            _mediator.OnStateChanged(_controller);
+            _controller.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(_controller);
 
             // Then
             _dependents[0].Received().ForceState(_constraints[1].MaxAllowedState); // 0ではなく1のmaxに強制遷移している

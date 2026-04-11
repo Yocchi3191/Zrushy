@@ -11,7 +11,7 @@ namespace Zrushy.Core.Presentation.Unity
     /// 遷移に条件がある複数のISpriteStateNodeをまとめて管理するクラス
     /// 遷移条件の基準になるControllerStateの変更を受けて、dependents(ISpriteStateNode)の状態を強制的に遷移させる
     /// </summary>
-    public class HoodieStateMediator : MonoBehaviour, ISpriteStateMediator
+    public class HoodieStateMediator : MonoBehaviour
     {
         [SerializeField] ConstraintEntry[] _constraints; // controllerの状態ごとの、dependentsの遷移可能な状態
         [SerializeField] ISpriteStateNode _controller;
@@ -30,9 +30,15 @@ namespace Zrushy.Core.Presentation.Unity
             _controller = controller;
             _dependents = dependents;
             _constraints = constraints;
+
+            _controller.OnStateChanged += OnStateChanged;
+            foreach (ISpriteStateNode dependent in _dependents)
+            {
+                dependent.OnStateChanged += OnStateChanged;
+            }
         }
 
-        public void OnStateChanged(ISpriteStateNode changed)
+        private void OnStateChanged(ISpriteStateNode changed)
         {
             if (changed == _controller)
             {
