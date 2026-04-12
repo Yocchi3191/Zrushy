@@ -11,26 +11,29 @@ using Zrushy.Core.Presentation.Unity;
 
 public class SpriteStatePatternImporter
 {
-    private const string ResourceRoot = "Heroin";
+    private const string ResourceRoot = "Heroin/Sprites";
 
     [MenuItem("Tools/Import SpriteStatePattern")]
     public static void Import()
     {
         string jsonPath = EditorUtility.OpenFilePanel("JSONを選択", "", "json");
-        if (string.IsNullOrEmpty(jsonPath)) return;
+        if (string.IsNullOrEmpty(jsonPath))
+            return;
 
         var data = JsonConvert.DeserializeObject<SpriteStatePatternData>(File.ReadAllText(jsonPath));
 
         var pattern = ScriptableObject.CreateInstance<SpriteStatePattern>();
         pattern.layerID = data.layerID;
         pattern.initialState = LoadSprite(data.layerID, data.initialState);
-        if (pattern.initialState == null) return;
+        if (pattern.initialState == null)
+            return;
 
         foreach (var t in data.transitions)
         {
             var from = LoadSprite(data.layerID, t.from);
             var to = LoadSprite(data.layerID, t.to);
-            if (from == null || to == null) return;
+            if (from == null || to == null)
+                return;
 
             pattern.Add(new StateTransition
             {
@@ -46,7 +49,8 @@ public class SpriteStatePatternImporter
             "asset",
             ""
         );
-        if (string.IsNullOrEmpty(savePath)) return;
+        if (string.IsNullOrEmpty(savePath))
+            return;
 
         AssetDatabase.CreateAsset(pattern, savePath);
         AssetDatabase.SaveAssets();

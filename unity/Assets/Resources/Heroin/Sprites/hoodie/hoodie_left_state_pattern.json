@@ -1,0 +1,30 @@
+{
+  "layerID": "hoodie/left",
+  "initialState": "close",
+  "transitions": [
+    {
+      "from": "close",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "half_open"
+    },
+    {
+      "from": "half_open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "close"
+    },
+    {
+      "from": "half_open",
+      "type": "Stroke",
+      "direction": "Left",
+      "to": "open"
+    },
+    {
+      "from": "open",
+      "type": "Stroke",
+      "direction": "Right",
+      "to": "half_open"
+    }
+  ]
+}

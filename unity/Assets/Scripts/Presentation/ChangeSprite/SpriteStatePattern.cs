@@ -52,9 +52,9 @@ namespace Zrushy.Core.Presentation.Unity
         private void OnValidate()
         {
             // transitionsからfromStateが重複しているものを抽出
-            IEnumerable<IGrouping<Sprite, StateTransition>> duplicates = (IEnumerable<IGrouping<Sprite, StateTransition>>)_transitions
-                .GroupBy(t => (t.fromState, t.requiredDirection))
-                .Where(g => g.Count() > 1);
+            IEnumerable<IGrouping<(Sprite fromState, CardinalDirection requiredDirection), StateTransition>> duplicates = _transitions
+               .GroupBy(t => (t.fromState, t.requiredDirection))
+               .Where(g => g.Count() > 1);
 
             foreach (IGrouping<Sprite, StateTransition> dup in duplicates)
                 Debug.LogError($"fromState {dup.Key} が重複しています", this);

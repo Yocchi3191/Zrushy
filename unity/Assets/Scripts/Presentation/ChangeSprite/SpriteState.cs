@@ -33,6 +33,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             _image = gameObject.GetComponent<Image>();
             if (_image == null)
                 throw new System.Exception("Imageコンポーネントがアタッチされていません");
+            _image.alphaHitTestMinimumThreshold = 0.1f;
         }
 
         void Start()
@@ -49,7 +50,8 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
                 .Where(t => t.fromState == CurrentState)
                 .FirstOrDefault(t => t.CanTransition(input, _setting));
 
-            if (matched == null) return;
+            if (matched == null)
+                return;
 
             ForceState(matched.toState);
         }
