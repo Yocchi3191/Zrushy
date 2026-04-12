@@ -70,9 +70,6 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 
         public bool IsAbove(int targetStateIndex)
         {
-            if (targetStateIndex < 0)
-                throw new ArgumentException("判定しようとしたインデックスの範囲が不正です");
-
             return _statePattern.IndexOf(CurrentState) > targetStateIndex;
         }
     }
