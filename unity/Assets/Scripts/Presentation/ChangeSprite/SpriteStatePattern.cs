@@ -56,7 +56,7 @@ namespace Zrushy.Core.Presentation.Unity
                .GroupBy(t => (t.fromState, t.requiredDirection))
                .Where(g => g.Count() > 1);
 
-            foreach (IGrouping<Sprite, StateTransition> dup in duplicates)
+            foreach (IGrouping<(Sprite fromState, CardinalDirection requiredDirection), StateTransition> dup in duplicates)
                 Debug.LogError($"fromState {dup.Key} が重複しています", this);
         }
 
