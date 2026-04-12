@@ -16,7 +16,8 @@ namespace Zrushy.Core.Presentation.Unity
     {
         public string layerID; // 対象レイヤーのID
         public Sprite initialState; // 初期状態のスプライト
-        public List<StateTransition> transitions = new(); // 状態遷移のリスト
+        [SerializeField] private List<StateTransition> _transitions = new(); // 状態遷移のリスト
+        public IReadOnlyList<StateTransition> Transitions => _transitions;
         private List<Sprite> _orderStates;
         private List<Sprite> OrderStates => _orderStates ??= BuildOrderStates(); // 状態インデックスの遅延解決用
 
@@ -30,8 +31,9 @@ namespace Zrushy.Core.Presentation.Unity
             var current = initialState;
             while (true)
             {
-                var next = transitions.FirstOrDefault(t => t.fromState == current)?.toState;
-                if (next == null) break;
+                var next = _transitions.FirstOrDefault(t => t.fromState == current)?.toState;
+                if (next == null)
+                    break;
                 ordered.Add(next);
                 current = next;
             }
@@ -45,6 +47,27 @@ namespace Zrushy.Core.Presentation.Unity
             if (index == -1)
                 throw new InvalidOperationException("存在しない状態のインデックスを検索しようとしました");
             return index;
+        }
+
+        private void OnValidate()
+        {
+            // transitionsからfromStateが重複しているものを抽出
+            IEnumerable<IGrouping<(Sprite fromState, CardinalDirection requiredDirection), StateTransition>> duplicates = _transitions
+               .GroupBy(t => (t.fromState, t.requiredDirection))
+               .Where(g => g.Count() > 1);
+
+            foreach (IGrouping<(Sprite fromState, CardinalDirection requiredDirection), StateTransition> dup in duplicates)
+                Debug.LogError($"fromState {dup.Key} が重複しています", this);
+        }
+
+        public void Add(StateTransition transition)
+        {
+            // 衝突する遷移が無いか確認
+            IEnumerable<StateTransition> conflict = _transitions.Where(t => t.fromState == transition.fromState && t.requiredDirection == transition.requiredDirection);
+            if (conflict.Any())
+                throw new TransitionConflictException(transition);
+            // 問題なければ追加
+            _transitions.Add(transition);
         }
     }
 }

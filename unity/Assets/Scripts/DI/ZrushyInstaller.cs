@@ -6,6 +6,7 @@ using Yarn.Unity;
 using Zenject;
 using Zrushy.Core.Application;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
+using Zrushy.Core.Application.UseCase.CanZrushy;
 using Zrushy.Core.Application.UseCase.GetScenario;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
@@ -70,6 +71,7 @@ namespace Zrushy.Core.DI
             Container.Bind<GetScenario>().AsSingle();
             Container.Bind<IScenarioProvider>().To<YarnScenarioProvider>().AsSingle();
             Container.Bind<ScenarioSelector>().AsSingle();
+            Container.Bind<IZrushyPermission>().To<CanZrushy>().AsSingle();
         }
 
         private void InstallDomain()

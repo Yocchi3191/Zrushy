@@ -697,10 +697,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2110340297375308643}
     m_Modifications:
+    - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 92d73db311d60d1449cc5181404740e7, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
       value: zipper
       objectReference: {fileID: 0}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _setting
+      value: 
+      objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _statePattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 596fdb45f1c047040aa373c27c770c9e, type: 2}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -727,11 +739,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1820.6
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 980
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -763,11 +775,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 12.388194
+      value: 0.00035476685
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 10.994257
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -784,7 +796,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1406019992}
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
 --- !u!224 &418919372 stripped
 RectTransform:
@@ -1108,7 +1123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3256515696759302751, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Name
-      value: torso_L
+      value: torso
       objectReference: {fileID: 0}
     - target: {fileID: 8488247166625686897, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Color.a
@@ -1455,7 +1470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &736194885
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,7 +1809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3256515696759302751, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Name
-      value: torso_R
+      value: torso
       objectReference: {fileID: 0}
     - target: {fileID: 8488247166625686897, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Color.a
@@ -1953,6 +1968,11 @@ RectTransform:
   m_AnchoredPosition: {x: -100, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &883938232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 1971318753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &972173063 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3228771603176722642, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
@@ -2168,20 +2188,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216bbd2896186cd4a8322dac9faa5ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.DI::Zrushy.Core.DI.BodyInitializer
-  defaultPartConfig: {fileID: 11400000, guid: bdf82e037625e7545abcdbc37fd18be4, type: 2}
-  chestPartConfig: {fileID: 11400000, guid: b5e335890c4bab044bb3bc2503bc1ca1, type: 2}
-  secretPartConfig: {fileID: 11400000, guid: ddf9d64415a2e994b9f46614eb2700b1, type: 2}
-  defaultPartIds:
-  - torso_R
-  - torso_L
-  - waist
-  - secret
-  - head
-  - chest
+  _defaultPartConfig: {fileID: 11400000, guid: bdf82e037625e7545abcdbc37fd18be4, type: 2}
+  _chestPartConfig: {fileID: 11400000, guid: b5e335890c4bab044bb3bc2503bc1ca1, type: 2}
+  _secretPartConfig: {fileID: 11400000, guid: ddf9d64415a2e994b9f46614eb2700b1, type: 2}
+  _defaultPartIds:
   - arm
   - leg
   - hand
   - foot
+  - torso
+  - waist
+  - head
+  - chest
+  - secret
 --- !u!4 &1153780309
 Transform:
   m_ObjectHideFlags: 0
@@ -2455,7 +2474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3256515696759302751, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Name
-      value: chest_R
+      value: chest
       objectReference: {fileID: 0}
     - target: {fileID: 8488247166625686897, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Color.a
@@ -2482,6 +2501,11 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3228771603176722642, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
   m_PrefabInstance: {fileID: 1406008110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1359642640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 1698260917}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &1388455238 stripped
 RectTransform:
@@ -2832,6 +2856,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
+--- !u!1 &1406019988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 418919371}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1406019992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406019988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
 --- !u!1001 &1442634271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3165,6 +3206,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
   m_PrefabInstance: {fileID: 1971318753}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1531578653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883938232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
 --- !u!1 &1627419531
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,7 +3416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03e88911fffb2479a75adf0f9a6a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::HeroinView
-  bindings: []
+  _bindings: []
 --- !u!1 &1679064306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,18 +3470,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2033f1529e12cbb4480cd83fa4e2c6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::PartParameterDebugView
-  debugText: {fileID: 2042768580}
-  parts:
+  _debugText: {fileID: 0}
+  _parts:
   - head
-  - torso_R
-  - torso_L
+  - torso
   - hand
   - arm
   - waist
   - foot
   - leg
-  - chest
-  - secret
 --- !u!114 &1679064309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3621,19 +3671,31 @@ PrefabInstance:
     - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d6e43bcf483e96146a1fd63bc8965a01, type: 3}
+      objectReference: {fileID: 21300000, guid: f41d714c3d742814d98f8ddf662395ab, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
       value: hoodie_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: setting
       value: 
       objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
     - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _setting
+      value: 
+      objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: statePattern
       value: 
       objectReference: {fileID: 11400000, guid: 01840933bdaf0ba41a103c5d0a2446a9, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _statePattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e3f52c92c436242975cbdbece4ac6a, type: 2}
     - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: clickables.Array.size
       value: 1
@@ -3725,7 +3787,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1882962273}
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
 --- !u!1001 &1741229638
 PrefabInstance:
@@ -4061,6 +4126,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
   m_PrefabInstance: {fileID: 1698260917}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1882962273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359642640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
 --- !u!1001 &1892936480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4190,19 +4267,31 @@ PrefabInstance:
     - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d6e43bcf483e96146a1fd63bc8965a01, type: 3}
+      objectReference: {fileID: 21300000, guid: 6e008ba2e6ba36e498b577cbe9ebb3d7, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
       value: hoodie_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: setting
       value: 
       objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
     - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _setting
+      value: 
+      objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: statePattern
       value: 
       objectReference: {fileID: 11400000, guid: 01840933bdaf0ba41a103c5d0a2446a9, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _statePattern
+      value: 
+      objectReference: {fileID: 11400000, guid: a8acdc50fb47790488112b928bc375f7, type: 2}
     - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: clickables.Array.size
       value: 1
@@ -4294,7 +4383,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1531578653}
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
 --- !u!1 &1974100944
 GameObject:
@@ -4512,7 +4604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3256515696759302751, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Name
-      value: chest_L
+      value: chest
       objectReference: {fileID: 0}
     - target: {fileID: 8488247166625686897, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
       propertyPath: m_Color.a
@@ -5104,7 +5196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f8382d0b9ed2a42917e6b87b689897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.DI::Zrushy.Core.DI.ZrushyInstaller
-  yarnProject: {fileID: 7545569452688597077, guid: 0be765063e77aa843806d299ec30566f, type: 3}
+  _yarnProject: {fileID: 7545569452688597077, guid: 0be765063e77aa843806d299ec30566f, type: 3}
 --- !u!114 &2070870870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5613,9 +5705,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 418919372}
   - {fileID: 1882962269}
   - {fileID: 1531578649}
+  - {fileID: 418919372}
   m_Father: {fileID: 1178128742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5854,7 +5946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4f9e81cd807fe43aa6a5ce67d4816a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteStateMediator
-  constraints: []
+  _constraints: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
