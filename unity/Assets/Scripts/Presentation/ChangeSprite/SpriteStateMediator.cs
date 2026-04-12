@@ -30,7 +30,7 @@ namespace Zrushy.Core.Presentation.Unity
         /// <param name="constraints"></param>
         internal void Construct(ISpriteStateNode controller, ISpriteStateNode[] dependents, ConstraintEntry[] constraints)
         {
-            if (controller != null)
+            if (_controller != null)
                 throw new InvalidOperationException("Constructは2回以上呼び出せません");
 
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
