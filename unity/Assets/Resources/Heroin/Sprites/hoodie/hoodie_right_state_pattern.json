@@ -4,25 +4,21 @@
   "transitions": [
     {
       "from": "close",
-      "type": "Stroke",
       "direction": "Right",
       "to": "half_open"
     },
     {
       "from": "half_open",
-      "type": "Stroke",
       "direction": "Left",
       "to": "close"
     },
     {
       "from": "half_open",
-      "type": "Stroke",
       "direction": "Right",
       "to": "open"
     },
     {
       "from": "open",
-      "type": "Stroke",
       "direction": "Left",
       "to": "half_open"
     }

@@ -139,41 +139,30 @@ namespace Zrushy.Core.Test.Unity.EditMode
         public void IsAbove_patternsのうち現在状態より先のインデックスのspriteが渡された場合_false()
         {
             // Arrange
-            _spriteState.ForceState(_nextSprite);
+            _spriteState.ForceState(1);
 
             // Assert
-            Assert.False(_spriteState.IsAbove(_furtherSprite));
+            Assert.False(_spriteState.IsAbove(2));
         }
 
         [Test]
         public void IsAbove_patternsのうち現在状態より前のインデックスのspriteが渡された場合_true()
         {
             // Arrange
-            _spriteState.ForceState(_nextSprite);
+            _spriteState.ForceState(1);
 
             // Assert
-            Assert.True(_spriteState.IsAbove(_initialSprite));
+            Assert.True(_spriteState.IsAbove(0));
         }
 
         [Test]
         public void IsAbove_patternsのうち_現在のインデックスと同じインデックスのspriteが渡された場合_false()
         {
             // Arrange
-            _spriteState.ForceState(_nextSprite);
+            _spriteState.ForceState(1);
 
             // Assert
-            Assert.False(_spriteState.IsAbove(_nextSprite));
-        }
-
-        [Test]
-        public void IsAbove_patternsに存在しないスプライトが渡された場合_例外を投げる()
-        {
-            // Arrange
-            Sprite dummy = Sprite.Create(new Texture2D(1, 1), new Rect(0, 0, 1, 1), Vector2.zero);
-            _spriteState.ForceState(_nextSprite);
-
-            // Assert
-            Assert.Throws<InvalidOperationException>(() => _spriteState.IsAbove(dummy));
+            Assert.False(_spriteState.IsAbove(1));
         }
     }
 }

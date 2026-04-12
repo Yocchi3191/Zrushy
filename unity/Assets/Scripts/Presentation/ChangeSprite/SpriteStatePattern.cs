@@ -19,7 +19,17 @@ namespace Zrushy.Core.Presentation.Unity
         [SerializeField] private List<StateTransition> _transitions = new(); // 状態遷移のリスト
         public IReadOnlyList<StateTransition> Transitions => _transitions;
         private List<Sprite> _orderStates;
-        private List<Sprite> OrderStates => _orderStates ??= BuildOrderStates(); // 状態インデックスの遅延解決用
+
+        // 状態インデックスの遅延解決用
+        private List<Sprite> OrderStates
+        {
+            get
+            {
+                if (_orderStates == null || _orderStates.Count == 0)
+                    _orderStates = BuildOrderStates();
+                return _orderStates;
+            }
+        }
 
         /// <summary>
         /// 
@@ -27,11 +37,13 @@ namespace Zrushy.Core.Presentation.Unity
         /// <returns></returns>
         private List<Sprite> BuildOrderStates()
         {
-            var ordered = new List<Sprite> { initialState };
-            var current = initialState;
+            List<Sprite> ordered = new List<Sprite> { initialState };
+            Sprite current = initialState;
             while (true)
             {
-                var next = _transitions.FirstOrDefault(t => t.fromState == current)?.toState;
+                var next = _transitions
+                    .FirstOrDefault(t => t.fromState == current && !ordered.Contains(t.toState))
+                    ?.toState;
                 if (next == null)
                     break;
                 ordered.Add(next);
@@ -69,5 +81,7 @@ namespace Zrushy.Core.Presentation.Unity
             // 問題なければ追加
             _transitions.Add(transition);
         }
+
+        internal Sprite GetState(int index) => OrderStates[index];
     }
 }

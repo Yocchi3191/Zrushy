@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using Zrushy.Core.Presentation.Unity.ChangeSprite;
 
 namespace Zrushy.Core.Presentation.Unity
 {
@@ -11,11 +12,13 @@ namespace Zrushy.Core.Presentation.Unity
     /// 遷移に条件がある複数のISpriteStateNodeをまとめて管理するクラス
     /// 遷移条件の基準になるControllerStateの変更を受けて、dependents(ISpriteStateNode)の状態を強制的に遷移させる
     /// </summary>
-    public class HoodieStateMediator : MonoBehaviour
+    public class SpriteStateMediator : MonoBehaviour
     {
-        [SerializeField] ConstraintEntry[] _constraints; // controllerの状態ごとの、dependentsの遷移可能な状態
-        [SerializeField] ISpriteStateNode _controller;
-        [SerializeField] ISpriteStateNode[] _dependents; // controllerの状態に応じて遷移させるSpriteState
+        [SerializeField] private ConstraintEntry[] _constraints; // controllerの状態ごとの、dependentsの遷移可能な状態
+        private ISpriteStateNode _controller;
+        private ISpriteStateNode[] _dependents; // controllerの状態に応じて遷移させるSpriteState
+        [SerializeField] private SpriteState controller;
+        [SerializeField] private SpriteState[] dependents;
 
         /// <summary>
         /// 疑似コンストラクタ
@@ -27,15 +30,23 @@ namespace Zrushy.Core.Presentation.Unity
         /// <param name="constraints"></param>
         internal void Construct(ISpriteStateNode controller, ISpriteStateNode[] dependents, ConstraintEntry[] constraints)
         {
-            _controller = controller;
-            _dependents = dependents;
-            _constraints = constraints;
+            if (_controller != null)
+                throw new InvalidOperationException("Constructは2回以上呼び出せません");
+
+            _controller = controller ?? throw new ArgumentNullException(nameof(controller));
+            _dependents = dependents ?? throw new ArgumentNullException(nameof(dependents));
+            _constraints = constraints ?? throw new ArgumentNullException(nameof(constraints));
 
             _controller.OnStateChanged += OnStateChanged;
             foreach (ISpriteStateNode dependent in _dependents)
             {
                 dependent.OnStateChanged += OnStateChanged;
             }
+        }
+
+        private void Awake()
+        {
+            Construct(controller, dependents, _constraints);
         }
 
         private void OnStateChanged(ISpriteStateNode changed)
@@ -59,8 +70,12 @@ namespace Zrushy.Core.Presentation.Unity
         {
             // 遷移後がcontrollerの制約条件に違反していた場合は、許可されている最大の状態に遷移させる
             ConstraintEntry entry = _constraints.FirstOrDefault(c => c.ControllerState == _controller.CurrentState);
-            if (changed.IsAbove(entry.MaxAllowedState))
-                changed.ForceState(entry.MaxAllowedState);
+
+            if (entry == null)
+                throw new Exception($"対応する制約がconstraintsから見つかりませんでした。制約条件の登録漏れの可能性があります。ControllerState: {_controller.CurrentState}");
+
+            if (changed.IsAbove(entry.MaxAllowedStateIndex))
+                changed.ForceState(entry.MaxAllowedStateIndex);
         }
 
         private void ControllerOperation(ISpriteStateNode changed)
@@ -74,10 +89,10 @@ namespace Zrushy.Core.Presentation.Unity
             // 2. 制約に従って、dependentsのうち違反しているものを遷移させる
             foreach (ISpriteStateNode dependent in _dependents)
             {
-                if (!dependent.IsAbove(constraint.MaxAllowedState))
+                if (!dependent.IsAbove(constraint.MaxAllowedStateIndex))
                     continue;
 
-                dependent.ForceState(constraint.MaxAllowedState);
+                dependent.ForceState(constraint.MaxAllowedStateIndex);
             }
         }
     }

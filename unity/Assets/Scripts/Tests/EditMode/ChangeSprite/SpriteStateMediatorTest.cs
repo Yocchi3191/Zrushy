@@ -12,7 +12,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
 {
     public class SpriteStateMediatorTest
     {
-        HoodieStateMediator _mediator;
+        SpriteStateMediator _mediator;
         ISpriteStateNode _controller;
         ISpriteStateNode[] _dependents;
         ConstraintEntry[] _constraints;
@@ -28,7 +28,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             };
             _constraints = Builder();
 
-            _mediator = new GameObject().AddComponent<HoodieStateMediator>();
+            _mediator = new GameObject().AddComponent<SpriteStateMediator>();
             _mediator.Construct(_controller, _dependents, _constraints);
         }
 
@@ -37,8 +37,6 @@ namespace Zrushy.Core.Test.Unity.EditMode
         public void TearDown()
         {
             GameObject.DestroyImmediate(_mediator.gameObject);
-            foreach (ConstraintEntry entry in _constraints)
-                ScriptableObject.DestroyImmediate(entry);
         }
 
         // Dependent遷移時の条件違反チェックはmediator側で行う
@@ -52,14 +50,13 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _controller.CurrentState.Returns(_constraints[0].ControllerState); // controllerの状態を遷移させる
 
             ISpriteStateNode dependent = _dependents[0];
-            dependent.CurrentState.Returns(_constraints[0].MaxAllowedState); // 遷移後の状態は許可されている状態
-            dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
+            dependent.IsAbove(Arg.Any<int>()).Returns(false); // 遷移後の状態が違反していない
 
             // When
             dependent.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(dependent);
 
             // Then
-            dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
+            dependent.Received(1).IsAbove(Arg.Any<int>()); // dependent遷移後の条件違反チェックはmediatorで行う
         }
 
         [Test]
@@ -74,14 +71,13 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _controller.CurrentState.Returns(_constraints[2].ControllerState); // controllerの状態を遷移させる
 
             ISpriteStateNode dependent = _dependents[0];
-            dependent.CurrentState.Returns(_constraints[1].MaxAllowedState); // 遷移後の状態は許可されている状態
-            dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 遷移後の状態が違反していない
+            dependent.IsAbove(Arg.Any<int>()).Returns(false); // 遷移後の状態が違反していない
 
             // When
             dependent.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(dependent);
 
             // Then
-            dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
+            dependent.Received(1).IsAbove(Arg.Any<int>()); // dependent遷移後の条件違反チェックはmediatorで行う
         }
 
         [Test]
@@ -90,14 +86,14 @@ namespace Zrushy.Core.Test.Unity.EditMode
             // Given
             _controller.CurrentState.Returns(_constraints[0].ControllerState); // 違反チェックにcontrollerのStateが必要
             ISpriteStateNode dependent = _dependents[0];
-            dependent.IsAbove(Arg.Any<Sprite>()).Returns(true); // 遷移後の状態が違反している
+            dependent.IsAbove(Arg.Any<int>()).Returns(true); // 遷移後の状態が違反している
 
             // When
             dependent.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(dependent);
 
             // Then
-            dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // dependent遷移後の条件違反チェックはmediatorで行う
-            dependent.Received(1).ForceState(Arg.Any<Sprite>()); // 違反しているdependentは強制遷移される
+            dependent.Received(1).IsAbove(Arg.Any<int>()); // dependent遷移後の条件違反チェックはmediatorで行う
+            dependent.Received(1).ForceState(Arg.Any<int>()); // 違反しているdependentは強制遷移される
         }
 
         [Test]
@@ -107,7 +103,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _controller.CurrentState.Returns(_constraints[0].ControllerState); // controllerの状態を遷移させる
             foreach (var dependent in _dependents)
             {
-                dependent.IsAbove(Arg.Any<Sprite>()).Returns(false); // 状態が違反しているdependentはいない
+                dependent.IsAbove(Arg.Any<int>()).Returns(false); // 状態が違反しているdependentはいない
             }
 
             // When
@@ -116,8 +112,8 @@ namespace Zrushy.Core.Test.Unity.EditMode
             // Then
             foreach (var dependent in _dependents)
             {
-                dependent.Received(1).IsAbove(Arg.Any<Sprite>()); // mediatorはdependentsに確認したか
-                dependent.DidNotReceive<ISpriteStateNode>().ForceState(Arg.Any<Sprite>()); // 違反しているdependentはいないので、強制遷移したものはいない
+                dependent.Received(1).IsAbove(Arg.Any<int>()); // mediatorはdependentsに確認したか
+                dependent.DidNotReceive<ISpriteStateNode>().ForceState(Arg.Any<int>()); // 違反しているdependentはいないので、強制遷移したものはいない
             }
         }
 
@@ -128,7 +124,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _controller.CurrentState.Returns(_constraints[0].ControllerState);
             foreach (var dependent in _dependents)
             {
-                dependent.IsAbove(Arg.Any<Sprite>()).Returns(true); // 違反している
+                dependent.IsAbove(Arg.Any<int>()).Returns(true); // 違反している
             }
 
             // When
@@ -138,7 +134,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             foreach (var dependent in _dependents)
             {
                 // 違反しているISpriteStateNodeは、すべて現在許可されている状態に強制遷移させられている
-                dependent.Received(1).ForceState(_constraints[0].MaxAllowedState);
+                dependent.Received(1).ForceState(_constraints[0].MaxAllowedStateIndex);
             }
         }
 
@@ -147,15 +143,15 @@ namespace Zrushy.Core.Test.Unity.EditMode
         {
             // Given
             _controller.CurrentState.Returns(_constraints[0].ControllerState);
-            _dependents[0].IsAbove(Arg.Any<Sprite>()).Returns(true); // 違反している
-            _dependents[1].IsAbove(Arg.Any<Sprite>()).Returns(false); // 違反していない
+            _dependents[0].IsAbove(Arg.Any<int>()).Returns(true); // 違反している
+            _dependents[1].IsAbove(Arg.Any<int>()).Returns(false); // 違反していない
 
             // When
             _controller.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(_controller);
 
             // Then
-            _dependents[0].Received(1).ForceState(_constraints[0].MaxAllowedState); // 0番目は違反しているので強制遷移させられる
-            _dependents[1].DidNotReceive().ForceState(Arg.Any<Sprite>()); // 1番目は違反していないので遷移させられていない
+            _dependents[0].Received(1).ForceState(_constraints[0].MaxAllowedStateIndex); // 0番目は違反しているので強制遷移させられる
+            _dependents[1].DidNotReceive().ForceState(Arg.Any<int>()); // 1番目は違反していないので遷移させられていない
         }
 
         [Test]
@@ -163,33 +159,31 @@ namespace Zrushy.Core.Test.Unity.EditMode
         {
             // Given
             _controller.CurrentState.Returns(_constraints[1].ControllerState);
-            _dependents[0].IsAbove(Arg.Any<Sprite>()).Returns(true); // 強制遷移対象
-            _dependents[1].IsAbove(Arg.Any<Sprite>()).Returns(false); // 対象外
+            _dependents[0].IsAbove(Arg.Any<int>()).Returns(true); // 強制遷移対象
+            _dependents[1].IsAbove(Arg.Any<int>()).Returns(false); // 対象外
 
             // When
             _controller.OnStateChanged += Raise.Event<Action<ISpriteStateNode>>(_controller);
 
             // Then
-            _dependents[0].Received().ForceState(_constraints[1].MaxAllowedState); // 0ではなく1のmaxに強制遷移している
-            _dependents[0].DidNotReceive().ForceState(_constraints[0].MaxAllowedState); // 0ではなく1のmaxに強制遷移している
-            _dependents[1].DidNotReceive().ForceState(_constraints[1].MaxAllowedState); // 何もされていない
+            _dependents[0].Received().ForceState(_constraints[1].MaxAllowedStateIndex); // 0ではなく1のmaxに強制遷移している
+            _dependents[0].DidNotReceive().ForceState(_constraints[0].MaxAllowedStateIndex); // 0ではなく1のmaxに強制遷移している
+            _dependents[1].DidNotReceive().ForceState(_constraints[1].MaxAllowedStateIndex); // 何もされていない
         }
 
         private ConstraintEntry[] Builder()
         {
             return new ConstraintEntry[]
             {
-                CreateEntry(CreateSprite(), CreateSprite()),
-                CreateEntry(CreateSprite(), CreateSprite()),
-                CreateEntry(CreateSprite(), CreateSprite()),
+                CreateEntry(CreateSprite(), 0),
+                CreateEntry(CreateSprite(), 1),
+                CreateEntry(CreateSprite(), 2),
             };
         }
 
-        private ConstraintEntry CreateEntry(Sprite controllerState, Sprite maxAllowedState)
+        private ConstraintEntry CreateEntry(Sprite controllerState, int maxAllowedIndex)
         {
-            var entry = ScriptableObject.CreateInstance<ConstraintEntry>();
-            entry.ControllerState = controllerState;
-            entry.MaxAllowedState = maxAllowedState;
+            ConstraintEntry entry = new ConstraintEntry(controllerState, maxAllowedIndex);
             return entry;
         }
 

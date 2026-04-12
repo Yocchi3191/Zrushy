@@ -1,0 +1,46 @@
+{
+  "layerID": "pants",
+  "initialState": "on",
+  "transitions": [
+    {
+      "from": "on",
+      "direction": "Down",
+      "to": "half_off"
+    },
+    {
+      "from": "half_off",
+      "direction": "Up",
+      "to": "on"
+    },
+    {
+      "from": "half_off",
+      "direction": "Down",
+      "to": "before_knee"
+    },
+    {
+      "from": "before_knee",
+      "direction": "Up",
+      "to": "half_off"
+    },
+    {
+      "from": "before_knee",
+      "direction": "Down",
+      "to": "knee"
+    },
+    {
+      "from": "knee",
+      "direction": "Up",
+      "to": "before_knee"
+    },
+    {
+      "from": "knee",
+      "direction": "Down",
+      "to": "off"
+    },
+    {
+      "from": "off",
+      "direction": "Up",
+      "to": "knee"
+    }
+  ]
+}

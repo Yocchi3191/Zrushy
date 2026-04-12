@@ -9,10 +9,16 @@ namespace Zrushy.Core.Presentation.Unity
     /// ControllerState と dependents の遷移可能な状態の組み合わせを定義するクラス
     /// 差し替える gameObject ごとに1つアタッチする
     /// </summary>
-    [CreateAssetMenu(fileName = "ConstraintEntry", menuName = "Scriptable Objects/ConstraintEntry")]
-    public class ConstraintEntry : ScriptableObject
+    [System.Serializable]
+    public class ConstraintEntry
     {
         public Sprite ControllerState;
-        public Sprite MaxAllowedState;
+        public int MaxAllowedStateIndex;
+
+        public ConstraintEntry(Sprite ControllerState, int MaxAllowedStateIndex)
+        {
+            this.ControllerState = ControllerState;
+            this.MaxAllowedStateIndex = MaxAllowedStateIndex;
+        }
     }
 }

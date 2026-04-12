@@ -16,15 +16,15 @@ namespace Zrushy.Core.Presentation.Unity
         /// <summary>
         /// 状態を強制変更する
         /// </summary>
-        /// <param name="newState"></param>
-        void ForceState(Sprite newState);
+        /// <param name="newStateIndex"></param>
+        void ForceState(int newStateIndex);
 
         /// <summary>
         /// 現在の状態が、引数の状態よりも上位の状態かどうか
         /// </summary>
-        /// <param name="maxAllowed"></param>
+        /// <param name="targetStateIndex"></param>
         /// <returns></returns>
-        bool IsAbove(Sprite target);
+        bool IsAbove(int targetStateIndex);
 
         /// <summary>
         /// 状態遷移した際に通知する
