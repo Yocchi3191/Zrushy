@@ -32,7 +32,8 @@ namespace Zrushy.Core.Presentation.Unity
             while (true)
             {
                 var next = _transitions.FirstOrDefault(t => t.fromState == current)?.toState;
-                if (next == null) break;
+                if (next == null)
+                    break;
                 ordered.Add(next);
                 current = next;
             }
@@ -51,8 +52,8 @@ namespace Zrushy.Core.Presentation.Unity
         private void OnValidate()
         {
             // transitionsからfromStateが重複しているものを抽出
-            IEnumerable<IGrouping<Sprite, StateTransition>> duplicates = _transitions
-                .GroupBy(t => t.fromState)
+            IEnumerable<IGrouping<Sprite, StateTransition>> duplicates = (IEnumerable<IGrouping<Sprite, StateTransition>>)_transitions
+                .GroupBy(t => (t.fromState, t.requiredDirection))
                 .Where(g => g.Count() > 1);
 
             foreach (IGrouping<Sprite, StateTransition> dup in duplicates)
@@ -61,10 +62,10 @@ namespace Zrushy.Core.Presentation.Unity
 
         public void Add(StateTransition transition)
         {
-            // fromStateが重複していないか確認
-            IEnumerable<StateTransition> dup = _transitions.Where(t => t.fromState == transition.fromState);
-            if (dup.Any())
-                throw new FromStateDuplicationException(transition);
+            // 衝突する遷移が無いか確認
+            IEnumerable<StateTransition> conflict = _transitions.Where(t => t.fromState == transition.fromState && t.requiredDirection == transition.requiredDirection);
+            if (conflict.Any())
+                throw new TransitionConflictException(transition);
             // 問題なければ追加
             _transitions.Add(transition);
         }

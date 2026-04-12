@@ -11,8 +11,11 @@ namespace Zrushy.Core.Test.Unity.EditMode
     /// 仕様
     /// x IndexOf_指定したSpriteのinitialStateからのインデックスを返す
     /// x IndexOf_Transitionに無いSpriteを渡した場合例外をスロー
-    /// Add_fromStateが複数のTransitionを作成しようとすると例外をスロー
-    ///
+    /// x IndexOf_双方向遷移があっても正しいインデックスを返す
+    /// 
+    /// x Add_同じfromStateと同じdirectionは例外をスロー
+    /// x Add_同じfromStateでも異なるdirectionなら追加できる
+    /// 
 
     public class SpriteStatePatternTest
     {
@@ -49,6 +52,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
         {
             Assert.AreEqual(0, _pattern.IndexOf(_initialSprite));
             Assert.AreEqual(1, _pattern.IndexOf(_nextSprite));
+            Assert.AreEqual(2, _pattern.IndexOf(_furtherSprite));
         }
 
         [Test]
@@ -56,6 +60,61 @@ namespace Zrushy.Core.Test.Unity.EditMode
         {
             Sprite dummySprite = Sprite.Create(new Texture2D(1, 1), new Rect(0, 0, 1, 1), Vector2.zero);
             Assert.Throws<InvalidOperationException>(() => _pattern.IndexOf(dummySprite));
+        }
+
+        [Test]
+        public void Add_同じfromStateでも異なるdirectionなら追加できる()
+        {
+            // Arrange
+            // _nextSpriteからの遷移はすでに登録されている
+            StateTransition dummy = new StateTransition
+            {
+                fromState = _nextSprite,
+                requiredDirection = CardinalDirection.Up,
+                toState = _initialSprite
+            };
+
+            // Act&Assert
+            Assert.DoesNotThrow(() => _pattern.Add(dummy));
+
+            // Assert
+            Assert.Contains(dummy, (System.Collections.ICollection)_pattern.Transitions);
+        }
+
+        [Test]
+        public void Add_同じfromStateと同じdirectionは例外をスロー()
+        {
+            // Arrange
+            // 衝突する遷移
+            StateTransition dummy = new StateTransition
+            {
+                fromState = _nextSprite,
+                requiredDirection = CardinalDirection.Down,
+                toState = _initialSprite
+            };
+
+            // Act&Assert
+            Assert.Throws<TransitionConflictException>(() => _pattern.Add(dummy));
+        }
+
+        [Test]
+        public void IndexOf_双方向遷移があっても正しいインデックスを返す()
+        {
+            // Arrange
+            // _nextSpriteからの遷移が2つある状態にする
+            StateTransition dummy = new StateTransition
+            {
+                fromState = _nextSprite,
+                requiredDirection = CardinalDirection.Up,
+                toState = _initialSprite
+            };
+
+            // Act
+            _pattern.Add(dummy);
+
+            // Assert
+            Assert.AreEqual(1, _pattern.IndexOf(_nextSprite));
+            Assert.AreEqual(2, _pattern.IndexOf(_furtherSprite));
         }
     }
 }
