@@ -30,6 +30,9 @@ namespace Zrushy.Core.Presentation.Unity
         /// <param name="constraints"></param>
         internal void Construct(ISpriteStateNode controller, ISpriteStateNode[] dependents, ConstraintEntry[] constraints)
         {
+            if (controller != null)
+                throw new InvalidOperationException("Constructは2回以上呼び出せません");
+
             _controller = controller ?? throw new ArgumentNullException(nameof(controller));
             _dependents = dependents ?? throw new ArgumentNullException(nameof(dependents));
             _constraints = constraints ?? throw new ArgumentNullException(nameof(constraints));
@@ -43,8 +46,7 @@ namespace Zrushy.Core.Presentation.Unity
 
         private void Awake()
         {
-            if (controller != null && dependents != null && _constraints != null)
-                Construct(controller, dependents, _constraints);
+            Construct(controller, dependents, _constraints);
         }
 
         private void OnStateChanged(ISpriteStateNode changed)
@@ -68,6 +70,10 @@ namespace Zrushy.Core.Presentation.Unity
         {
             // 遷移後がcontrollerの制約条件に違反していた場合は、許可されている最大の状態に遷移させる
             ConstraintEntry entry = _constraints.FirstOrDefault(c => c.ControllerState == _controller.CurrentState);
+
+            if (entry == null)
+                throw new Exception($"対応する制約がconstraintsから見つかりませんでした。制約条件の登録漏れの可能性があります。ControllerState: {_controller.CurrentState}");
+
             if (changed.IsAbove(entry.MaxAllowedStateIndex))
                 changed.ForceState(entry.MaxAllowedStateIndex);
         }
