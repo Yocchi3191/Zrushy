@@ -317,6 +317,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210057454}
   m_CullTransparentMesh: 1
+--- !u!1 &211227400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211227401}
+  m_Layer: 5
+  m_Name: face_parts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &211227401
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211227400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 323102378}
+  - {fileID: 415991670}
+  - {fileID: 1042198851}
+  - {fileID: 1037181701}
+  m_Father: {fileID: 1178128742}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &217466058
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,20 +624,28 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1178128742}
+    m_TransformParent: {fileID: 973252423}
     m_Modifications:
     - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6565cd961ccf54b4da401ed439c59bff, type: 3}
+      objectReference: {fileID: 21300000, guid: cb65564dd59efb1459ae223f7c6d8232, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite_8
+      value: pants
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _setting
+      value: 
+      objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _statePattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 702c2b15f9d51f845915e5190dad80e4, type: 2}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -625,11 +672,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1919.7129
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -684,6 +731,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+--- !u!114 &366808126 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 366808125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
 --- !u!224 &415991670 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
@@ -796,16 +854,24 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1406019992}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
 --- !u!224 &418919372 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
   m_PrefabInstance: {fileID: 418919371}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &418919373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 418919371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
 --- !u!1001 &466959560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1152,15 +1218,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1178128742}
+    m_TransformParent: {fileID: 211227401}
     m_Modifications:
+    - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 33c2cdb9ba204de4d909124a8e443bb3, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite
+      value: eye_blow
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
@@ -1188,11 +1258,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1919.7129
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1501,19 +1571,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1178128742}
+    m_TransformParent: {fileID: 211227401}
     m_Modifications:
     - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 71d9c7b11f3476d4d97faa94107385b8, type: 3}
+      objectReference: {fileID: 21300000, guid: dab8de11165e4ae44aa1684ee4b64c70, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite_9
+      value: cheek
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
@@ -1541,11 +1611,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1919.7129
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1968,16 +2038,65 @@ RectTransform:
   m_AnchoredPosition: {x: -100, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &883938232 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
-  m_PrefabInstance: {fileID: 1971318753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &972173063 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3228771603176722642, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
   m_PrefabInstance: {fileID: 1477436741}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &973252422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 973252423}
+  - component: {fileID: 973252424}
+  m_Layer: 5
+  m_Name: under
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &973252423
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973252422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1933253680}
+  - {fileID: 1399859294}
+  m_Father: {fileID: 1178128742}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &973252424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973252422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4f9e81cd807fe43aa6a5ce67d4816a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.HoodieStateMediator
+  _constraints: []
+  controller: {fileID: 1180756241}
+  dependents:
+  - {fileID: 366808126}
 --- !u!224 &1028478858 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3228771603176722642, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
@@ -2255,14 +2374,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 415991670}
-  - {fileID: 323102378}
-  - {fileID: 1042198851}
   - {fileID: 162193634}
+  - {fileID: 211227401}
+  - {fileID: 973252423}
   - {fileID: 2110340297375308643}
-  - {fileID: 1399859294}
-  - {fileID: 1933253680}
-  - {fileID: 1037181701}
   - {fileID: 1530565390}
   m_Father: {fileID: 1647551991}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2285,20 +2400,28 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1178128742}
+    m_TransformParent: {fileID: 973252423}
     m_Modifications:
     - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d7180e03d1e8c7a40a5b1a5a2b9d21ed, type: 3}
+      objectReference: {fileID: 21300000, guid: 62cc5e74ce46b0f4fa13cd4f73918a8b, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite_7
+      value: bottoms
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _setting
+      value: 
+      objectReference: {fileID: 11400000, guid: aef326bd2048db14a9fb5ea402815837, type: 2}
+    - target: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: _statePattern
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ec5f1629e2acb94cade119e29687165, type: 2}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2325,11 +2448,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1919.7129
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2384,6 +2507,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+--- !u!114 &1180756241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 1180756240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
 --- !u!1001 &1186967308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2502,11 +2636,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3228771603176722642, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
   m_PrefabInstance: {fileID: 1406008110}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1359642640 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
-  m_PrefabInstance: {fileID: 1698260917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1388455238 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3228771603176722642, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
@@ -2518,15 +2647,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1178128742}
+    m_TransformParent: {fileID: 211227401}
     m_Modifications:
+    - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c6ca3239f71947a4bb3548ea17e33232, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite_2
+      value: mouth
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
@@ -2554,11 +2687,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1919.7129
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2856,23 +2989,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be3ed4012150a842bb16b455b6dc490, type: 3}
---- !u!1 &1406019988 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
-  m_PrefabInstance: {fileID: 418919371}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1406019992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1406019988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
 --- !u!1001 &1442634271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3102,10 +3218,10 @@ PrefabInstance:
     - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 34cd026e844908e4cae497c472d898bc, type: 3}
+      objectReference: {fileID: 21300000, guid: bb43c10adcdd7d340b20d5851f39eda7, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite_3
+      value: body
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
@@ -3206,18 +3322,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
   m_PrefabInstance: {fileID: 1971318753}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1531578653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883938232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
 --- !u!1 &1627419531
 GameObject:
   m_ObjectHideFlags: 0
@@ -3787,11 +3891,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1882962273}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+--- !u!114 &1698260918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 1698260917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
 --- !u!1001 &1741229638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4126,18 +4238,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
   m_PrefabInstance: {fileID: 1698260917}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1882962273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359642640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
 --- !u!1001 &1892936480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4383,11 +4483,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1531578653}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+--- !u!114 &1971318754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175757281996252486, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+  m_PrefabInstance: {fileID: 1971318753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
 --- !u!1 &1974100944
 GameObject:
   m_ObjectHideFlags: 0
@@ -5501,15 +5609,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1178128742}
+    m_TransformParent: {fileID: 211227401}
     m_Modifications:
+    - target: {fileID: 1655188246601610092, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 98918b113fc4df948927cb3fa72d5214, type: 3}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Name
-      value: PartSprite_1
+      value: eye
       objectReference: {fileID: 0}
     - target: {fileID: 3094210720679040974, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_Pivot.x
@@ -5537,11 +5649,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1919.7129
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6343945878239124932, guid: 07e43cac0be79e74899c676ea8d5457d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5914,7 +6026,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2110340297375308643}
   - component: {fileID: 8048933340222837099}
-  - component: {fileID: 8048933340222837098}
   m_Layer: 5
   m_Name: hoodies
   m_TagString: Untagged
@@ -5922,18 +6033,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8048933340222837098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8048933340222837097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20569c5ff8871db418d07534423fe3d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.HoodieInputRouter
 --- !u!114 &8048933340222837099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5946,7 +6045,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4f9e81cd807fe43aa6a5ce67d4816a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteStateMediator
-  _constraints: []
+  _constraints:
+  - ControllerState: {fileID: 0}
+    MaxAllowedState: {fileID: 0}
+  controller: {fileID: 418919373}
+  dependents:
+  - {fileID: 1971318754}
+  - {fileID: 1698260918}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

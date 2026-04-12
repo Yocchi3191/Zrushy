@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5184510438127183787}
   - component: {fileID: 1655188246601610092}
   - component: {fileID: 6175757281996252486}
+  - component: {fileID: 4171775626155567192}
   m_Layer: 0
   m_Name: PartSprite
   m_TagString: Untagged
@@ -88,6 +89,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
-  statePattern: {fileID: 0}
-  setting: {fileID: 0}
-  clickables: []
+  _statePattern: {fileID: 0}
+  _setting: {fileID: 0}
+--- !u!114 &4171775626155567192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094210720679040974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ffec8cb4e1f814da9c2a3ae2ec160a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable

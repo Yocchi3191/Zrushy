@@ -76,7 +76,6 @@ public class SpriteStatePatternImporter
     private class TransitionData
     {
         public string from;
-        public string type;
         public string direction;
         public string to;
     }

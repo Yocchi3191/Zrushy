@@ -1,0 +1,36 @@
+{
+  "layerID": "bottoms",
+  "initialState": "on",
+  "transitions": [
+    {
+      "from": "on",
+      "direction": "Down",
+      "to": "half_off"
+    },
+    {
+      "from": "half_off",
+      "direction": "Up",
+      "to": "on"
+    },
+    {
+      "from": "half_off",
+      "direction": "Down",
+      "to": "knee"
+    },
+    {
+      "from": "knee",
+      "direction": "Up",
+      "to": "half_off"
+    },
+    {
+      "from": "knee",
+      "direction": "Down",
+      "to": "off"
+    },
+    {
+      "from": "off",
+      "direction": "Up",
+      "to": "knee"
+    }
+  ]
+}
