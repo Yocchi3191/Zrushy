@@ -11,7 +11,7 @@ namespace Zrushy.Core.Presentation.Unity
         private StateTransition _transition;
         private const string DefaultMessage = "衝突する遷移が登録されました";
         public TransitionConflictException(StateTransition transition)
-            : base($"{DefaultMessage}DefaultMessage)):fromState={transition.fromState?.name}, direction={transition.requiredDirection}")
+            : base($"{DefaultMessage}: fromState={transition.fromState?.name}, direction={transition.requiredDirection}")
         {
             _transition = transition;
         }
