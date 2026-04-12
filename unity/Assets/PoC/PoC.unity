@@ -2090,10 +2090,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 973252422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4f9e81cd807fe43aa6a5ce67d4816a, type: 3}
+  m_Script: {fileID: 11500000, guid: eb2c9aae9865a4e4fbf8676cd214bde9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.HoodieStateMediator
-  _constraints: []
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteStateMediator
+  _constraints:
+  - ControllerState: {fileID: 21300000, guid: 62cc5e74ce46b0f4fa13cd4f73918a8b, type: 3}
+    MaxAllowedStateIndex: 0
+  - ControllerState: {fileID: 21300000, guid: b0afac5299b596d41b32903a275da647, type: 3}
+    MaxAllowedStateIndex: 2
+  - ControllerState: {fileID: 21300000, guid: df622d3e22bb990448abdd84c885a58c, type: 3}
+    MaxAllowedStateIndex: 3
+  - ControllerState: {fileID: 21300000, guid: 1668727bd04442f4abfd23b28cd9d9ff, type: 3}
+    MaxAllowedStateIndex: 4
   controller: {fileID: 1180756241}
   dependents:
   - {fileID: 366808126}
@@ -6025,7 +6033,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2110340297375308643}
-  - component: {fileID: 8048933340222837099}
+  - component: {fileID: 8048933340222837098}
   m_Layer: 5
   m_Name: hoodies
   m_TagString: Untagged
@@ -6033,7 +6041,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8048933340222837099
+--- !u!114 &8048933340222837098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6042,16 +6050,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8048933340222837097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4f9e81cd807fe43aa6a5ce67d4816a, type: 3}
+  m_Script: {fileID: 11500000, guid: eb2c9aae9865a4e4fbf8676cd214bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteStateMediator
   _constraints:
-  - ControllerState: {fileID: 0}
-    MaxAllowedState: {fileID: 0}
+  - ControllerState: {fileID: 21300000, guid: 92d73db311d60d1449cc5181404740e7, type: 3}
+    MaxAllowedStateIndex: 0
+  - ControllerState: {fileID: 21300000, guid: 31c474be5ec97d247b55661483bef4b0, type: 3}
+    MaxAllowedStateIndex: 1
+  - ControllerState: {fileID: 21300000, guid: 9f26a59f570c84847ac16b2d4a7852bd, type: 3}
+    MaxAllowedStateIndex: 2
   controller: {fileID: 418919373}
   dependents:
-  - {fileID: 1971318754}
   - {fileID: 1698260918}
+  - {fileID: 1971318754}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

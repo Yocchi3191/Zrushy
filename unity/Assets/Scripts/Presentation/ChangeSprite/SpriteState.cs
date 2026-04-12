@@ -53,23 +53,27 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             if (matched == null)
                 return;
 
-            ForceState(matched.toState);
+            SetState(matched.toState);
         }
 
         /// <summary>
         /// 外部から初期状態に強制リセットする（コーディネーターによるカスケード用）
         /// </summary>
-        public void ForceState(Sprite newState)
+        public void ForceState(int newStateIndex) => SetState(_statePattern.GetState(newStateIndex));
+
+        private void SetState(Sprite newState)
         {
             CurrentState = newState;
             _image.sprite = CurrentState;
             OnStateChanged?.Invoke(this);
         }
 
-        public bool IsAbove(Sprite targetState)
+        public bool IsAbove(int targetStateIndex)
         {
-            return _statePattern.IndexOf(CurrentState) > _statePattern.IndexOf(targetState);
-        }
+            if (targetStateIndex < 0)
+                throw new ArgumentException("判定しようとしたインデックスの範囲が不正です");
 
+            return _statePattern.IndexOf(CurrentState) > targetStateIndex;
+        }
     }
 }
