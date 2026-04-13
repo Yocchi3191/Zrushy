@@ -16,7 +16,6 @@
 ### ソース管理
 
 - GitHub / gh コマンドで操作（github-operations skill を使うこと）
-- issue管理は personal-issue-management skill を使うこと
 - 利用可能ラベル: `.github/labels.yml`
 - ラベルをGitHubに反映: `tools/gh-sync-labels/sync-labels.sh`
 
@@ -84,7 +83,32 @@ EventEvaluator.Evaluate → Event.CanFire() (ICondition[] AND評価)
   → YarnScenarioEngine.Start → DialogueRunner.StartDialogue
 ```
 
+### issue管理について
+
+zrushyのissueはclaudeを使った半自動管理を実施しています。
+claudeはユーザーが本プロジェクトの仕様・設計等に関する相談を行った場合、personal-issue-management skillを利用して、関連issueの確認や新規issueの作成等を行ってください。
+
+- 関連issueの検索・参照: 確認不要です
+- issueの追加・更新: 作業前にユーザーに確認してください
+
 ## レビュー
 
 PRを上げたらレビューをclaudeに依頼しています
 レビュー内容はPRにコメントとして投稿してください
+
+## Unity MCP
+
+Unity Editorが起動している場合、claudeはunity-mcp経由でシーンやヒエラルキーの情報を取得することができます。
+以下のような状況で使うこと
+
+確認不要で使っていい状況
+
+- unity editor上での確認が必要な質問を受けたとき
+- Unity側の動作確認を求められたとき
+- コンソールエラー・ログを確認するとき
+
+確認が必要な状況:
+
+- Unityでコマンドを実行するとき
+- C#スクリプトの実行
+- シーン、アセットの編集
