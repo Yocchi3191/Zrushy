@@ -7,7 +7,7 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Infrastructure.ParameterReader
 {
-    public class ArousalReader : ArousalReadable
+    public class ArousalReader : IArousalReader
     {
         private readonly Heroin _heroin;
 

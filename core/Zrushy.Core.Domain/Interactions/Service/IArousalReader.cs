@@ -5,7 +5,7 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Domain.Interactions.Service
 {
-    public interface ArousalReadable
+    public interface IArousalReader
     {
         Arousal GetArousal();
     }

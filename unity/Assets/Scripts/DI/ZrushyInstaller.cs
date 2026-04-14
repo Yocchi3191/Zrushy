@@ -61,9 +61,9 @@ namespace Zrushy.Core.DI
             Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
 
             Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
-            Container.Bind<ArousalReadable>().To<ArousalReader>().AsSingle();
-            Container.Bind<DevelopmentReadable>().To<DevelopmentReader>().AsSingle();
-            Container.Bind<AffectionReadable>().To<AffectionReader>().AsSingle();
+            Container.Bind<IArousalReader>().To<ArousalReader>().AsSingle();
+            Container.Bind<IDevelopmentReader>().To<DevelopmentReader>().AsSingle();
+            Container.Bind<IAffectionReader>().To<AffectionReader>().AsSingle();
 
             Container.Bind<YarnProject>().FromInstance(_yarnProject).AsSingle();
         }

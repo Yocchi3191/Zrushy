@@ -11,11 +11,11 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 {
     public class AffectionConditionParser : IConditionParser
     {
-        private readonly AffectionReadable _reader;
+        private readonly IAffectionReader _reader;
 
         public string Type => "affection";
 
-        public AffectionConditionParser(AffectionReadable reader)
+        public AffectionConditionParser(IAffectionReader reader)
         {
             _reader = reader;
         }

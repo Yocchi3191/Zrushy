@@ -5,7 +5,7 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Domain.Interactions.Service
 {
-    public interface AffectionReadable
+    public interface IAffectionReader
     {
         Affection GetAffection();
     }

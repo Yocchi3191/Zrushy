@@ -11,11 +11,11 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 {
     public class DevelopmentConditionParser : IConditionParser
     {
-        private readonly DevelopmentReadable _reader;
+        private readonly IDevelopmentReader _reader;
 
         public string Type => "development";
 
-        public DevelopmentConditionParser(DevelopmentReadable reader)
+        public DevelopmentConditionParser(IDevelopmentReader reader)
         {
             _reader = reader;
         }

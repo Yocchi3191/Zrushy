@@ -5,7 +5,7 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Domain.Interactions.Service
 {
-    public interface DevelopmentReadable
+    public interface IDevelopmentReader
     {
         Development GetDevelopment(PartID part);
     }

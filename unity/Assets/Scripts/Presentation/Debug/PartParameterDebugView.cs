@@ -11,9 +11,9 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 public class PartParameterDebugView : MonoBehaviour
 {
-    [Inject] private AffectionReadable _affectionReader;
-    [Inject] private ArousalReadable _arousalReader;
-    [Inject] private DevelopmentReadable _developmentReader;
+    [Inject] private IAffectionReader _affectionReader;
+    [Inject] private IArousalReader _arousalReader;
+    [Inject] private IDevelopmentReader _developmentReader;
 
     [Inject]
     private IInteractionHistory _interactionHistory;

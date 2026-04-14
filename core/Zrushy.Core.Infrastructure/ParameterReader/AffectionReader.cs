@@ -7,7 +7,7 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Infrastructure.ParameterReader
 {
-    public class AffectionReader : AffectionReadable
+    public class AffectionReader : IAffectionReader
     {
         private readonly Heroin _heroin;
 
