@@ -1,6 +1,6 @@
 title: waist_developed
 tags: part:waist
-condition: development:waist:25,arousal:waist:50,affection:30
+condition: development:waist:25,arousal:50,affection:30
 priority: 9
 ---
 んん……もっと、ギュッてして…… #anim:reaction_default #expr:expression_happy
