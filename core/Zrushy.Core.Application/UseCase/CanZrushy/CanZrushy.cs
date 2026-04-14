@@ -12,7 +12,7 @@ namespace Zrushy.Core.Application.UseCase.CanZrushy
 
         public CanZrushy(Heroin heroin)
         {
-            _heroin = heroin ?? throw new ArgumentNullException();
+            _heroin = heroin ?? throw new ArgumentNullException(nameof(heroin));
         }
 
         bool IZrushyPermission.CanZrushy(ZrushyInput input)
