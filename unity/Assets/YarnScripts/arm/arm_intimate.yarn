@@ -1,6 +1,6 @@
 title: arm_intimate
 tags: part:arm
-condition: affection:arm:40,touch_count:arm:10
+condition: affection:40,touch_count:arm:10
 priority: 9
 ---
 ずっと、こうしてようか…… #anim:reaction_default #expr:expression_happy

@@ -16,14 +16,12 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
         public PartID ID { get; }
         public Development Development { get; private set; }
-        public Affection Affection { get; private set; }
 
         /// <param name="virginityIntact">処女かどうか</param>
-        public SecretPart(PartID id, Development development, Affection affection, SecretPartConfig config, bool virginityIntact = true)
+        public SecretPart(PartID id, Development development, SecretPartConfig config, bool virginityIntact = true)
         {
             ID = id;
             Development = development;
-            Affection = affection;
             _config = config;
             _virginityIntact = virginityIntact;
         }
@@ -32,7 +30,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// 秘部への興奮度計算
         /// 濡れ状態・処女状態・さわり方・開発度によって大きく変わる
         /// </summary>
-        public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction)
+        public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction, Affection affection)
         {
             // 処女喪失前のペニス挿入: 強い痛みで大幅に減少
             if (interaction.Type == InteractionType.Penis && _virginityIntact)
@@ -66,7 +64,6 @@ namespace Zrushy.Core.Domain.Interactions.Entity
             }
 
             Development = Development.CalculateGain();
-            Affection = Affection.CalculateGain();
         }
 
         public void AddDevelopment(Development bonus)

@@ -1,6 +1,6 @@
 title: chest_aroused
 tags: part:chest
-condition: arousal:chest:15
+condition: arousal:15
 priority: 7
 ---
 ふっ……んっ……変な感じ…… #anim:reaction_default #expr:expression_shy

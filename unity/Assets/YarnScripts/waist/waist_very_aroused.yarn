@@ -1,6 +1,6 @@
 title: waist_very_aroused
 tags: part:waist
-condition: arousal:waist:30,touch_count:waist:8
+condition: arousal:30,touch_count:waist:8
 priority: 7
 ---
 あっ……力、入らない…… #anim:reaction_default #expr:expression_shy

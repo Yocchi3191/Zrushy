@@ -5,10 +5,8 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Domain.Interactions.Service
 {
-    public interface IPartParameterReader
+    public interface IArousalReader
     {
-        Arousal GetArousal(PartID partID);
-        Development GetDevelopment(PartID partID);
-        Affection GetAffection(PartID partID);
+        Arousal GetArousal();
     }
 }

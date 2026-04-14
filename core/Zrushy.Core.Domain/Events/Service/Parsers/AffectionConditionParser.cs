@@ -11,25 +11,24 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 {
     public class AffectionConditionParser : IConditionParser
     {
-        private readonly IPartParameterReader _parameterReader;
+        private readonly IAffectionReader _reader;
 
         public string Type => "affection";
 
-        public AffectionConditionParser(IPartParameterReader parameterReader)
+        public AffectionConditionParser(IAffectionReader reader)
         {
-            _parameterReader = parameterReader;
+            _reader = reader;
         }
 
         public ICondition? Parse(string[] parts)
         {
-            if (parts.Length != 3)
+            if (parts.Length != 2)
             {
                 return null;
             }
 
-            PartID partID = new PartID(parts[1]);
             return new ThresholdCondition(
-                new Threshold<Affection>(new Affection(int.Parse(parts[2])), null, () => _parameterReader.GetAffection(partID)));
+                new Threshold<Affection>(new Affection(int.Parse(parts[1])), null, () => _reader.GetAffection()));
         }
     }
 }

@@ -14,7 +14,9 @@ using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Events.Service.Parsers;
 using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.Service;
+using Zrushy.Core.Infrastructure.ParameterReader;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Infrastructure.Unity;
 using Zrushy.Core.Presentation;
@@ -59,7 +61,9 @@ namespace Zrushy.Core.DI
             Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
 
             Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
-            Container.Bind<IPartParameterReader>().To<BodyParameterReader>().AsSingle();
+            Container.Bind<IArousalReader>().To<ArousalReader>().AsSingle();
+            Container.Bind<IDevelopmentReader>().To<DevelopmentReader>().AsSingle();
+            Container.Bind<IAffectionReader>().To<AffectionReader>().AsSingle();
 
             Container.Bind<YarnProject>().FromInstance(_yarnProject).AsSingle();
         }
@@ -77,7 +81,9 @@ namespace Zrushy.Core.DI
         private void InstallDomain()
         {
             Container.Bind<IEventEvaluator>().To<EventEvaluator>().AsSingle();
-            Container.Bind<Heroin>().AsSingle();
+            Container.Bind<Heroin>()
+                .FromMethod(_ => new Heroin(new Arousal(0), new Affection(0)))
+                .AsSingle();
 
             Container.Bind<IConditionParser>().To<TouchCountConditionParser>().AsSingle();
             Container.Bind<IConditionParser>().To<FirstTouchConditionParser>().AsSingle();

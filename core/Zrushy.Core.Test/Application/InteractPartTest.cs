@@ -22,8 +22,8 @@ public class InteractPartTest
     public void Setup()
     {
         _partID = new PartID("head");
-        _heroin = new Heroin();
-        _heroin.AddPart(new Part(_partID, new Development(0), new Affection(0), s_partConfig));
+        _heroin = new Heroin(new Arousal(0), new Affection(0));
+        _heroin.AddPart(new Part(_partID, new Development(0), s_partConfig));
 
         _useCase = new InteractPart(_heroin, Substitute.For<IEventEvaluator>());
     }
@@ -37,7 +37,6 @@ public class InteractPartTest
         // 好感度0・開発度0の部位は不快なので興奮度は負になる
         Assert.That(_heroin.Arousal.Value, Is.LessThan(0));
         Assert.That(part.Development.Value, Is.EqualTo(1));
-        Assert.That(part.Affection.Value, Is.EqualTo(1));
     }
 
     [Test]
@@ -52,7 +51,7 @@ public class InteractPartTest
     {
         // 開発度50・好感度50なので1回あたり約5増加 → 20回前後で絶頂
         PartID bodyPartID = new PartID("body");
-        _heroin.AddPart(new Part(bodyPartID, new Development(50), new Affection(50), s_partConfig));
+        _heroin.AddPart(new Part(bodyPartID, new Development(50), s_partConfig));
 
         bool cooldownOccurred = false;
         for (int i = 0; i < 100; i++)

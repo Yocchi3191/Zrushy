@@ -11,25 +11,24 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 {
     public class ArousalConditionParser : IConditionParser
     {
-        private readonly IPartParameterReader _parameterReader;
+        private readonly IArousalReader _reader;
 
         public string Type => "arousal";
 
-        public ArousalConditionParser(IPartParameterReader parameterReader)
+        public ArousalConditionParser(IArousalReader reader)
         {
-            _parameterReader = parameterReader;
+            _reader = reader;
         }
 
         public ICondition? Parse(string[] parts)
         {
-            if (parts.Length != 3)
+            if (parts.Length != 2)
             {
                 return null;
             }
 
-            PartID partID = new PartID(parts[1]);
             return new ThresholdCondition(
-                new Threshold<Arousal>(new Arousal(int.Parse(parts[2])), null, () => _parameterReader.GetArousal(partID)));
+                new Threshold<Arousal>(new Arousal(int.Parse(parts[1])), null, () => _reader.GetArousal()));
         }
     }
 }

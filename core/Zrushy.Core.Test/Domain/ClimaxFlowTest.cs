@@ -20,11 +20,10 @@ public class ClimaxFlowTest
     [SetUp]
     public void Setup()
     {
-        _body = new Heroin();
+        _body = new Heroin(new Arousal(0), new Affection(50));
         _partID = new PartID("test");
 
-        // 開発度50、好感度50の部位を追加
-        _body.AddPart(new Part(_partID, new Development(50), new Affection(50), s_partConfig));
+        _body.AddPart(new Part(_partID, new Development(50), s_partConfig));
     }
 
     [Test]
