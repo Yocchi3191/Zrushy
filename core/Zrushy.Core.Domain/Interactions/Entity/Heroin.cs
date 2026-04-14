@@ -22,6 +22,8 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// </summary>
         public Arousal Arousal { get; private set; }
 
+        public Affection Affection { get; private set; }
+
         /// <summary>
         /// 絶頂判定の閾値
         /// </summary>
@@ -35,10 +37,11 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// <summary>
         /// 身体を作成する
         /// </summary>
-        public Heroin()
+        public Heroin(Arousal arousal, Affection affection)
         {
             _parts = new List<IPart>();
-            Arousal = new Arousal(0);
+            Arousal = arousal ?? new Arousal(0);
+            Affection = affection ?? new Affection(0);
         }
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
             IPart targetPart = GetPart(interaction.PartID);
 
             // 部位ごとの計算ロジックで興奮度を更新
-            Arousal = targetPart.CalculateArousal(Arousal, interaction);
+            Arousal = targetPart.CalculateArousal(Arousal, interaction, Affection);
 
             // 部位のパラメータを更新
             targetPart.Interact(interaction);

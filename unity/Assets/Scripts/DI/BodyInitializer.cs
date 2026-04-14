@@ -41,7 +41,6 @@ namespace Zrushy.Core.DI
                 _body.AddPart(new Part(
                     new PartID(id),
                     new Development(0),
-                    new Affection(0),
                     _defaultPartConfig.ToConfig()
                 ));
             }

@@ -22,6 +22,6 @@ namespace Zrushy.Core.Infrastructure.Repository
         public Arousal GetArousal(PartID partID) => _body.Arousal;
 
         public Development GetDevelopment(PartID partID) => _body.GetPart(partID).Development;
-        public Affection GetAffection(PartID partID) => _body.GetPart(partID).Affection;
+        public Affection GetAffection(PartID partID) => _body.Affection;
     }
 }

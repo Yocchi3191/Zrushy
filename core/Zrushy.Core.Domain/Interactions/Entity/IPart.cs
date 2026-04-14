@@ -13,13 +13,12 @@ namespace Zrushy.Core.Domain.Interactions.Entity
     {
         PartID ID { get; }
         Development Development { get; }
-        Affection Affection { get; }
 
         /// <summary>
         /// 興奮度計算
         /// 状態によっては不快になる部位もある
         /// </summary>
-        Arousal CalculateArousal(Arousal baseArousal, Interaction interaction);
+        Arousal CalculateArousal(Arousal baseArousal, Interaction interaction, Affection affection);
 
         /// <summary>
         /// さわり操作による内部状態の更新

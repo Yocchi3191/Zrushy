@@ -23,11 +23,11 @@ namespace Zrushy.Core.Test.Presentation
         public void setup()
         {
             _eventEvaluator = Substitute.For<IEventEvaluator>();
-            _heroin = new Heroin();
+            _heroin = new Heroin(new Arousal(0), new Affection(0));
 
             IPart headPart = Substitute.For<IPart>();
             headPart.ID.Returns(new PartID("head"));
-            headPart.CalculateArousal(Arg.Any<Arousal>(), Arg.Any<Interaction>()).Returns(new Arousal(0));
+            headPart.CalculateArousal(Arg.Any<Arousal>(), Arg.Any<Interaction>(), Arg.Any<Affection>()).Returns(new Arousal(0));
             _heroin.AddPart(headPart);
         }
 

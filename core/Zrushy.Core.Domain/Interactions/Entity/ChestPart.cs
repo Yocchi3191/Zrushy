@@ -16,13 +16,11 @@ namespace Zrushy.Core.Domain.Interactions.Entity
 
         public PartID ID { get; }
         public Development Development { get; private set; }
-        public Affection Affection { get; private set; }
 
-        public ChestPart(PartID id, Development development, Affection affection, PartConfig config)
+        public ChestPart(PartID id, Development development, PartConfig config)
         {
             ID = id;
             Development = development;
-            Affection = affection;
             _config = config;
         }
 
@@ -31,18 +29,17 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// 序盤は緩やかに上昇し、開発度・好感度が高まるほど大きく増加する
         /// 十分に開発されると胸イキが可能になる
         /// </summary>
-        public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction)
+        public Arousal CalculateArousal(Arousal baseArousal, Interaction interaction, Affection affection)
         {
             int gain = _config.BaseGain
                 + (int)(Development.Value * _config.DevelopmentFactor)
-                + (int)(Affection.Value * _config.AffectionFactor);
+                + (int)(affection.Value * _config.AffectionFactor);
             return baseArousal + gain;
         }
 
         public void Interact(Interaction interaction)
         {
             Development = Development.CalculateGain();
-            Affection = Affection.CalculateGain();
         }
 
         public void AddDevelopment(Development bonus)
