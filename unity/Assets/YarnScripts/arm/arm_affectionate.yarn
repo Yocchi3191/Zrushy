@@ -1,6 +1,6 @@
 title: arm_affectionate
 tags: part:arm
-condition: affection:arm:25
+condition: affection:25
 priority: 7
 ---
 もう……仕方ないなぁ…… #anim:reaction_default #expr:expression_happy

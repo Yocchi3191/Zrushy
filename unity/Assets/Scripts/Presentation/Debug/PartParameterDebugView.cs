@@ -11,8 +11,9 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 
 public class PartParameterDebugView : MonoBehaviour
 {
-    [Inject]
-    private IPartParameterReader _parameterReader;
+    [Inject] private AffectionReadable _affectionReader;
+    [Inject] private ArousalReadable _arousalReader;
+    [Inject] private DevelopmentReadable _developmentReader;
 
     [Inject]
     private IInteractionHistory _interactionHistory;
@@ -25,25 +26,27 @@ public class PartParameterDebugView : MonoBehaviour
 
     private void Update()
     {
-        if (_debugText == null) return;
+        if (_debugText == null)
+            return;
 
         string text = "=== Part Parameters ===\n\n";
 
-        // Body 全体の快感を表示
-        Arousal bodyArousal = _parameterReader.GetArousal(new PartID("dummy")); // PartID は無視される
-        text += $"[Body Arousal: {bodyArousal.Value}]\n\n";
+        // 興奮度
+        Arousal arousal = _arousalReader.GetArousal();
+        text += $"[Arousal: {arousal.Value}]\n";
+        // 好感度
+        Affection affection = _affectionReader.GetAffection();
+        text += $"[Affection: {affection.Value}]\n\n";
 
         foreach (string partName in _parts)
         {
             PartID partID = new PartID(partName);
             int touchCount = _interactionHistory.Get(partID).Count;
-            Development development = _parameterReader.GetDevelopment(partID);
-            Affection affection = _parameterReader.GetAffection(partID);
+            Development development = _developmentReader.GetDevelopment(partID);
 
             text += $"[{partName}]\n";
             text += $"  Touch: {touchCount}\n";
-            text += $"  Development: {development}\n";
-            text += $"  Affection: {affection}\n\n";
+            text += $"  Development: {development.Value}\n";
         }
 
         _debugText.text = text;

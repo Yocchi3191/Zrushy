@@ -1,6 +1,6 @@
 title: head_affectionate
 tags: part:head
-condition: touch_count:head:10,affection:head:20
+condition: touch_count:head:10,affection:20
 priority: 7
 ---
 ……ちょっとだけなら、いいけど #anim:reaction_default #expr:expression_happy

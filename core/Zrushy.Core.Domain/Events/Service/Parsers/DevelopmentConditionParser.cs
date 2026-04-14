@@ -11,13 +11,13 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 {
     public class DevelopmentConditionParser : IConditionParser
     {
-        private readonly IPartParameterReader _parameterReader;
+        private readonly DevelopmentReadable _reader;
 
         public string Type => "development";
 
-        public DevelopmentConditionParser(IPartParameterReader parameterReader)
+        public DevelopmentConditionParser(DevelopmentReadable reader)
         {
-            _parameterReader = parameterReader;
+            _reader = reader;
         }
 
         public ICondition? Parse(string[] parts)
@@ -29,7 +29,7 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 
             PartID partID = new PartID(parts[1]);
             return new ThresholdCondition(
-                new Threshold<Development>(new Development(int.Parse(parts[2])), null, () => _parameterReader.GetDevelopment(partID)));
+                new Threshold<Development>(new Development(int.Parse(parts[2])), null, () => _reader.GetDevelopment(partID)));
         }
     }
 }

@@ -1,6 +1,6 @@
 title: hand_affectionate
 tags: part:hand
-condition: affection:hand:30
+condition: affection:30
 priority: 7
 ---
 もう、離さないでね…… #anim:reaction_default #expr:expression_happy

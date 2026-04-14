@@ -16,6 +16,7 @@ using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.Service;
+using Zrushy.Core.Infrastructure.ParameterReader;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Infrastructure.Unity;
 using Zrushy.Core.Presentation;
@@ -60,7 +61,9 @@ namespace Zrushy.Core.DI
             Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
 
             Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
-            Container.Bind<IPartParameterReader>().To<BodyParameterReader>().AsSingle();
+            Container.Bind<ArousalReadable>().To<ArousalReader>().AsSingle();
+            Container.Bind<DevelopmentReadable>().To<DevelopmentReader>().AsSingle();
+            Container.Bind<AffectionReadable>().To<AffectionReader>().AsSingle();
 
             Container.Bind<YarnProject>().FromInstance(_yarnProject).AsSingle();
         }

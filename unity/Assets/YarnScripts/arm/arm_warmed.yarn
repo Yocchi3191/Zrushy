@@ -1,6 +1,6 @@
 title: arm_warmed
 tags: part:arm
-condition: touch_count:arm:4,affection:arm:10
+condition: touch_count:arm:4,affection:10
 priority: 5
 ---
 なに……甘えたいの……？ #anim:reaction_default #expr:expression_shy
