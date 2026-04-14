@@ -1540,7 +1540,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &736194885
 Transform:
   m_ObjectHideFlags: 0
@@ -3582,7 +3582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2033f1529e12cbb4480cd83fa4e2c6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::PartParameterDebugView
-  _debugText: {fileID: 0}
+  _debugText: {fileID: 2042768580}
   _parts:
   - head
   - torso
