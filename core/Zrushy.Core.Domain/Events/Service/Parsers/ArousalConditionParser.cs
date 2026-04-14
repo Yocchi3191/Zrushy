@@ -22,14 +22,13 @@ namespace Zrushy.Core.Domain.Events.Service.Parsers
 
         public ICondition? Parse(string[] parts)
         {
-            if (parts.Length != 3)
+            if (parts.Length != 2)
             {
                 return null;
             }
 
-            PartID partID = new PartID(parts[1]);
             return new ThresholdCondition(
-                new Threshold<Arousal>(new Arousal(int.Parse(parts[2])), null, () => _reader.GetArousal()));
+                new Threshold<Arousal>(new Arousal(int.Parse(parts[1])), null, () => _reader.GetArousal()));
         }
     }
 }
