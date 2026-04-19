@@ -9,12 +9,6 @@ namespace Zrushy.Core.Domain.Interactions.Exception
     [Serializable]
     public class ClothingNotFoundException : System.Exception
     {
-        private ClothingID _target;
-
-        public ClothingNotFoundException(ClothingID id) : base($"服が見つかりません ID: {id}")
-        {
-            _target = id;
-        }
-
+        public ClothingNotFoundException(ClothingID id) : base($"服が見つかりません ID: {id}") { }
     }
 }
