@@ -7,7 +7,7 @@ using Zrushy.Core.Domain.Interactions.ValueObject;
 namespace Zrushy.Core.Domain.Interactions.Exception
 {
     [Serializable]
-    internal class ClothingNotFoundException : System.Exception
+    public class ClothingNotFoundException : System.Exception
     {
         private ClothingID _target;
 
