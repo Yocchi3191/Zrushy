@@ -12,8 +12,8 @@ namespace Zrushy.Core.Presentation.Unity
     {
         [Inject] private readonly Heroin _heroin;
         [SerializeField] private ClothingConfig[] _clothingConfigs;
-        private
-        void Start()
+
+        private void Start()
         {
             foreach (ClothingConfig config in _clothingConfigs)
             {
