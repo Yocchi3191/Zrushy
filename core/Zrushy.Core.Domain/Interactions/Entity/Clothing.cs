@@ -9,7 +9,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
     public class Clothing : IClothing
     {
         public ClothingID ID { get; init; }
-        private int _resistance;
+        private readonly int _resistance;
 
         public Clothing(ClothingID id, int resistance)
         {
