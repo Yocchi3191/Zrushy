@@ -47,9 +47,11 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         }
 
         /// <summary>
-        /// 部位を追加する
+        /// 服を追加する
+        /// 同じIDの服が既に存在する場合は例外をスローする
         /// </summary>
-        /// <param name="part">追加する部位</param>
+        /// <param name="clothing">追加する服</param>
+        /// <exception cref="DuplicateClothingException"></exception>
         public void AddClothing(IClothing clothing)
         {
             if (_clothings.Any(c => c.ID.Equals(clothing.ID)))
@@ -58,6 +60,10 @@ namespace Zrushy.Core.Domain.Interactions.Entity
             _clothings.Add(clothing);
         }
 
+        /// <summary>
+        /// 部位を追加する
+        /// </summary>
+        /// <param name="part">追加する部位</param>
         public void AddPart(IPart part)
         {
             if (_parts.Any(p => p.ID == part.ID))
