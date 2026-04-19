@@ -14,6 +14,7 @@ namespace Zrushy.Core.Presentation.Unity
         [Inject] private IZrushyPermission _zrushyPermission;
 
         private Vector2 _dragStartPosition;
+        [SerializeField] private string _clothingID;
 
 
         internal void Construct(ISpriteInputHandler spriteInputHandler, IZrushyPermission zrushyPermission)
@@ -37,7 +38,7 @@ namespace Zrushy.Core.Presentation.Unity
             Vector2 endPosition = eventData.position;
             Vector2 dragVector = endPosition - _dragStartPosition;
 
-            ZrushyInput input = new ZrushyInput(new System.Numerics.Vector2(dragVector.x, dragVector.y));
+            ZrushyInput input = new ZrushyInput(_clothingID, new System.Numerics.Vector2(dragVector.x, dragVector.y));
             if (!_zrushyPermission.CanZrushy(input))
                 return;
 

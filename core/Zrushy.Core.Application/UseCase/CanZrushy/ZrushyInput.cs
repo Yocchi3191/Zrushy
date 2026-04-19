@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Numerics;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Application.UseCase.CanZrushy
 {
@@ -11,9 +12,11 @@ namespace Zrushy.Core.Application.UseCase.CanZrushy
     public record ZrushyInput
     {
         public Vector2 Direction { get; init; } // ドラッグ方向の単位ベクトル
+        public ClothingID Target { get; init; }
 
-        public ZrushyInput(Vector2 direction)
+        public ZrushyInput(string clothingID, Vector2 direction)
         {
+            Target = new ClothingID(clothingID);
             Direction = Vector2.Normalize(direction);
         }
     }

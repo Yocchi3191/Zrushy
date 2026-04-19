@@ -17,7 +17,7 @@ namespace Zrushy.Core.Application.UseCase.CanZrushy
 
         bool IZrushyPermission.CanZrushy(ZrushyInput input)
         {
-            throw new NotImplementedException();
+            return _heroin.CanPutOffClothing(input.Target);
         }
 
     }

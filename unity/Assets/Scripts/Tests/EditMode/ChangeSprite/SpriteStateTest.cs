@@ -98,7 +98,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             Sprite expected = _nextSprite;
 
             // Act
-            ZrushyInput input = new ZrushyInput(new System.Numerics.Vector2(0, -1));
+            ZrushyInput input = new ZrushyInput("dummy", new System.Numerics.Vector2(0, -1));
             _spriteState.TryTransition(input);
 
             // Assert
@@ -112,7 +112,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             Sprite expected = _initialSprite; // 遷移しないので初期状態から変化なし
 
             // Act
-            ZrushyInput input = new ZrushyInput(new System.Numerics.Vector2(0, 0)); // 無効な入力
+            ZrushyInput input = new ZrushyInput("dummy", new System.Numerics.Vector2(0, 0)); // 無効な入力
             _spriteState.TryTransition(input);
 
             // Assert
@@ -128,7 +128,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _spriteState.OnStateChanged += callback;
 
             // Act
-            ZrushyInput input = new ZrushyInput(new System.Numerics.Vector2(0, -1));
+            ZrushyInput input = new ZrushyInput("dummy", new System.Numerics.Vector2(0, -1));
             _spriteState.TryTransition(input);
 
             // Assert
