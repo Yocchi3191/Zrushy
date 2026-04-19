@@ -15,6 +15,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
     public class Heroin
     {
         private readonly List<IPart> _parts;
+        private readonly List<IClothing> _clothings;
 
         /// <summary>
         /// Body全体の興奮度パラメータ
@@ -40,6 +41,7 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         public Heroin(Arousal arousal, Affection affection)
         {
             _parts = new List<IPart>();
+            _clothings = new List<IClothing>();
             Arousal = arousal ?? new Arousal(0);
             Affection = affection ?? new Affection(0);
         }
@@ -48,6 +50,14 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         /// 部位を追加する
         /// </summary>
         /// <param name="part">追加する部位</param>
+        public void AddClothing(IClothing clothing)
+        {
+            if (_clothings.Any(c => c.ID.Equals(clothing.ID)))
+                throw new DuplicateClothingException(clothing.ID);
+
+            _clothings.Add(clothing);
+        }
+
         public void AddPart(IPart part)
         {
             if (_parts.Any(p => p.ID == part.ID))
@@ -115,6 +125,16 @@ namespace Zrushy.Core.Domain.Interactions.Entity
         {
             return _parts.Find(p => p.ID.Equals(partID))
                 ?? throw new PartNotFoundException(partID);
+        }
+
+        public bool CanPutOffClothing(ClothingID target)
+        {
+            IClothing clothing = _clothings.Find(c => c.ID.Equals(target));
+            if (clothing == null)
+            {
+                throw new ClothingNotFoundException(target);
+            }
+            return clothing.CanPutOff(Affection, Arousal);
         }
     }
 }
