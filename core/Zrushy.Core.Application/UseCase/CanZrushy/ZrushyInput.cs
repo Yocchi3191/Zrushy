@@ -12,7 +12,7 @@ namespace Zrushy.Core.Application.UseCase.CanZrushy
     public record ZrushyInput
     {
         public Vector2 Direction { get; init; } // ドラッグ方向の単位ベクトル
-        public ClothingID Target { get; internal set; }
+        public ClothingID Target { get; init; }
 
         public ZrushyInput(string clothingID, Vector2 direction)
         {
