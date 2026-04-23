@@ -59,8 +59,10 @@ namespace Zrushy.Core.DI
             Container.Bind<DialogueRunner>().FromComponentInHierarchy().AsSingle();
 
             Container.Bind<IEventRepository>().To<YarnEventRepository>().AsSingle();
+            Container.Bind<IClothingEventRepository>().To<YarnClothingEventRepository>().AsSingle();
 
             Container.Bind<IInteractionHistory>().To<InteractionHistory>().AsSingle();
+            Container.Bind<IZrushyHistory>().To<ZrushyHistory>().AsSingle();
             Container.Bind<IArousalReader>().To<ArousalReader>().AsSingle();
             Container.Bind<IDevelopmentReader>().To<DevelopmentReader>().AsSingle();
             Container.Bind<IAffectionReader>().To<AffectionReader>().AsSingle();
@@ -75,7 +77,8 @@ namespace Zrushy.Core.DI
             Container.Bind<GetScenario>().AsSingle();
             Container.Bind<IScenarioProvider>().To<YarnScenarioProvider>().AsSingle();
             Container.Bind<ScenarioSelector>().AsSingle();
-            Container.Bind<IZrushyPermission>().To<CanZrushy>().AsSingle();
+            Container.Bind<IClothingEventEvaluator>().To<ClothingEventEvaluator>().AsSingle();
+            Container.Bind<IZrushyClothing>().To<ZrushyClothing>().AsSingle();
         }
 
         private void InstallDomain()
