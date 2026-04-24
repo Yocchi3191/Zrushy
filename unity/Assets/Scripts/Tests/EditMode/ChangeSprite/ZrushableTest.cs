@@ -5,7 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Zrushy.Core.Application.UseCase.Execute;
+using Zrushy.Core.Application.UseCase.CanZrushy;
 using Zrushy.Core.Presentation.Unity;
 
 namespace Zrushy.Core.Test.Unity.EditMode
