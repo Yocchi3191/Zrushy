@@ -17,8 +17,9 @@ namespace Zrushy.Core.Presentation.Unity
         [SerializeField] private string _clothingID;
 
 
-        internal void Construct(ISpriteInputHandler spriteInputHandler, IZrushyClothing zrushyPermission)
+        internal void Construct(string clothingID, ISpriteInputHandler spriteInputHandler, IZrushyClothing zrushyPermission)
         {
+            _clothingID = clothingID;
             _spriteInputHandler = spriteInputHandler;
             _zrushyPermission = zrushyPermission;
         }

@@ -33,7 +33,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _spriteInputHandler = Substitute.For<ISpriteInputHandler>();
             _zrushyPermission = Substitute.For<IZrushyClothing>();
 
-            _zrushable.Construct(_spriteInputHandler, _zrushyPermission);
+            _zrushable.Construct("test_clothing", _spriteInputHandler, _zrushyPermission);
         }
 
         [TearDown]
