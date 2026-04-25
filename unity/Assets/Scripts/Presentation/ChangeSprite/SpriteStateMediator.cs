@@ -46,6 +46,12 @@ namespace Zrushy.Core.Presentation.Unity
 
         private void Awake()
         {
+            if (controller == null)
+            {
+                Debug.LogWarning("controllerが設定されていません", this);
+                return;
+            }
+
             Construct(controller, dependents, _constraints);
         }
 
