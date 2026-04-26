@@ -47,7 +47,7 @@ public class ZrushyClothingTest
 
         useCase.Execute(input);
 
-        evaluator.Received(1).Evaluate(input.Target, true);
+        evaluator.Received(1).Evaluate(input.Target, SlideResult.Success);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class ZrushyClothingTest
 
         useCase.Execute(input);
 
-        evaluator.Received(1).Evaluate(input.Target, false);
+        evaluator.Received(1).Evaluate(input.Target, SlideResult.Failure);
     }
 
     private static Heroin CreateHeroin(bool canPutOff)

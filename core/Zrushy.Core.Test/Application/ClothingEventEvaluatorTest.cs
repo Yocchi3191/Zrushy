@@ -35,7 +35,7 @@ public class ClothingEventEvaluatorTest
         _eventBus.OnEventPublished += e => published = e;
         var evaluator = new ClothingEventEvaluator(_history, new StubRepository(), _eventBus);
 
-        evaluator.Evaluate(_clothingID, isSuccess: true);
+        evaluator.Evaluate(_clothingID, SlideResult.Success);
 
         Assert.That(published, Is.Null);
     }
@@ -48,7 +48,7 @@ public class ClothingEventEvaluatorTest
         var evt = new StubEvent(canFire: true, priority: 1, _testScenarioID);
         var evaluator = new ClothingEventEvaluator(_history, new StubRepository(evt), _eventBus);
 
-        evaluator.Evaluate(_clothingID, isSuccess: true);
+        evaluator.Evaluate(_clothingID, SlideResult.Success);
 
         Assert.That(published, Is.EqualTo(evt.ID));
     }
@@ -61,7 +61,7 @@ public class ClothingEventEvaluatorTest
         var evt = new StubEvent(canFire: false, priority: 1, _testScenarioID);
         var evaluator = new ClothingEventEvaluator(_history, new StubRepository(evt), _eventBus);
 
-        evaluator.Evaluate(_clothingID, isSuccess: true);
+        evaluator.Evaluate(_clothingID, SlideResult.Success);
 
         Assert.That(published, Is.Null);
     }
@@ -75,7 +75,7 @@ public class ClothingEventEvaluatorTest
         var high = new StubEvent(canFire: true, priority: 10, new ScenarioID("high"));
         var evaluator = new ClothingEventEvaluator(_history, new StubRepository(low, high), _eventBus);
 
-        evaluator.Evaluate(_clothingID, isSuccess: true);
+        evaluator.Evaluate(_clothingID, SlideResult.Success);
 
         Assert.That(published, Is.EqualTo(high.ID));
     }
@@ -85,9 +85,9 @@ public class ClothingEventEvaluatorTest
     {
         var evaluator = new ClothingEventEvaluator(_history, new StubRepository(), _eventBus);
 
-        evaluator.Evaluate(_clothingID, isSuccess: true);
+        evaluator.Evaluate(_clothingID, SlideResult.Success);
 
-        _history.Received(1).Record(_clothingID, true);
+        _history.Received(1).Record(_clothingID, SlideResult.Success);
     }
 
     // --- Stubs ---
@@ -104,6 +104,6 @@ public class ClothingEventEvaluatorTest
     private class StubRepository(params IScenarioEvent[] events) : IClothingEventRepository
     {
         private readonly IReadOnlyList<IScenarioEvent> _events = events;
-        public IReadOnlyList<IScenarioEvent> GetEvents(ClothingID clothingID, bool isSuccess) => _events;
+        public IReadOnlyList<IScenarioEvent> GetEvents(ClothingID clothingID, SlideResult result) => _events;
     }
 }
