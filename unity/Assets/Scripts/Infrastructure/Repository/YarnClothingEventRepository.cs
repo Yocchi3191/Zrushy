@@ -16,7 +16,7 @@ namespace Zrushy.Core.Infrastructure.Unity
 {
     public class YarnClothingEventRepository : IClothingEventRepository
     {
-        private readonly Dictionary<(ClothingID, bool), List<IScenarioEvent>> _cache = new();
+        private readonly Dictionary<(ClothingID, SlideResult), List<IScenarioEvent>> _cache = new();
 
         public YarnClothingEventRepository(DialogueRunner dialogueRunner, IConditionFactory conditionFactory)
         {
@@ -26,7 +26,7 @@ namespace Zrushy.Core.Infrastructure.Unity
                 Node node = pair.Value;
 
                 string clothingId = null;
-                bool? isSuccess = null;
+                SlideResult? slideResult = null;
                 string conditionString = null;
                 int priority = 0;
 
@@ -39,10 +39,10 @@ namespace Zrushy.Core.Infrastructure.Unity
                             {
                                 if (tag.StartsWith("clothing:"))
                                     clothingId = tag.Substring("clothing:".Length);
-                                else if (tag == "zrushy:success")
-                                    isSuccess = true;
-                                else if (tag == "zrushy:failure")
-                                    isSuccess = false;
+                                else if (tag == "result:success")
+                                    slideResult = SlideResult.Success;
+                                else if (tag == "result:failure")
+                                    slideResult = SlideResult.Failure;
                             }
                             break;
                         case "condition":
@@ -54,7 +54,7 @@ namespace Zrushy.Core.Infrastructure.Unity
                     }
                 }
 
-                if (clothingId == null || isSuccess == null) continue;
+                if (clothingId == null || slideResult == null) continue;
 
                 ClothingID clothingID = new ClothingID(clothingId);
 
@@ -72,16 +72,16 @@ namespace Zrushy.Core.Infrastructure.Unity
                     priority,
                     conditions);
 
-                var key = (clothingID, isSuccess.Value);
+                var key = (clothingID, slideResult.Value);
                 if (!_cache.ContainsKey(key))
                     _cache[key] = new List<IScenarioEvent>();
                 _cache[key].Add(scenarioEvent);
             }
         }
 
-        public IReadOnlyList<IScenarioEvent> GetEvents(ClothingID clothingID, bool isSuccess)
+        public IReadOnlyList<IScenarioEvent> GetEvents(ClothingID clothingID, SlideResult result)
         {
-            var key = (clothingID, isSuccess);
+            var key = (clothingID, result);
             return _cache.TryGetValue(key, out var events)
                 ? events.AsReadOnly()
                 : Array.Empty<IScenarioEvent>();
