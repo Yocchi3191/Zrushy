@@ -7,6 +7,6 @@ namespace Zrushy.Core.Domain.Events.Service
 {
     public interface IZrushyHistory
     {
-        void Record(ClothingID clothingID, bool isSuccess);
+        void Record(ClothingID clothingID, SlideResult result);
     }
 }

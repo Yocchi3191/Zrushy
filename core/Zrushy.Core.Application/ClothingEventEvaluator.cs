@@ -25,11 +25,11 @@ namespace Zrushy.Core.Application
             _eventBus = eventBus;
         }
 
-        public void Evaluate(ClothingID clothingID, bool isSuccess)
+        public void Evaluate(ClothingID clothingID, SlideResult result)
         {
-            _history.Record(clothingID, isSuccess);
+            _history.Record(clothingID, result);
 
-            IScenarioEvent fired = _eventRepository.GetEvents(clothingID, isSuccess)
+            IScenarioEvent fired = _eventRepository.GetEvents(clothingID, result)
                 .Where(e => e.CanFire())
                 .OrderByDescending(e => e.Priority)
                 .FirstOrDefault();

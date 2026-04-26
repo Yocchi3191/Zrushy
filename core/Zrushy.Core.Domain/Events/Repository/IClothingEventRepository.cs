@@ -9,6 +9,6 @@ namespace Zrushy.Core.Domain.Events.Repository
 {
     public interface IClothingEventRepository
     {
-        IReadOnlyList<IScenarioEvent> GetEvents(ClothingID clothingID, bool isSuccess);
+        IReadOnlyList<IScenarioEvent> GetEvents(ClothingID clothingID, SlideResult result);
     }
 }

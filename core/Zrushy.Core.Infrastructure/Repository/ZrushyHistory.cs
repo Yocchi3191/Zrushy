@@ -9,11 +9,11 @@ namespace Zrushy.Core.Infrastructure.Repository
 {
     public class ZrushyHistory : IZrushyHistory
     {
-        private readonly List<(ClothingID clothingID, bool isSuccess)> _records = new();
+        private readonly List<(ClothingID clothingID, SlideResult result)> _records = new();
 
-        public void Record(ClothingID clothingID, bool isSuccess)
+        public void Record(ClothingID clothingID, SlideResult result)
         {
-            _records.Add((clothingID, isSuccess));
+            _records.Add((clothingID, result));
         }
     }
 }

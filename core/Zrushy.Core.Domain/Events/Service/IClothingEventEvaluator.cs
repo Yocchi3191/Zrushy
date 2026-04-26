@@ -7,6 +7,6 @@ namespace Zrushy.Core.Domain.Events.Service
 {
     public interface IClothingEventEvaluator
     {
-        void Evaluate(ClothingID clothingID, bool isSuccess);
+        void Evaluate(ClothingID clothingID, SlideResult result);
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using Zrushy.Core.Domain.Events.Service;
 using Zrushy.Core.Domain.Interactions.Entity;
+using Zrushy.Core.Domain.Interactions.ValueObject;
 
 namespace Zrushy.Core.Application.UseCase.CanZrushy
 {
@@ -20,9 +21,10 @@ namespace Zrushy.Core.Application.UseCase.CanZrushy
 
         bool IZrushyClothing.Execute(ZrushyInput input)
         {
-            bool isSuccess = _heroin.CanPutOffClothing(input.Target);
-            _evaluator.Evaluate(input.Target, isSuccess);
-            return isSuccess;
+            bool canPutOff = _heroin.CanPutOffClothing(input.Target);
+            SlideResult result = canPutOff ? SlideResult.Success : SlideResult.Failure;
+            _evaluator.Evaluate(input.Target, result);
+            return canPutOff;
         }
     }
 }
