@@ -22,7 +22,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
     public class ZrushableTest
     {
         Zrushable _zrushable;
-        IZrushyPermission _zrushyPermission;
+        IZrushyClothing _zrushyPermission;
         ISpriteInputHandler _spriteInputHandler;
 
         [SetUp]
@@ -31,9 +31,9 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _zrushable = new GameObject().AddComponent<Zrushable>();
 
             _spriteInputHandler = Substitute.For<ISpriteInputHandler>();
-            _zrushyPermission = Substitute.For<IZrushyPermission>();
+            _zrushyPermission = Substitute.For<IZrushyClothing>();
 
-            _zrushable.Construct(_spriteInputHandler, _zrushyPermission);
+            _zrushable.Construct("test_clothing", _spriteInputHandler, _zrushyPermission);
         }
 
         [TearDown]
@@ -50,14 +50,14 @@ namespace Zrushy.Core.Test.Unity.EditMode
             _zrushable.OnBeginDrag(new PointerEventData(null));
             _zrushable.OnEndDrag(new PointerEventData(null));
             // Then
-            _zrushyPermission.Received(1).CanZrushy(Arg.Any<ZrushyInput>());
+            _zrushyPermission.Received(1).Execute(Arg.Any<ZrushyInput>());
         }
 
         [Test]
         public void ずらしが許可されたら_マウス入力をISpriteInputHandlerに伝える()
         {
             // Given
-            _zrushyPermission.CanZrushy(Arg.Any<ZrushyInput>()).Returns(true);
+            _zrushyPermission.Execute(Arg.Any<ZrushyInput>()).Returns(true);
             // When
             _zrushable.OnBeginDrag(new PointerEventData(null));
             _zrushable.OnEndDrag(new PointerEventData(null));
@@ -69,7 +69,7 @@ namespace Zrushy.Core.Test.Unity.EditMode
         public void ずらしが許可されなかったら_ISpriteInputHandlerに伝えない()
         {
             // Given
-            _zrushyPermission.CanZrushy(Arg.Any<ZrushyInput>()).Returns(false);
+            _zrushyPermission.Execute(Arg.Any<ZrushyInput>()).Returns(false);
             // When
             _zrushable.OnBeginDrag(new PointerEventData(null));
             _zrushable.OnEndDrag(new PointerEventData(null));
