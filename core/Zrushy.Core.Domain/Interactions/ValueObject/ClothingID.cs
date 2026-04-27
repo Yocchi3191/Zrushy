@@ -20,5 +20,8 @@ namespace Zrushy.Core.Domain.Interactions.ValueObject
         }
 
         public override int GetHashCode() => _id.GetHashCode();
+
+        public static bool operator ==(ClothingID left, ClothingID right) => Equals(left, right);
+        public static bool operator !=(ClothingID left, ClothingID right) => !Equals(left, right);
     }
 }
