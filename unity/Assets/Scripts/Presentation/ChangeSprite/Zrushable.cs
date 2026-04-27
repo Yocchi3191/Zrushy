@@ -11,16 +11,17 @@ namespace Zrushy.Core.Presentation.Unity
     public class Zrushable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
         private ISpriteInputHandler _spriteInputHandler;
-        [Inject] private IZrushyPermission _zrushyPermission;
+        [Inject] private IZrushyClothing _zrushyClothing;
 
         private Vector2 _dragStartPosition;
         [SerializeField] private string _clothingID;
 
 
-        internal void Construct(ISpriteInputHandler spriteInputHandler, IZrushyPermission zrushyPermission)
+        internal void Construct(string clothingID, ISpriteInputHandler spriteInputHandler, IZrushyClothing zrushyClothing)
         {
+            _clothingID = clothingID;
             _spriteInputHandler = spriteInputHandler;
-            _zrushyPermission = zrushyPermission;
+            _zrushyClothing = zrushyClothing;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -39,7 +40,7 @@ namespace Zrushy.Core.Presentation.Unity
             Vector2 dragVector = endPosition - _dragStartPosition;
 
             ZrushyInput input = new ZrushyInput(_clothingID, new System.Numerics.Vector2(dragVector.x, dragVector.y));
-            if (!_zrushyPermission.CanZrushy(input))
+            if (!_zrushyClothing.Execute(input))
                 return;
 
             _spriteInputHandler.TryTransition(input);
