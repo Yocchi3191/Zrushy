@@ -668,74 +668,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1036254000512667456, guid: 5818fc2562cead248bdb72ef18ae809d, type: 3}
   m_PrefabInstance: {fileID: 1578361246}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &29800230667092414
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 326.24817
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 198.16957
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8994187941862192156, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-      propertyPath: m_Name
-      value: TitleSceneController
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
---- !u!114 &29800230667092415 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6837877113124457302, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
-  m_PrefabInstance: {fileID: 29800230667092414}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bb8a834112a3ed4ebb0a23d23ee3290, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Title.TitelSceneController
 --- !u!1001 &7171624296365367130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -828,10 +760,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_Exit
       objectReference: {fileID: 0}
-    - target: {fileID: 2990480181988351899, guid: bbf5ede998e362143b87e056579bdc45, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 29800230667092415}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -844,4 +772,3 @@ SceneRoots:
   - {fileID: 709854640}
   - {fileID: 1320813787}
   - {fileID: 140566709}
-  - {fileID: 29800230667092414}
