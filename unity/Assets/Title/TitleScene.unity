@@ -280,7 +280,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 241440427}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 29800230667092415}
+        m_TargetAssemblyTypeName: Zrushy.Core.Presentation.Unity.Title.TitelSceneController,
+          Zrushy.Core.Presentation.Unity
+        m_MethodName: OnStartClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &241440427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,7 +550,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 520891112}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 29800230667092415}
+        m_TargetAssemblyTypeName: Zrushy.Core.Presentation.Unity.Title.TitelSceneController,
+          Zrushy.Core.Presentation.Unity
+        m_MethodName: OnExitClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &520891112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1071,6 +1097,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787269171}
   m_CullTransparentMesh: 1
+--- !u!1001 &29800230667092414
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 326.24817
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 198.16957
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715334029381705025, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994187941862192156, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+      propertyPath: m_Name
+      value: TitleSceneController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+--- !u!114 &29800230667092415 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6837877113124457302, guid: 7b92028b4b493f24a803e4ca4d222a48, type: 3}
+  m_PrefabInstance: {fileID: 29800230667092414}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb8a834112a3ed4ebb0a23d23ee3290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Title.TitelSceneController
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1078,3 +1172,4 @@ SceneRoots:
   - {fileID: 709854640}
   - {fileID: 1320813787}
   - {fileID: 140566709}
+  - {fileID: 29800230667092414}

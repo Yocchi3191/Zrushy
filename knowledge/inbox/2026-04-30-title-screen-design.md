@@ -37,9 +37,15 @@ Assets/Scripts/Presentation/Title/
 
 ## Build Settings
 
-| Index | シーン |
-|-------|--------|
-| 0 | TitleScene |
-| 1 | PoC |
+| Index | シーン     |
+| ----- | ---------- |
+| 0     | TitleScene |
+| 1     | PoC        |
 
 ゲーム起動時に TitleScene が最初に開く。
+
+## シーン開けない
+
+https://qiita.com/rapirapi/items/9422f3634e43ea6aa15f
+ビルドプロファイルに遷移したいシーンを登録しないといけない
+てか ## Build Settings に書いてあんじゃん
