@@ -8,9 +8,9 @@ namespace Zrushy.Core.Presentation
 {
     public class SpriteLayerController : ISpriteLayerController
     {
-        private readonly FindSprite _changeSprite;
+        private readonly IFindSprite _changeSprite;
         private readonly HeroinViewModel _heroinViewModel;
-        public SpriteLayerController(FindSprite changeSprite, HeroinViewModel heroinViewModel)
+        public SpriteLayerController(IFindSprite changeSprite, HeroinViewModel heroinViewModel)
         {
             _changeSprite = changeSprite;
             _heroinViewModel = heroinViewModel;

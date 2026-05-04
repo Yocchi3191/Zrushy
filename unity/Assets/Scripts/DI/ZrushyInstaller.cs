@@ -7,6 +7,7 @@ using Zenject;
 using Zrushy.Core.Application;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Application.UseCase.CanZrushy;
+using Zrushy.Core.Application.UseCase.FindSprite;
 using Zrushy.Core.Application.UseCase.GetScenario;
 using Zrushy.Core.Application.UseCase.InteractPart;
 using Zrushy.Core.Domain.Events.Repository;
@@ -50,6 +51,8 @@ namespace Zrushy.Core.DI
             Container.Bind<ScenarioCommandHandler>().FromComponentInHierarchy().AsSingle();
 
             Container.Bind<HeroinViewModel>().AsSingle();
+
+            Container.Bind<ISpriteLayerController>().To<SpriteLayerController>().AsSingle();
         }
 
         private void InstallInfrastructure()
@@ -82,6 +85,7 @@ namespace Zrushy.Core.DI
             Container.Bind<ScenarioSelector>().AsSingle();
             Container.Bind<IClothingEventEvaluator>().To<ClothingEventEvaluator>().AsSingle();
             Container.Bind<IZrushyClothing>().To<ZrushyClothing>().AsSingle();
+            Container.Bind<IFindSprite>().To<FindSprite>().AsSingle();
         }
 
         private void InstallDomain()

@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 using Zrushy.Core.Application.UseCase.CanZrushy;
 using Zrushy.Core.Domain.Sprite;
 
@@ -16,7 +17,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
     {
         [SerializeField] private SpriteStatePattern _statePattern;
         [SerializeField] private DragDirectionThresholdSetting _setting;
-        private ISpriteLayerController _controller;
+        [Inject] private ISpriteLayerController _controller;
 
         public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
         public Sprite CurrentState { get; private set; }
