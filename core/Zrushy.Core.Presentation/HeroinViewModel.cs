@@ -11,7 +11,7 @@ namespace Zrushy.Core.Presentation
         public event System.Action<HeroinViewModel>? OnUpdated;
         public Dictionary<SpriteLayerID, string> SpritePaths { get; } = new();
 
-        public void UpdateSprite(SpriteLayerID id, string newSpritePath)
+        internal void UpdateSprite(SpriteLayerID id, string newSpritePath)
         {
             SpritePaths[id] = newSpritePath;
             OnUpdated?.Invoke(this);

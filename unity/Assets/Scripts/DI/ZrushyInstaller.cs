@@ -16,6 +16,7 @@ using Zrushy.Core.Domain.Interactions.Entity;
 using Zrushy.Core.Domain.Interactions.Service;
 using Zrushy.Core.Domain.Interactions.ValueObject;
 using Zrushy.Core.Domain.Scenarios.Service;
+using Zrushy.Core.Domain.Sprite;
 using Zrushy.Core.Infrastructure.ParameterReader;
 using Zrushy.Core.Infrastructure.Repository;
 using Zrushy.Core.Infrastructure.Unity;
@@ -68,6 +69,8 @@ namespace Zrushy.Core.DI
             Container.Bind<IAffectionReader>().To<AffectionReader>().AsSingle();
 
             Container.Bind<YarnProject>().FromInstance(_yarnProject).AsSingle();
+
+            Container.Bind<ISpriteLayerRepository>().To<SpriteLayerRepository>().AsSingle();
         }
 
         private void InstallApplication()

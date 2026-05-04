@@ -16,16 +16,16 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
     {
         [SerializeField] private SpriteStatePattern _statePattern;
         [SerializeField] private DragDirectionThresholdSetting _setting;
-        [Inject] private HeroinViewModel _heroinViewModel;
-        [Inject] private IFindSprite _findSprite;
+        private ISpriteLayerController _controller;
 
         public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
         public Sprite CurrentState { get; private set; }
 
-        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting)
+        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting, ISpriteLayerController controller)
         {
             _statePattern = pattern;
             _setting = setting;
+            _controller = controller;
             CurrentState = pattern.initialState;
             SetState(CurrentState);
         }
@@ -62,8 +62,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             OnStateChanged?.Invoke(this); // Mediatorに通知 状態が違反していればここで調整される
 
             SpriteLayerID layerID = new SpriteLayerID(_statePattern.layerID);
-            string path = _repository.Get(layerID, new LayerState(newState.name));
-            _heroinViewModel.UpdateSprite(layerID, path);
+            _controller.ChangeSprite(layerID, new LayerState(newState.name));
         }
 
         public bool IsAbove(int targetStateIndex)
