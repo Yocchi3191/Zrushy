@@ -16,8 +16,8 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
     {
         [SerializeField] private SpriteStatePattern _statePattern;
         [SerializeField] private DragDirectionThresholdSetting _setting;
-        private HeroinViewModel _heroinViewModel;
-        private ISpriteLayerRepository _repository;
+        [Inject] private HeroinViewModel _heroinViewModel;
+        [Inject] private IFindSprite _findSprite;
 
         public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
         public Sprite CurrentState { get; private set; }
