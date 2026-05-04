@@ -27,11 +27,13 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             _statePattern = pattern;
             _setting = setting;
             CurrentState = pattern.initialState;
+            SetState(CurrentState);
         }
 
         void Start()
         {
             CurrentState = _statePattern.initialState;
+            SetState(CurrentState);
         }
 
         /// <summary>
