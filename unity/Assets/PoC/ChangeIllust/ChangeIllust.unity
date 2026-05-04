@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5716014372782497147, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
+      propertyPath: m_text
+      value: Sprites/bottoms_on
+      objectReference: {fileID: 0}
     - target: {fileID: 7931315935771037807, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Name
       value: Button
@@ -496,6 +500,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5716014372782497147, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
+      propertyPath: m_text
+      value: Sprites/pants_on
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716014372782497147, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716014372782497147, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7931315935771037807, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Name
       value: Button
@@ -670,6 +686,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5716014372782497147, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
+      propertyPath: m_text
+      value: Sprites/bottoms_off
+      objectReference: {fileID: 0}
     - target: {fileID: 7931315935771037807, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Name
       value: Button_1
@@ -780,6 +800,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5716014372782497147, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
+      propertyPath: m_text
+      value: Sprites/pants_off
+      objectReference: {fileID: 0}
     - target: {fileID: 7931315935771037807, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Name
       value: Button_1
@@ -805,6 +829,14 @@ PrefabInstance:
     - target: {fileID: 953991894448375755, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
       propertyPath: m_Name
       value: Buttons_Face
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605181887564545830, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
+      propertyPath: m_ChildForceExpandWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605181887564545830, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5709260474085998797, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
       propertyPath: m_Pivot.x
@@ -1120,6 +1152,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1663538473033050564, guid: ef29ae120acb65b40b4dac9364208095, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2635831912108956366, guid: ef29ae120acb65b40b4dac9364208095, type: 3}
       propertyPath: m_Pivot.x
       value: 0

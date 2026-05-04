@@ -4,8 +4,8 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using Zrushy.Core.Application.UseCase.CanZrushy;
+using Zrushy.Core.Domain.Sprite;
 
 namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 {
@@ -15,8 +15,9 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
     public class SpriteState : MonoBehaviour, ISpriteInputHandler, ISpriteStateNode
     {
         [SerializeField] private SpriteStatePattern _statePattern;
-        Image _image;
         [SerializeField] private DragDirectionThresholdSetting _setting;
+        private HeroinViewModel _heroinViewModel;
+        private ISpriteLayerRepository _repository;
 
         public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
         public Sprite CurrentState { get; private set; }
@@ -26,14 +27,6 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             _statePattern = pattern;
             _setting = setting;
             CurrentState = pattern.initialState;
-        }
-
-        private void Awake()
-        {
-            _image = gameObject.GetComponent<Image>();
-            if (_image == null)
-                throw new System.Exception("Imageコンポーネントがアタッチされていません");
-            _image.alphaHitTestMinimumThreshold = 0.1f;
         }
 
         void Start()
@@ -64,8 +57,11 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         private void SetState(Sprite newState)
         {
             CurrentState = newState;
-            _image.sprite = CurrentState;
-            OnStateChanged?.Invoke(this);
+            OnStateChanged?.Invoke(this); // Mediatorに通知 状態が違反していればここで調整される
+
+            SpriteLayerID layerID = new SpriteLayerID(_statePattern.layerID);
+            string path = _repository.Get(layerID, new LayerState(newState.name));
+            _heroinViewModel.UpdateSprite(layerID, path);
         }
 
         public bool IsAbove(int targetStateIndex)
