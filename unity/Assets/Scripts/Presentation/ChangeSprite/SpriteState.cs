@@ -31,7 +31,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             SetState(CurrentState);
         }
 
-        void Start()
+        void Awake()
         {
             CurrentState = _statePattern.initialState;
             SetState(CurrentState);
