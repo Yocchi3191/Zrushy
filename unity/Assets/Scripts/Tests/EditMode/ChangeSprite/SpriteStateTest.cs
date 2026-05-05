@@ -7,7 +7,6 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using Zrushy.Core.Application.UseCase.CanZrushy;
-using Zrushy.Core.Presentation;
 using Zrushy.Core.Presentation.Unity;
 using Zrushy.Core.Presentation.Unity.ChangeSprite;
 using SpriteState = Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState;
@@ -47,20 +46,19 @@ namespace Zrushy.Core.Test.Unity.EditMode
         private Sprite _furtherSprite;
         private SpriteStatePattern _pattern;
         private DragDirectionThresholdSetting _setting;
-        private HeroinViewModel _heroinViewModel;
-        private ISpriteLayerController _controller;
+        private ISpriteChanger _changer;
 
         [SetUp]
         public void SetUp()
         {
             SetUpTestData();
 
-            _controller = Substitute.For<ISpriteLayerController>();
+            _changer = Substitute.For<ISpriteChanger>();
 
             var go = new GameObject();
             go.AddComponent<Image>();
             _spriteState = go.AddComponent<SpriteState>();
-            _spriteState.Construct(_pattern, _setting, _controller);
+            _spriteState.Construct(_pattern, _setting, _changer);
         }
 
         private void SetUpTestData()
