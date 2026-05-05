@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using UnityEngine;
 using Zrushy.Core.Application.UseCase.CanZrushy;
-using Zrushy.Core.Domain.Sprite;
 
 namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 {
@@ -65,9 +64,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         private void SetState(Sprite newState)
         {
             CurrentState = newState;
-            OnStateChanged?.Invoke(this); // Mediatorに通知 状態が違反していればここで調整される
-
-            SpriteLayerID layerID = new SpriteLayerID(_statePattern.layerID);
+            OnStateChanged?.Invoke(this);
             _spriteChanger.ChangeSprite(newState.name);
         }
 

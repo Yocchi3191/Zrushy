@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8797141392721385581, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: _layerID
-      value: Sprites/bottoms
+      value: bottoms
       objectReference: {fileID: 0}
     - target: {fileID: 337310496596076838, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Pivot.x
@@ -418,7 +418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8797141392721385581, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: _layerID
-      value: Sprites/pants
+      value: pants
       objectReference: {fileID: 0}
     - target: {fileID: 337310496596076838, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Pivot.x
@@ -604,7 +604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8797141392721385581, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: _layerID
-      value: Sprites/bottoms
+      value: bottoms
       objectReference: {fileID: 0}
     - target: {fileID: 337310496596076838, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Pivot.x
@@ -718,7 +718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8797141392721385581, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: _layerID
-      value: Sprites/pants
+      value: pants
       objectReference: {fileID: 0}
     - target: {fileID: 337310496596076838, guid: 63e080e071cb0224fab9f43c70593145, type: 3}
       propertyPath: m_Pivot.x
@@ -828,7 +828,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 953991894448375755, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
       propertyPath: m_Name
-      value: Buttons_Face
+      value: Buttons_pants
       objectReference: {fileID: 0}
     - target: {fileID: 5605181887564545830, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
       propertyPath: m_ChildForceExpandWidth
@@ -944,7 +944,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 953991894448375755, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
       propertyPath: m_Name
-      value: ButtonGroup_1
+      value: Buttons_bottoms
       objectReference: {fileID: 0}
     - target: {fileID: 5709260474085998797, guid: bdd682f0bc7f091448d61a0ec392bee4, type: 3}
       propertyPath: m_Pivot.x

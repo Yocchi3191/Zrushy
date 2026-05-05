@@ -12,13 +12,14 @@ namespace Zrushy.Core.Presentation.Unity
 {
     public class HeroinView : MonoBehaviour
     {
-        [Inject]
-        private HeroinViewModel _viewModel;
-
-        [SerializeField] private SpriteLayerBindings[] _bindings;
+        [Inject] private HeroinViewModel _viewModel;
+        private Dictionary<SpriteLayerID, Image> _layerImages;
 
         private void Start()
         {
+            _layerImages = GetComponentsInChildren<SpriteChanger>()
+                            .ToDictionary(c => c.LayerID, c => c.Image);
+
             _viewModel.OnUpdated += OnViewModelUpdated;
         }
 
@@ -36,34 +37,24 @@ namespace Zrushy.Core.Presentation.Unity
         {
             foreach (var path in paths)
             {
-                SpriteLayerID layerID = path.Key;
-                SpriteLayerBindings binding = _bindings.FirstOrDefault(b => b.LayerID == layerID.value);
-
-                if (binding.Image == null)
+                if (!_layerImages.TryGetValue(path.Key, out Image image))
                     continue;
 
                 if (path.Value.EndsWith("/none"))
                 {
-                    binding.Image.enabled = false;
+                    image.enabled = false;
                     continue;
                 }
 
                 Sprite sprite = Resources.Load<Sprite>(path.Value);
                 if (sprite == null)
                 {
-                    Debug.LogWarning($"Sprite not found at path '{path.Value}' for layer '{layerID.value}'");
+                    Debug.LogWarning($"Sprite not found at path '{path.Value}' for layer '{path.Key.value}'");
                     continue;
                 }
-                binding.Image.enabled = true;
-                binding.Image.sprite = Resources.Load<Sprite>(path.Value);
+                image.enabled = true;
+                image.sprite = sprite;
             }
-        }
-
-        [System.Serializable]
-        private struct SpriteLayerBindings
-        {
-            public string LayerID;
-            public Image Image;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Zrushy.Presentation.ChangeIllust
     {
         void Start()
         {
-            var image = GetComponent<UnityEngine.UI.Image>();
+            var image = GetComponent<Image>();
             image.alphaHitTestMinimumThreshold = 0.1f;
         }
     }
