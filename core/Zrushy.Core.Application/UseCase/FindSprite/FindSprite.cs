@@ -3,13 +3,13 @@
 
 using Zrushy.Core.Domain.Sprite;
 
-namespace Zrushy.Core.Application.UseCase.ChangeSprite
+namespace Zrushy.Core.Application.UseCase.FindSprite
 {
-    public class ChangeSprite
+    public class FindSprite : IFindSprite
     {
 
         private readonly ISpriteLayerRepository _repository;
-        public ChangeSprite(ISpriteLayerRepository repository)
+        public FindSprite(ISpriteLayerRepository repository)
         {
             _repository = repository;
         }

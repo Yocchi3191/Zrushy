@@ -531,7 +531,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c03e88911fffb2479a75adf0f9a6a8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::HeroinView
-  _bindings: []
+  _bindings:
+  - LayerID: Sprites/body
+    Image: {fileID: 1851102698230680330}
+  - LayerID: Sprites/eyes
+    Image: {fileID: 1384596459900406472}
+  - LayerID: Sprites/eyeblow
+    Image: {fileID: 5663240205996810761}
+  - LayerID: Sprites/mouth
+    Image: {fileID: 2417599682303771183}
+  - LayerID: Sprites/cheek
+    Image: {fileID: 3844353111679096727}
+  - LayerID: Sprites/pants
+    Image: {fileID: 7304949095260618399}
+  - LayerID: Sprites/bottoms
+    Image: {fileID: 6366031561140299470}
+  - LayerID: Sprites/hoodie/left
+    Image: {fileID: 3545702024964437206}
+  - LayerID: Sprites/hoodie/right
+    Image: {fileID: 5117749320761940973}
+  - LayerID: Sprites/hoodie/zipper
+    Image: {fileID: 4331461148047466063}
 --- !u!222 &1182657177674407749
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -872,6 +892,8 @@ GameObject:
   - component: {fileID: 5117749320761940973}
   - component: {fileID: 8840060141942940232}
   - component: {fileID: 2439777109669244927}
+  - component: {fileID: 7084424298104098920}
+  - component: {fileID: 4218215816793127372}
   m_Layer: 0
   m_Name: hoodie_R
   m_TagString: Untagged
@@ -963,6 +985,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: hoodie
+--- !u!114 &7084424298104098920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831604492619610420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &4218215816793127372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831604492619610420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &2016323087740431128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1143,8 @@ GameObject:
   - component: {fileID: 6366031561140299470}
   - component: {fileID: 1737260308837604061}
   - component: {fileID: 8871183718240639020}
+  - component: {fileID: 2117370941724779189}
+  - component: {fileID: 967986629578915938}
   m_Layer: 0
   m_Name: bottoms
   m_TagString: Untagged
@@ -1187,6 +1236,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: bottoms
+--- !u!114 &2117370941724779189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2256158199115877471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &967986629578915938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2256158199115877471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &2438782629145623672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,8 +1309,9 @@ GameObject:
   - component: {fileID: 3493932204007025248}
   - component: {fileID: 2924682898606561564}
   - component: {fileID: 1384596459900406472}
-  - component: {fileID: 7590317594114297837}
   - component: {fileID: 5949551738122288024}
+  - component: {fileID: 1518092275543874895}
+  - component: {fileID: 6282724468946978539}
   m_Layer: 0
   m_Name: eye
   m_TagString: Untagged
@@ -1301,20 +1376,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7590317594114297837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2855227513363972980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
-  _statePattern: {fileID: 0}
-  _setting: {fileID: 0}
 --- !u!114 &5949551738122288024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,6 +1389,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: 
+--- !u!114 &1518092275543874895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2855227513363972980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &6282724468946978539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2855227513363972980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &3034760102247739467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,8 +1742,9 @@ GameObject:
   - component: {fileID: 5112553728673628058}
   - component: {fileID: 2326244998983700504}
   - component: {fileID: 3844353111679096727}
-  - component: {fileID: 1097530264768108314}
   - component: {fileID: 255488356709933767}
+  - component: {fileID: 3019288852664378819}
+  - component: {fileID: 5566551499793097347}
   m_Layer: 0
   m_Name: cheek
   m_TagString: Untagged
@@ -1722,20 +1809,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1097530264768108314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3394152571493233869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
-  _statePattern: {fileID: 0}
-  _setting: {fileID: 0}
 --- !u!114 &255488356709933767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,6 +1822,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: 
+--- !u!114 &3019288852664378819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3394152571493233869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &5566551499793097347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3394152571493233869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &3438568279322648799
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,6 +2242,8 @@ GameObject:
   - component: {fileID: 3545702024964437206}
   - component: {fileID: 9011820879111658585}
   - component: {fileID: 5885260013036875755}
+  - component: {fileID: 7157029189855579429}
+  - component: {fileID: 5545489362949240090}
   m_Layer: 0
   m_Name: hoodie_L
   m_TagString: Untagged
@@ -2235,6 +2335,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: hoodie
+--- !u!114 &7157029189855579429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481419967912710071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &5545489362949240090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5481419967912710071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &5587714612672309892
 GameObject:
   m_ObjectHideFlags: 0
@@ -2583,6 +2708,8 @@ GameObject:
   - component: {fileID: 4331461148047466063}
   - component: {fileID: 4831769338674628706}
   - component: {fileID: 4834360040965935836}
+  - component: {fileID: 5333287239079887036}
+  - component: {fileID: 5854629763993505496}
   m_Layer: 0
   m_Name: zipper
   m_TagString: Untagged
@@ -2674,6 +2801,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: hoodie
+--- !u!114 &5333287239079887036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578939843655955629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &5854629763993505496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6578939843655955629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &6624122871253077242
 GameObject:
   m_ObjectHideFlags: 0
@@ -2952,8 +3104,9 @@ GameObject:
   - component: {fileID: 3176244008405530009}
   - component: {fileID: 725375371312281461}
   - component: {fileID: 1851102698230680330}
-  - component: {fileID: 3509879848169294172}
   - component: {fileID: 2901531719915276128}
+  - component: {fileID: 4071660245330323485}
+  - component: {fileID: 4640123625300145336}
   m_Layer: 0
   m_Name: body
   m_TagString: Untagged
@@ -3018,20 +3171,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3509879848169294172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7363832265736299900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
-  _statePattern: {fileID: 0}
-  _setting: {fileID: 0}
 --- !u!114 &2901531719915276128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3045,6 +3184,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: 
+--- !u!114 &4071660245330323485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363832265736299900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &4640123625300145336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363832265736299900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &7391310040824656551
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,8 +3257,9 @@ GameObject:
   - component: {fileID: 1823460942388441108}
   - component: {fileID: 8011505702227612063}
   - component: {fileID: 2417599682303771183}
-  - component: {fileID: 4308461282939143098}
   - component: {fileID: 7172142081692628573}
+  - component: {fileID: 6024437361430958597}
+  - component: {fileID: 4172108497301232987}
   m_Layer: 0
   m_Name: mouth
   m_TagString: Untagged
@@ -3159,20 +3324,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4308461282939143098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7601038996719121117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
-  _statePattern: {fileID: 0}
-  _setting: {fileID: 0}
 --- !u!114 &7172142081692628573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3186,6 +3337,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: 
+--- !u!114 &6024437361430958597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7601038996719121117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &4172108497301232987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7601038996719121117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &7741585771001768273
 GameObject:
   m_ObjectHideFlags: 0
@@ -3199,6 +3375,8 @@ GameObject:
   - component: {fileID: 7304949095260618399}
   - component: {fileID: 8235205475492786355}
   - component: {fileID: 2142763666429382685}
+  - component: {fileID: 8828699922166570402}
+  - component: {fileID: 3066030974518806370}
   m_Layer: 0
   m_Name: pants
   m_TagString: Untagged
@@ -3290,6 +3468,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: pants
+--- !u!114 &8828699922166570402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741585771001768273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &3066030974518806370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741585771001768273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &8068162415665300467
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,8 +4143,9 @@ GameObject:
   - component: {fileID: 8990918066369894051}
   - component: {fileID: 4140972465576649261}
   - component: {fileID: 5663240205996810761}
-  - component: {fileID: 5787419750697571444}
   - component: {fileID: 6230886359824435405}
+  - component: {fileID: 1672993308299921143}
+  - component: {fileID: 7606239754908135228}
   m_Layer: 0
   m_Name: eye_blow
   m_TagString: Untagged
@@ -4006,20 +4210,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5787419750697571444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8887182482422861313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1490f0c3cd265b84fbadbecfbd51b036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.ChangeSprite.SpriteState
-  _statePattern: {fileID: 0}
-  _setting: {fileID: 0}
 --- !u!114 &6230886359824435405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4033,3 +4223,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.Zrushable
   _clothingID: 
+--- !u!114 &1672993308299921143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8887182482422861313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9947393d8c1846d429742580d71d39ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Zrushy.Core.Presentation.Unity::Zrushy.Core.Presentation.Unity.SpriteChanger
+  _layerID: 
+--- !u!114 &7606239754908135228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8887182482422861313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba39d75af1cdb2419fa5e497939b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
