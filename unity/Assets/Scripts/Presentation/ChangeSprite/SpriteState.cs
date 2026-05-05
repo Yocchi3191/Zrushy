@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using Zrushy.Core.Application.UseCase.CanZrushy;
 
 namespace Zrushy.Core.Presentation.Unity.ChangeSprite
@@ -12,33 +11,34 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
     /// <summary>
     /// スプライトの状態遷移を実行するランタイム
     /// </summary>
+    [RequireComponent(typeof(SpriteChanger))]
     public class SpriteState : MonoBehaviour, ISpriteInputHandler, ISpriteStateNode
     {
         [SerializeField] private SpriteStatePattern _statePattern;
-        Image _image;
         [SerializeField] private DragDirectionThresholdSetting _setting;
+        private ISpriteChanger _spriteChanger;
 
         public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
         public Sprite CurrentState { get; private set; }
 
-        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting)
+        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting, ISpriteChanger spriteChanger)
         {
             _statePattern = pattern;
             _setting = setting;
             CurrentState = pattern.initialState;
+            _spriteChanger = spriteChanger;
+            SetState(CurrentState);
         }
 
-        private void Awake()
+        void Awake()
         {
-            _image = gameObject.GetComponent<Image>();
-            if (_image == null)
-                throw new System.Exception("Imageコンポーネントがアタッチされていません");
-            _image.alphaHitTestMinimumThreshold = 0.1f;
-        }
+            if (_statePattern == null)
+                return;
 
-        void Start()
-        {
+            _spriteChanger = gameObject.GetComponent<SpriteChanger>();
+
             CurrentState = _statePattern.initialState;
+            SetState(CurrentState);
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         private void SetState(Sprite newState)
         {
             CurrentState = newState;
-            _image.sprite = CurrentState;
             OnStateChanged?.Invoke(this);
+            _spriteChanger.ChangeSprite(newState.name);
         }
 
         public bool IsAbove(int targetStateIndex)

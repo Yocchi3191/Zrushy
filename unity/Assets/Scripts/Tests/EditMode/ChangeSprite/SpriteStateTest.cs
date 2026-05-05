@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,16 +46,19 @@ namespace Zrushy.Core.Test.Unity.EditMode
         private Sprite _furtherSprite;
         private SpriteStatePattern _pattern;
         private DragDirectionThresholdSetting _setting;
+        private ISpriteChanger _changer;
 
         [SetUp]
         public void SetUp()
         {
             SetUpTestData();
 
+            _changer = Substitute.For<ISpriteChanger>();
+
             var go = new GameObject();
             go.AddComponent<Image>();
             _spriteState = go.AddComponent<SpriteState>();
-            _spriteState.Construct(_pattern, _setting);
+            _spriteState.Construct(_pattern, _setting, _changer);
         }
 
         private void SetUpTestData()

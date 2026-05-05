@@ -1,16 +1,16 @@
 ﻿// Copyright (c) yoshioyocchi314@gmail.com
 // Licensed under the MIT License.
 
-using Zrushy.Core.Application.UseCase.ChangeSprite;
+using Zrushy.Core.Application.UseCase.FindSprite;
 using Zrushy.Core.Domain.Sprite;
 
 namespace Zrushy.Core.Presentation
 {
-    public class SpriteLayerController
+    public class SpriteLayerController : ISpriteLayerController
     {
-        private readonly ChangeSprite _changeSprite;
+        private readonly IFindSprite _changeSprite;
         private readonly HeroinViewModel _heroinViewModel;
-        public SpriteLayerController(ChangeSprite changeSprite, HeroinViewModel heroinViewModel)
+        public SpriteLayerController(IFindSprite changeSprite, HeroinViewModel heroinViewModel)
         {
             _changeSprite = changeSprite;
             _heroinViewModel = heroinViewModel;
