@@ -7,6 +7,7 @@ using Yarn.Unity;
 using Zenject;
 using Zrushy.Core.Application.UseCase.ApplyBonus;
 using Zrushy.Core.Domain.Interactions.ValueObject;
+using Zrushy.Core.Domain.Sprite;
 
 namespace Zrushy.Core.Presentation.Unity
 {
@@ -24,6 +25,7 @@ namespace Zrushy.Core.Presentation.Unity
         [Inject] private DialogueRunner _dialogueRunner;
         [Inject] private VirtualCursor _virtualCursor;
         [Inject] private ClickableRegistry _clickableRegistry;
+        [Inject] private ISpriteLayerController _spriteLayerController;
 
         private void Start()
         {
@@ -35,6 +37,9 @@ namespace Zrushy.Core.Presentation.Unity
 
             _dialogueRunner.AddCommandHandler("wait_for_touch",
                 (string targetPartId) => HandleWaitForTouch(targetPartId));
+
+            _dialogueRunner.AddCommandHandler("change_expr",
+                (string layerId, string state) => HandleSwitchSprite(layerId, state));
         }
 
         /// <summary>
@@ -71,6 +76,17 @@ namespace Zrushy.Core.Presentation.Unity
             }
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, target.transform.position);
             _virtualCursor.MoveTo(screenPos);
+        }
+
+        /// <summary>
+        /// 指定部位のスプライトを任意の状態に切り替える
+        /// 使用例: &lt;&lt;change_expr eyes calm&gt;&gt;
+        /// </summary>
+        /// <param name="layerID"></param>
+        /// <param name="stateName"></param>
+        private void HandleSwitchSprite(string layerID, string stateName)
+        {
+            _spriteLayerController.ChangeSprite(new SpriteLayerID(layerID), new LayerState(stateName));
         }
     }
 }
