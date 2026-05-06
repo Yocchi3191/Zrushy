@@ -20,7 +20,7 @@ namespace Zrushy.Core.Infrastructure.Unity
 
         public YarnEventRepository(DialogueRunner dialogueRunner, IConditionFactory conditionFactory)
         {
-            foreach (var pair in dialogueRunner.YarnProject.Program.Nodes)
+            foreach (KeyValuePair<string, Node> pair in dialogueRunner.YarnProject.Program.Nodes)
             {
                 string nodeName = pair.Key;
                 Node node = pair.Value;
@@ -52,7 +52,8 @@ namespace Zrushy.Core.Infrastructure.Unity
                     }
                 }
 
-                if (partId == null) continue;
+                if (partId == null)
+                    continue;
 
                 PartID partID = new PartID(partId);
 
@@ -80,7 +81,7 @@ namespace Zrushy.Core.Infrastructure.Unity
 
         public IReadOnlyList<IScenarioEvent> GetEvents(PartID partID)
         {
-            return _cache.TryGetValue(partID, out var events)
+            return _cache.TryGetValue(partID, out List<IScenarioEvent> events)
                 ? events.AsReadOnly()
                 : Array.Empty<IScenarioEvent>();
         }

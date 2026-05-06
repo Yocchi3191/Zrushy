@@ -15,7 +15,8 @@
         "NSubstitute.dll",
         "Castle.Core.dll",
         "Zrushy.Core.Presentation.dll",
-        "Zrushy.Core.Application.dll"
+        "Zrushy.Core.Application.dll",
+        "Zrushy.Core.Domain.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

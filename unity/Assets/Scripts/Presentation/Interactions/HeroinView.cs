@@ -17,7 +17,7 @@ namespace Zrushy.Core.Presentation.Unity
 
         private void Start()
         {
-            _layerImages = GetComponentsInChildren<SpriteChanger>()
+            _layerImages = GetComponentsInChildren<SpriteBindingMarker>()
                             .ToDictionary(c => c.LayerID, c => c.Image);
 
             _viewModel.OnUpdated += OnViewModelUpdated;
