@@ -73,13 +73,9 @@ package "Presentation.Unity" #LightBlue {
     - _constraints: ConstraintEntry[]
     + OnStateChanged(node: ISpriteStateNode)
   }
-  interface SpriteBindingMarker {
-    + ChangeSprite(spriteName: string)
-  }
-  class SpriteChanger {
-    - _controller: ISpriteLayerController
-    - _layerID: string
-    + ChangeSprite(spriteName: string)
+  class SpriteBindingMarker {
+    + LayerID: SpriteLayerID
+	+ Image: string
   }
   class HeroinView {
     - _viewModel: HeroinViewModel
@@ -125,19 +121,19 @@ package "Infrastructure.Unity" #LightPink {
 
 SpriteState ..|> ISpriteInputHandler
 SpriteState ..|> ISpriteStateNode
-SpriteChanger ..|> SpriteBindingMarker
 SpriteLayerController ..|> ISpriteLayerController
 FindSprite ..|> IFindSprite
 SpriteLayerRepository ..|> ISpriteLayerRepository
 
 Zrushable --> ISpriteInputHandler : uses
-SpriteState --> SpriteBindingMarker : uses
+SpriteState --> SpriteBindingMarker : refs
+SpriteState --> ISpriteLayerController : uses
 SpriteState --> SpriteStateMediator : notifies (OnStateChanged)
 SpriteStateMediator --> ISpriteStateNode : observes / ForceState
-SpriteChanger --> ISpriteLayerController : uses
 SpriteLayerController --> IFindSprite : uses
 SpriteLayerController --> HeroinViewModel : updates
 FindSprite --> ISpriteLayerRepository : uses
+HeroinView --> SpriteBindingMarker : refs
 HeroinView --> HeroinViewModel : subscribes OnUpdated
 HeroinView --> Image : updates
 
