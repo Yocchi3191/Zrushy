@@ -17,13 +17,12 @@ namespace Zrushy.Core.Presentation.Unity
         [SerializeField] private string _layerID;
 
         public Image Image { get; private set; }
-
-        public SpriteLayerID LayerID => new SpriteLayerID(_layerID);
-
+        public SpriteLayerID LayerID { get; private set; }
 
         private void Awake()
         {
             Image = GetComponent<Image>();
+            LayerID = new SpriteLayerID(_layerID);
         }
     }
 }
