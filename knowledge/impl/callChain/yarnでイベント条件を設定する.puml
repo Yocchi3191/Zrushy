@@ -1,0 +1,84 @@
+@startuml
+title yarn経由のイベント条件設定機能 コールチェーン
+
+box "Domain" #LightBlue
+	participant IEventRepository
+	participant IConditionFactory
+	participant IConditionParser
+end box
+box "Infrastructure" #LightPink
+end box
+box "おさわり機能" #LightGreen
+	participant IEventEvaluator
+end box
+
+IEventRepository -> IConditionFactory : Constructor
+IConditionFactory -> IConditionParser : TrygetValue & Parse
+IEventEvaluator -> IEventRepository : イベント取得
+@enduml
+
+@startuml
+title yarn経由のイベント条件設定機能 クラス図
+skinparam Linetype ortho
+
+package "Domain" #LightBlue {
+  interface IEventRepository {
+    + GetEvents(partID: PartID): IReadOnlyList<IScenarioEvent>
+    + GetGlobalEvents(): IReadOnlyList<IScenarioEvent>
+  }
+
+  interface IConditionFactory {
+    + Create(conditionString: string): IEvent?
+  }
+
+  class ConditionFactory {
+    - _parsers: Dictionary<string, IConditionParser>
+    + Create(conditionString: string): IEvent?
+    - CreateSingle(token: string): ICondition?
+  }
+
+  interface IConditionParser {
+    + Type: string
+    + Parse(parts: string[]): ICondition?
+  }
+
+  class ConditionParserImpl
+
+  interface IEvent {
+    + CanFire(): bool
+  }
+
+  interface ICondition extends IEvent
+  interface IScenarioEvent extends IEvent {
+    + ID: EventID
+    + ScenarioToStart: ScenarioID
+    + Priority: int
+  }
+
+  class Event {
+    + ID: EventID
+    + ScenarioToStart: ScenarioID
+    + Priority: int
+    - _conditions: ICondition[]
+    + CanFire(): bool
+  }
+
+  class ConditionImpl  {
+	+ CanFire(): bool
+   }
+}
+
+ConditionFactory ..|> IConditionFactory
+Event ..|> IScenarioEvent
+
+ConditionParserImpl "*" ..|> "1" IConditionParser
+
+ConditionImpl "*"  ..|> "1" ICondition
+
+IEventRepository --> IConditionFactory : uses (constructor)
+ConditionFactory "1" o-- "many" IConditionParser : _parsers
+ConditionFactory ..> ICondition : creates
+ConditionFactory ..> Event : creates (複数条件)
+Event "1" o-- "many" ICondition : _conditions (AND評価)
+
+@enduml

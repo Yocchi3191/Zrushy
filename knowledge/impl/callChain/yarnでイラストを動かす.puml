@@ -1,0 +1,15 @@
+@startuml
+title yarnでイラストを動かす コールチェーン
+
+box "Unity" #LightBlue
+	participant YarnScenarioStarter
+	participant ScenarioSpriteSwitcher
+	participant SpriteChanger
+end box
+box "スプライト切り替え機能" #LightPink
+	participant スプライト切り替え機能
+end box
+
+ScenarioSpriteSwitcher -> SpriteChanger : スプライト切り替え指示
+SpriteChanger -> スプライト切り替え機能 : 以降は既存のイラスト差し替え機能のコールチェーン
+@enduml

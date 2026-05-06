@@ -1,0 +1,144 @@
+@startuml
+title イラスト差し替え機能 コールチェーン
+
+box "Unity" #LightSlateGray
+	participant Image
+end box
+box "Presentation.Unity" #LightBlue
+  participant Zrushable
+  participant PoCButton
+  participant ISpriteInputHandler
+  participant SpriteStateMediator
+  participant SpriteBindingMarker
+  participant HeroinView
+end box
+box "Presentation" #LightGreen
+  participant ISpriteLayerController
+  participant HeroinViewModel
+end box
+box "Application" #LightYellow
+  participant IFindSprite
+end box
+box "Infrastructure.Unity" #LightPink
+  participant ISpriteLayerRepository 
+end box
+
+Zrushable -> ISpriteInputHandler : 入力
+PoCButton -> ISpriteInputHandler : 入力
+ISpriteInputHandler -> SpriteStateMediator : 通知
+SpriteStateMediator -> ISpriteInputHandler : (制約があれば)スプライトを制御する
+ISpriteInputHandler -> ISpriteLayerController : 状態遷移したのでスプライト差し替え指示
+ISpriteLayerController -> IFindSprite : 変更後のスプライトを取得
+IFindSprite -> ISpriteLayerRepository  : スプライトを取得
+ISpriteLayerRepository  -> IFindSprite : スプライトを返す
+IFindSprite -> ISpriteLayerController : スプライトを返す
+ISpriteLayerController -> HeroinViewModel : スプライトを反映
+HeroinViewModel -> HeroinView : 通知
+HeroinView -> HeroinViewModel : 更新データ取得
+HeroinView -> Image : スプライト変更
+
+@enduml
+
+@startuml
+title イラスト差し替え クラス図
+skinparam Linetype ortho
+
+package "Unity" #LightSlateGray {
+  class Image
+}
+
+package "Presentation.Unity" #LightBlue {
+  class Zrushable {
+    - _spriteInputHandler: ISpriteInputHandler
+    + OnEndDrag(eventData)
+  }
+  interface ISpriteInputHandler {
+    + TryTransition(input: ZrushyInput)
+  }
+  interface ISpriteStateNode {
+    + CurrentState: Sprite
+    + OnStateChanged: Action<ISpriteStateNode>
+    + ForceState(index: int)
+    + IsAbove(index: int): bool
+  }
+  class SpriteState {
+    - _statePattern: SpriteStatePattern
+    - _spriteChanger: SpriteBindingMarker
+    + TryTransition(input: ZrushyInput)
+    + ForceState(index: int)
+  }
+  class SpriteStateMediator {
+    - _controller: ISpriteStateNode
+    - _dependents: ISpriteStateNode[]
+    - _constraints: ConstraintEntry[]
+    + OnStateChanged(node: ISpriteStateNode)
+  }
+  interface SpriteBindingMarker {
+    + ChangeSprite(spriteName: string)
+  }
+  class SpriteChanger {
+    - _controller: ISpriteLayerController
+    - _layerID: string
+    + ChangeSprite(spriteName: string)
+  }
+  class HeroinView {
+    - _viewModel: HeroinViewModel
+    - _layerImages: Dictionary<SpriteLayerID, Image>
+    + OnViewModelUpdated(vm: HeroinViewModel)
+  }
+}
+
+package "Presentation" #LightGreen {
+  interface ISpriteLayerController {
+    + ChangeSprite(id: SpriteLayerID, state: LayerState)
+  }
+  class SpriteLayerController {
+    - _findSprite: IFindSprite
+    - _heroinViewModel: HeroinViewModel
+    + ChangeSprite(id: SpriteLayerID, state: LayerState)
+  }
+  class HeroinViewModel {
+    + SpritePaths: Dictionary<SpriteLayerID, string>
+    + OnUpdated: Action<HeroinViewModel>
+    + UpdateSprite(id: SpriteLayerID, path: string)
+  }
+}
+
+package "Application" #LightYellow {
+  interface IFindSprite {
+    + Execute(id: SpriteLayerID, state: LayerState): string
+  }
+  class FindSprite {
+    - _repository: ISpriteLayerRepository
+    + Execute(id: SpriteLayerID, state: LayerState): string
+  }
+}
+
+package "Infrastructure.Unity" #LightPink {
+  interface ISpriteLayerRepository {
+    + Get(id: SpriteLayerID, state: LayerState): string
+  }
+  class SpriteLayerRepository {
+    + Get(id: SpriteLayerID, state: LayerState): string
+  }
+}
+
+SpriteState ..|> ISpriteInputHandler
+SpriteState ..|> ISpriteStateNode
+SpriteChanger ..|> SpriteBindingMarker
+SpriteLayerController ..|> ISpriteLayerController
+FindSprite ..|> IFindSprite
+SpriteLayerRepository ..|> ISpriteLayerRepository
+
+Zrushable --> ISpriteInputHandler : uses
+SpriteState --> SpriteBindingMarker : uses
+SpriteState --> SpriteStateMediator : notifies (OnStateChanged)
+SpriteStateMediator --> ISpriteStateNode : observes / ForceState
+SpriteChanger --> ISpriteLayerController : uses
+SpriteLayerController --> IFindSprite : uses
+SpriteLayerController --> HeroinViewModel : updates
+FindSprite --> ISpriteLayerRepository : uses
+HeroinView --> HeroinViewModel : subscribes OnUpdated
+HeroinView --> Image : updates
+
+@enduml

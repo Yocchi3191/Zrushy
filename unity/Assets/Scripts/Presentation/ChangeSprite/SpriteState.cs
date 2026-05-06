@@ -4,29 +4,33 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 using Zrushy.Core.Application.UseCase.CanZrushy;
+using Zrushy.Core.Domain.Sprite;
 
 namespace Zrushy.Core.Presentation.Unity.ChangeSprite
 {
     /// <summary>
     /// スプライトの状態遷移を実行するランタイム
     /// </summary>
-    [RequireComponent(typeof(SpriteChanger))]
+    [RequireComponent(typeof(SpriteBindingMarker))]
     public class SpriteState : MonoBehaviour, ISpriteInputHandler, ISpriteStateNode
     {
         [SerializeField] private SpriteStatePattern _statePattern;
         [SerializeField] private DragDirectionThresholdSetting _setting;
-        private ISpriteChanger _spriteChanger;
+        [Inject] private ISpriteLayerController _controller;
+        private SpriteLayerID _layerID;
 
         public event Action<ISpriteStateNode> OnStateChanged; // 状態遷移イベント
         public Sprite CurrentState { get; private set; }
 
-        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting, ISpriteChanger spriteChanger)
+        internal void Construct(SpriteStatePattern pattern, DragDirectionThresholdSetting setting, ISpriteLayerController controller, SpriteLayerID layerID)
         {
             _statePattern = pattern;
             _setting = setting;
+            _controller = controller;
+            _layerID = layerID;
             CurrentState = pattern.initialState;
-            _spriteChanger = spriteChanger;
             SetState(CurrentState);
         }
 
@@ -35,7 +39,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
             if (_statePattern == null)
                 return;
 
-            _spriteChanger = gameObject.GetComponent<SpriteChanger>();
+            _layerID = gameObject.GetComponent<SpriteBindingMarker>().LayerID;
 
             CurrentState = _statePattern.initialState;
             SetState(CurrentState);
@@ -65,7 +69,7 @@ namespace Zrushy.Core.Presentation.Unity.ChangeSprite
         {
             CurrentState = newState;
             OnStateChanged?.Invoke(this);
-            _spriteChanger.ChangeSprite(newState.name);
+            _controller.ChangeSprite(_layerID, new LayerState(newState.name));
         }
 
         public bool IsAbove(int targetStateIndex)

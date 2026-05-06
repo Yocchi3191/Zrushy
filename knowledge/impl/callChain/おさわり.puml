@@ -1,0 +1,147 @@
+@startuml
+box "Presentation.Unity" #SlateGray
+  participant Clickable
+  participant YarnScenarioStarter
+end box
+box "Presentation" #LightGreen
+  participant PartController
+end box
+box "Application" #LightYellow
+  participant InteractPart
+  participant EventBus
+end box
+box "Domain" #AliceBlue
+  participant Heroin
+  participant Part
+  participant IEventEvaluator
+end box
+box "Infrastructure" #LightPink
+  participant IInteractionHistory
+  participant IEventRepository
+  participant IFiredEventLog
+end box
+box "YarnSpinner" #LightBlue
+  participant DialogueRunner
+end box
+
+Clickable -> PartController : 入力
+PartController -> InteractPart : 呼び出し
+InteractPart -> Heroin : パラメータ更新
+Heroin -> Part : 触られた部位のパラメータ更新
+InteractPart -> IEventEvaluator : イベント判定
+IEventEvaluator -> IInteractionHistory : おさわり履歴更新
+IEventEvaluator -> IEventRepository : 再生可能なイベント取得
+IEventEvaluator -> IEventEvaluator : イベントの発生条件を満たすか判定
+IEventEvaluator -> EventBus : イベント発生通知
+EventBus -> IFiredEventLog  : 発生イベントを記録
+EventBus -> YarnScenarioStarter : イベント発火に反応
+YarnScenarioStarter -> YarnScenarioStarter : シナリオ開始条件を満たすか判定
+YarnScenarioStarter -> DialogueRunner : シナリオ開始を指示
+@enduml
+
+@startuml
+title おさわり クラス図
+skinparam Linetype ortho
+
+package "Presentation.Unity" #SlateGray {
+  class Clickable {
+    - _controller: PartController
+    + SendInput(type: InteractionType, direction: Vector2)
+  }
+  class YarnScenarioStarter {
+    - _eventBus: EventBus
+    - _dialogueRunner: DialogueRunner
+    + OnEventPublished(id: EventID)
+  }
+}
+
+package "Presentation" #LightGreen {
+  class PartController {
+    - _interactPartUseCase: InteractPart
+    + SendInput(input: PartInput)
+  }
+}
+
+package "Application" #LightYellow {
+  class InteractPart {
+    - _heroin: Heroin
+    - _eventEvaluator: IEventEvaluator
+    + Execute(command: InteractPartCommand)
+  }
+  class EventEvaluator {
+    - _interactionHistory: IInteractionHistory
+    - _eventRepository: IEventRepository
+    - _eventBus: EventBus
+    + Evaluate(interaction: Interaction)
+  }
+  class EventBus {
+    - _firedEventLog: IFiredEventLog
+    + OnEventPublished: Action<EventID>
+    + Publish(event: IScenarioEvent)
+  }
+}
+
+package "Domain" #AliceBlue {
+  class Heroin {
+    - _parts: List<IPart>
+    + Arousal: Arousal
+    + Affection: Affection
+    + Interact(interaction: Interaction)
+  }
+  interface IPart {
+    + Interact(interaction: Interaction)
+    + CalculateArousal(...): Arousal
+  }
+  class Part {
+    - _config: PartConfig
+    + ID: PartID
+    + Development: Development
+    + Interact(interaction: Interaction)
+    + CalculateArousal(...): Arousal
+  }
+  interface IEventEvaluator {
+    + Evaluate(interaction: Interaction)
+  }
+  interface IInteractionHistory {
+    + Get(partID: PartID): IReadOnlyList<Interaction>
+    + Record(interaction: Interaction)
+  }
+  interface IEventRepository {
+    + GetEvents(partID: PartID): IReadOnlyList<IScenarioEvent>
+    + GetGlobalEvents(): IReadOnlyList<IScenarioEvent>
+  }
+  interface IFiredEventLog {
+    + HasFired(id: EventID): bool
+    + Record(id: EventID)
+  }
+}
+
+package "Infrastructure" #LightPink {
+  class InteractionHistory {
+    - _history: Dictionary<PartID, List<Interaction>>
+    + Get(partID: PartID): IReadOnlyList<Interaction>
+    + Record(interaction: Interaction)
+  }
+  class FiredEventLog {
+    - _firedEvents: HashSet<EventID>
+    + HasFired(id: EventID): bool
+    + Record(id: EventID)
+  }
+}
+
+Clickable --> PartController : uses
+PartController --> InteractPart : uses
+InteractPart --> Heroin : uses
+InteractPart --> IEventEvaluator : uses
+Heroin "1" o-- "many" IPart
+Part ..|> IPart
+EventEvaluator ..|> IEventEvaluator
+EventEvaluator --> IInteractionHistory : uses
+EventEvaluator --> IEventRepository : uses
+EventEvaluator --> EventBus : uses
+EventBus --> IFiredEventLog : uses
+InteractionHistory ..|> IInteractionHistory
+FiredEventLog ..|> IFiredEventLog
+YarnScenarioStarter --> EventBus : subscribes
+
+@enduml
