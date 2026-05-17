@@ -1,0 +1,12 @@
+﻿title: change_sprite
+---
+服脱ぎ
+<<change_expr hoodie/zipper open>>
+<<change_expr hoodie/right open>>
+<<change_expr hoodie/left open>>
+
+服着る
+<<change_expr hoodie/zipper close>>
+<<change_expr hoodie/right close>>
+<<change_expr hoodie/left close>>
+===
