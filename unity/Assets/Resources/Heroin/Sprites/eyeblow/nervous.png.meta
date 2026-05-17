@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 33c2cdb9ba204de4d909124a8e443bb3
+guid: f49472f7fa7815a45bf0e9639e207822
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1852440423977545866
-    second: calm_0
+      213: 4624575743536719054
+    second: nervous_0
   - first:
-      213: -6511238163665981156
-    second: calm_1
+      213: 4049203012547344366
+    second: nervous_1
+  - first:
+      213: 2080619231700536400
+    second: nervous_2
+  - first:
+      213: -6861168515852240329
+    second: nervous_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -27,7 +33,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -103,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: calm_0
+      name: nervous_0
       rect:
         serializedVersion: 2
-        x: 1308
-        y: 3170
-        width: 121
-        height: 32
+        x: 1301
+        y: 3196
+        width: 29
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8071ce30c035b910800000000000000
-      internalID: 1852440423977545866
+      spriteID: ec4e46ef22bcd2040800000000000000
+      internalID: 4624575743536719054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: calm_1
+      name: nervous_1
       rect:
         serializedVersion: 2
-        x: 1145
-        y: 3094
-        width: 72
-        height: 52
+        x: 1342
+        y: 3200
+        width: 93
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +146,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c11f8be536f63a5a0800000000000000
-      internalID: -6511238163665981156
+      spriteID: ee77352bfa8a13830800000000000000
+      internalID: 4049203012547344366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nervous_2
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 3162
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05c4b5aea28dfdc10800000000000000
+      internalID: 2080619231700536400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: nervous_3
+      rect:
+        serializedVersion: 2
+        x: 1131
+        y: 3127
+        width: 62
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73a788c369b38c0a0800000000000000
+      internalID: -6861168515852240329
       vertices: []
       indices: 
       edges: []
@@ -160,8 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      calm_0: 1852440423977545866
-      calm_1: -6511238163665981156
+      nervous_0: 4624575743536719054
+      nervous_1: 4049203012547344366
+      nervous_2: 2080619231700536400
+      nervous_3: -6861168515852240329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: dab8de11165e4ae44aa1684ee4b64c70
+guid: c85ace0e8e359f941a101b659c8b05b1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3283730162967503144
-    second: frustrated_0
+      213: -4571828015118065507
+    second: back_0
   - first:
-      213: 5868308704423307988
-    second: frustrated_1
+      213: -2796314236206107100
+    second: back_1
+  - first:
+      213: -8741071136333515919
+    second: back_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -27,7 +30,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -103,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: frustrated_0
+      name: back_0
       rect:
         serializedVersion: 2
-        x: 1170
-        y: 2931
-        width: 120
-        height: 136
+        x: 1042
+        y: 2910
+        width: 55
+        height: 212
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 821e9ed6f27229d20800000000000000
-      internalID: 3283730162967503144
+      spriteID: d9065b094aa9d80c0800000000000000
+      internalID: -4571828015118065507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: frustrated_1
+      name: back_1
       rect:
         serializedVersion: 2
-        x: 1327
-        y: 2979
-        width: 140
-        height: 113
+        x: 1155
+        y: 2948
+        width: 469
+        height: 547
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +143,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4daeb7fccab607150800000000000000
-      internalID: 5868308704423307988
+      spriteID: 4263196840f7139d0800000000000000
+      internalID: -2796314236206107100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: back_2
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 2911
+        width: 42
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 173bb6a1d1a71b680800000000000000
+      internalID: -8741071136333515919
       vertices: []
       indices: 
       edges: []
@@ -160,8 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      frustrated_0: 3283730162967503144
-      frustrated_1: 5868308704423307988
+      back_0: -4571828015118065507
+      back_1: -2796314236206107100
+      back_2: -8741071136333515919
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
